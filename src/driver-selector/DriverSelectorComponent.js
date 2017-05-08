@@ -11,7 +11,9 @@ class DriverSelectorComponent extends Component {
     this.props.drivers.forEach(driver => driverRows.push((<tr><td><a style={{cursor:'pointer'}} onClick={() => this.onDriverClick(driver)}>{driver}</a></td></tr>)));
     return (
       <table>
-        {driverRows}
+        <thead>
+          {driverRows}
+        </thead>
       </table>
     );
   }
