@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+import DriverSelectorDriver from './DriverSelectorDriver';
 
 class DriverSelectorComponent extends Component {
-  onDriverClick(driver) {
-    const { onSelect } = this.props;
-    onSelect(driver);
-  }
-
   render() {
     const driverRows = [];
-    this.props.drivers.forEach(driver => driverRows.push((<tr><td><a style={{cursor:'pointer'}} onClick={() => this.onDriverClick(driver)}>{driver}</a></td></tr>)));
+    const { drivers, onSelect } = this.props;
+    drivers.forEach(driver => driverRows.push(<DriverSelectorDriver key={driver} driver={driver} onSelect={onSelect}/>));
     return (
       <table>
         <thead>
