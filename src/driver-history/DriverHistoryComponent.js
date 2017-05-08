@@ -8,7 +8,6 @@ class DriverHistory extends Component {
       dhLaps.push(<DriverHistoryLap key={lapNumber} lap={lap}/>);
     });
 
-    // const lap = this.props.driver.laps[0];
     return (
       <div>
         <table>

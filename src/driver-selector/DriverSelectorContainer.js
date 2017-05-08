@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DriverSelector from './DriverSelectorComponent';
+import { selectDriver } from './driver-selector-actions';
 
 class DriverSelectorContainer extends Component {
   render() {
-    const { drivers, selectedDriver } = this.props;
+    const { drivers, selectedDriver, selectDriver } = this.props;
     return (
-      <DriverSelector drivers={drivers} selectedDriver={selectedDriver}/>
+      <DriverSelector drivers={drivers} selectedDriver={selectedDriver} onSelect={selectDriver}/>
     );
   }
 }
 
 function mapStateToProps(state, props) {
-  console.log(`mapStateToProps with ${JSON.stringify(state)} and ${JSON.stringify(props)}`);
   return {
     drivers: Object.keys(state.drivers),
     selectedDriver: state.selectedDriver,
@@ -21,7 +21,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    selectDriver: (driver) => dispatch(selectDriver(driver)),
   };
 }
 

@@ -4,8 +4,7 @@ import DriverHistory from './DriverHistoryComponent';
 
 class DriverHistoryContainer extends Component {
   render() {
-    const {drivers} = this.props;
-    const selectedDriver = 'VAN';
+    const {drivers, selectedDriver} = this.props;
     return (
       <DriverHistory driver={drivers[selectedDriver]}/>
     );
@@ -17,9 +16,9 @@ DriverHistoryContainer.propTypes = {
 };
 
 function mapStateToProps(state, props) {
-  console.log(`mapStateToProps with ${JSON.stringify(state)} and ${JSON.stringify(props)}`);
   return {
     drivers: state.drivers,
+    selectedDriver: state.selectedDriver,
   };
 }
 
