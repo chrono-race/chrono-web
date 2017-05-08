@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 
 class DriverHistoryLap extends Component {
   render() {
@@ -14,5 +15,9 @@ class DriverHistoryLap extends Component {
     );
   }
 }
+
+DriverHistoryLap.PropTypes = {
+  lap: PropTypes.object.isRequired,
+};
 
 export default DriverHistoryLap;

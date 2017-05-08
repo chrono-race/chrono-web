@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import DriverSelector from './DriverSelectorComponent';
 import { selectDriver } from './driver-selector-actions';
@@ -11,6 +12,12 @@ class DriverSelectorContainer extends Component {
     );
   }
 }
+
+DriverSelectorContainer.PropTypes = {
+  drivers: PropTypes.array.isRequired,
+  selectedDriver: PropTypes.string.isRequired,
+  selectDriver: PropTypes.object.isRequired,
+};
 
 function mapStateToProps(state, props) {
   return {

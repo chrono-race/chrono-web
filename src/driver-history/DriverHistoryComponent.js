@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import DriverHistoryLap from './DriverHistoryLap';
 
 class DriverHistory extends Component {
   render() {
     const dhLaps = [];
-    this.props.driver.laps.forEach((lap, lapNumber) => {
+    const { driver } = this.props;
+    driver.laps.forEach((lap, lapNumber) => {
       dhLaps.push(<DriverHistoryLap key={lapNumber} lap={lap}/>);
     });
 
@@ -28,5 +30,9 @@ class DriverHistory extends Component {
     );
   }
 }
+
+DriverHistory.PropTypes = {
+  driver: PropTypes.object.isRequired,
+};
 
 export default DriverHistory;

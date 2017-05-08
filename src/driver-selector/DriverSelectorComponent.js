@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import DriverSelectorDriver from './DriverSelectorDriver';
 
 class DriverSelectorComponent extends Component {
@@ -15,5 +16,10 @@ class DriverSelectorComponent extends Component {
     );
   }
 }
+
+DriverSelectorComponent.PropTypes = {
+  drivers: PropTypes.array.isRequired,
+  onSelect: PropTypes.object.isRequired,
+};
 
 export default DriverSelectorComponent;

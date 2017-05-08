@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import DriverHistory from './DriverHistoryComponent';
 
@@ -12,7 +13,8 @@ class DriverHistoryContainer extends Component {
 }
 
 DriverHistoryContainer.propTypes = {
-  // drivers: PropTypes.array.isRequired,
+  drivers: PropTypes.object.isRequired,
+  selectedDriver: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state, props) {
