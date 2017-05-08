@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Page1 from './Page1';
+import DriverHistory from './driver-history/DriverHistoryContainer';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Page1/>
+        <DriverHistory/>
       </div>
     );
   }
