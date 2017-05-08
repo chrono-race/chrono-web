@@ -13,11 +13,13 @@ class DriverHistory extends Component {
       <div>
         <table>
           <thead>
-            <th>Lap</th>
-            <th>S1 Time</th>
-            <th>S2 Time</th>
-            <th>S3 Time</th>
-            <th>Lap Time</th>
+            <tr>
+              <th>Lap</th>
+              <th>S1 Time</th>
+              <th>S2 Time</th>
+              <th>S3 Time</th>
+              <th>Lap Time</th>
+            </tr>
           </thead>
           <tbody> 
             {dhLaps}
