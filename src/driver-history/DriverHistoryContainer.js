@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import DriverHistory from './DriverHistoryComponent';
 
 class DriverHistoryContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {drivers} = this.props;
     const selectedDriver = 'VAN';
