@@ -11,6 +11,8 @@
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
     "react-scripts": "0.9.5"
   },
   "scripts": {
