@@ -18,5 +18,14 @@ describe('session reducer', () => {
 
     assert(state.should.deep.equal({ drivers: {} }));
   });
+
+  it('adds a new driver to the session', () => {
+    const initialState = { drivers: { VAN: { } } };
+    const action = actions.backlogReceived([{driver: 'VAN', lapNumber: 1}]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(state.should.deep.equal({ drivers: { VAN: { laps: [] } } }));
+  });
 });
 
