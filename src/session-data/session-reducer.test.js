@@ -27,5 +27,6 @@ describe('session reducer', () => {
 
     assert(state.should.deep.equal({ drivers: { VAN: { laps: [ { driver: 'VAN', lapNumber: 1, lapTime: 90.123 }] } } }));
   });
+
 });
 
