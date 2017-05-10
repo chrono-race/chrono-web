@@ -21,7 +21,7 @@ DriverSelectorContainer.PropTypes = {
 
 function mapStateToProps(state, props) {
   return {
-    drivers: Object.keys(state.drivers),
+    drivers: Object.keys(state.session.drivers),
     selectedDriver: state.selectedDriver,
   };
 }

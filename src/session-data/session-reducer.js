@@ -11,7 +11,11 @@ function appendMessagesToDrivers(drivers, messages) {
   return drivers;
 }
 
-export default (state = {}, action) => {
+const defaultSessionState = {
+  drivers: {},
+};
+
+export default (state = defaultSessionState, action) => {
   switch (action.type) {
     case types.BACKLOG_RECEIVED:
       return { drivers: appendMessagesToDrivers({}, action.messages) };

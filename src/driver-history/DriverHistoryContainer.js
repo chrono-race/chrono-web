@@ -19,7 +19,7 @@ DriverHistoryContainer.propTypes = {
 
 function mapStateToProps(state, props) {
   return {
-    drivers: state.drivers,
+    drivers: state.session.drivers,
     selectedDriver: state.selectedDriver,
   };
 }

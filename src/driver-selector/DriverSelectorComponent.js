@@ -10,6 +10,9 @@ class DriverSelectorComponent extends Component {
     return (
       <table>
         <thead>
+          <tr>
+            <th>Drivers</th>
+          </tr>
           {driverRows}
         </thead>
       </table>

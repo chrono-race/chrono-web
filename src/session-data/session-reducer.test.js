@@ -8,7 +8,7 @@ should();
 describe('session reducer', () => {
   it('returns empty state by default', () => {
     const state = sessionReducer(undefined, {});
-    assert(state.should.deep.equal({}));
+    assert(state.should.deep.equal({drivers: {}}));
   });
 
   it('resets state on receipt of backlog message', () => {
