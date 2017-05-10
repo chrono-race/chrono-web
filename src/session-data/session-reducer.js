@@ -15,6 +15,8 @@ export default (state = {}, action) => {
   switch (action.type) {
     case types.BACKLOG_RECEIVED:
       return { drivers: appendMessagesToDrivers({}, action.messages) };
+    case types.EVENTS_RECEIVED:
+      return { drivers: appendMessagesToDrivers(state.drivers, action.messages)};
     default:
       return state;
   }

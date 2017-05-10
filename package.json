@@ -13,7 +13,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.3.0",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "sinon": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

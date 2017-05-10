@@ -1,4 +1,5 @@
 import { assert, should } from 'chai';
+import sinon from 'sinon';
 import * as actions from '../actions/data-actions';
 import sessionReducer from './session-reducer';
 
@@ -20,7 +21,7 @@ describe('session reducer', () => {
   });
 
   it('adds a new driver to the session with first lap', () => {
-    const initialState = { drivers: { VAN: { } } };
+    const initialState = { drivers: {} };
     const action = actions.backlogReceived([{driver: 'VAN', lapNumber: 1, lapTime: 90.123}]);
 
     const state = sessionReducer(initialState, action);
@@ -32,5 +33,27 @@ describe('session reducer', () => {
     assert(state.drivers.VAN.laps[0].lapTime.should.equal(90.123));
   });
 
+  it('appends to a session on events message', () => {
+    const initialState = {
+      drivers: {
+        VAN: {
+          laps: [
+            {
+              lapNumber: 1,
+              lapTime: 90.111,
+            }
+          ],
+          appendMessage: () => {},
+        },
+      },
+    };
+    const append = sinon.stub(initialState.drivers.VAN, 'appendMessage');
+    const message = {driver: 'VAN', lapNumber: 2, lapTime: 92.222};
+    const action = actions.eventsReceived([message]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(append.calledWith(message));
+  });
 });
 
