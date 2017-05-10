@@ -25,7 +25,11 @@ describe('session reducer', () => {
 
     const state = sessionReducer(initialState, action);
 
-    assert(state.should.deep.equal({ drivers: { VAN: { laps: [ { driver: 'VAN', lapNumber: 1, lapTime: 90.123 }] } } }));
+    assert(state.should.have.property('drivers'));
+    assert(state.drivers.should.have.property('VAN'));
+    assert(state.drivers.VAN.laps.length.should.equal(1));
+    assert(state.drivers.VAN.laps[0].lapNumber.should.equal(1));
+    assert(state.drivers.VAN.laps[0].lapTime.should.equal(90.123));
   });
 
 });
