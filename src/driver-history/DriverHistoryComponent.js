@@ -7,9 +7,9 @@ class DriverHistory extends Component {
     const dhLaps = [];
     const { driver } = this.props;
     if (driver === undefined) {
-      return (<div>No session</div>);
+      return (<div>No driver selected</div>);
     }
-    driver.laps.forEach((lap, lapNumber) => {
+    driver.get('laps').toArray().forEach((lap, lapNumber) => {
       dhLaps.push(<DriverHistoryLap key={lapNumber} lap={lap}/>);
     });
 

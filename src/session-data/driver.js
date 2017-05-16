@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 
 function emptyLap(lapNumber) {
   return {
@@ -14,17 +15,24 @@ function emptyLap(lapNumber) {
     speed3: NaN,
     speedTrap: NaN,
     timestamp: NaN,
-  }
+  };
 }
 
-export default () => {
-  return { 
+export const newDriver = () => {
+  return fromJS({ 
     laps: [],
-    appendMessage(msg) {
-      while (this.laps.length < msg.lapNumber) {
-        this.laps.push(emptyLap(this.laps.length+1));
-      }
-      this.laps[msg.lapNumber-1] = Object.assign(this.laps[msg.lapNumber-1], msg);
-    },
-  };
+  });
+};
+
+export const appendMessage = (driver, msg) => {
+  let laps = driver.get('laps');
+  while (laps.count() < msg.lapNumber) {
+    laps = laps.push(fromJS(emptyLap(laps.count()+1)));
+  }
+  let lap = laps.get(msg.lapNumber-1);
+  lap = lap.merge(msg);
+  laps = laps.set(msg.lapNumber-1, lap);
+  return fromJS({
+    laps,
+  });
 };

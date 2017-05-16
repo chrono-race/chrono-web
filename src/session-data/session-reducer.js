@@ -1,26 +1,30 @@
+import { fromJS } from 'immutable';
 import * as types from '../actions/action-types';
-import driver from './driver';
+import { newDriver, appendMessage } from './driver';
 
 function appendMessagesToDrivers(drivers, messages) {
+  let updatedDrivers = drivers;
   messages.forEach(msg => {
-    if (drivers[msg.driver] === undefined) {
-      drivers[msg.driver] = driver();
+    let driver = updatedDrivers.get(msg.driver);
+    if (driver === undefined) {
+      driver = newDriver();
     }
-    drivers[msg.driver].appendMessage(msg);
+    driver = appendMessage(driver, msg);
+    updatedDrivers = updatedDrivers.set(msg.driver, driver);
   });
-  return drivers;
+  return updatedDrivers;
 }
 
-const defaultSessionState = {
+const defaultSessionState = fromJS({
   drivers: {},
-};
+});
 
 export default (state = defaultSessionState, action) => {
   switch (action.type) {
     case types.BACKLOG_RECEIVED:
-      return { drivers: appendMessagesToDrivers({}, action.messages) };
+      return state.set('drivers', appendMessagesToDrivers(fromJS({}), action.messages));
     case types.EVENTS_RECEIVED:
-      return { drivers: appendMessagesToDrivers(state.drivers, action.messages)};
+      return state.set('drivers', appendMessagesToDrivers(state.get('drivers'), action.messages));
     default:
       return state;
   }

@@ -6,11 +6,11 @@ class DriverHistoryLap extends Component {
     const { lap } = this.props;
     return (
       <tr>
-        <td>{lap.lapNumber}</td>
-        <td>{lap.s1Time}</td>
-        <td>{lap.s2Time}</td>
-        <td>{lap.s3Time}</td>
-        <td>{lap.lapTime}</td>
+        <td>{lap.get('lapNumber')}</td>
+        <td>{lap.get('s1Time')}</td>
+        <td>{lap.get('s2Time')}</td>
+        <td>{lap.get('s3Time')}</td>
+        <td>{lap.get('lapTime')}</td>
       </tr>
     );
   }

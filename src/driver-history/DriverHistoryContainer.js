@@ -5,21 +5,22 @@ import DriverHistory from './DriverHistoryComponent';
 
 class DriverHistoryContainer extends Component {
   render() {
-    const {drivers, selectedDriver} = this.props;
+    const { session, selectedDriver } = this.props;
+    const drivers = session.get('drivers');
     return (
-      <DriverHistory driver={drivers[selectedDriver]}/>
+      <DriverHistory driver={drivers.get(selectedDriver)}/>
     );
   }
 }
 
 DriverHistoryContainer.propTypes = {
-  drivers: PropTypes.object.isRequired,
+  session: PropTypes.object.isRequired,
   selectedDriver: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state, props) {
   return {
-    drivers: state.session.drivers,
+    session: state.session,
     selectedDriver: state.selectedDriver,
   };
 }

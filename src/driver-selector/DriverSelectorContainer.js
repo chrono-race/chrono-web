@@ -14,14 +14,14 @@ class DriverSelectorContainer extends Component {
 }
 
 DriverSelectorContainer.PropTypes = {
-  drivers: PropTypes.array.isRequired,
+  drivers: PropTypes.object.isRequired,
   selectedDriver: PropTypes.string.isRequired,
   selectDriver: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state, props) {
   return {
-    drivers: Object.keys(state.session.drivers),
+    drivers: state.session.get('drivers').keySeq().toArray(),
     selectedDriver: state.selectedDriver,
   };
 }
