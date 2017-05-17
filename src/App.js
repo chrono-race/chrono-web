@@ -6,10 +6,15 @@ import DriverSelector from './driver-selector/DriverSelectorContainer';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h2 className="text-info">Chrono Web</h2>
-        <DriverSelector/>
-        <DriverHistory/>
+      <div className="App container-fluid">
+        <div className="row">
+          <div className="col-md-1">
+            <DriverSelector/>
+          </div>
+          <div className="col-md-5">
+            <DriverHistory/>
+          </div>
+        </div>
       </div>
     );
   }
