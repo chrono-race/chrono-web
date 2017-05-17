@@ -12,7 +12,13 @@
     "socket.io-client": "^1.7.3"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "less-plugin-autoprefix": "^1.5.1",
+    "less-plugin-clean-css": "^1.5.1",
     "mocha": "^3.3.0",
     "react-scripts": "0.9.5",
     "sinon": "^2.2.0"
@@ -21,6 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "compile-less": "grunt compile-less",
+    "watch-less": "grunt watch"
   }
 }
