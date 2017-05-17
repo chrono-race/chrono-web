@@ -8,10 +8,10 @@ class App extends Component {
     return (
       <div className="App container-fluid">
         <div className="row">
-          <div className="col-md-1">
+          <div className="col-md-1" style={{paddingLeft: '0.8em', paddingTop: '0.8em', paddingRight: '0em'}}>
             <DriverSelector/>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-5" style={{paddingLeft: '0.8em', paddingTop: '0.8em', paddingRight: '0em'}}>
             <DriverHistory/>
           </div>
         </div>

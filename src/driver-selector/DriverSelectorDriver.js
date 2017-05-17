@@ -8,11 +8,17 @@ class DriverSelectorDriver extends Component {
   }
 
   render() {
-    const { driver } = this.props;
+    const { driver, selectedDriver } = this.props;
+    let className = 'btn btn-primary btn-xs btn-block';
+    if (selectedDriver === driver) {
+      className += ' active';
+    }
     return (
       <tr>
         <td>
-         <a style={{cursor:'pointer'}} onClick={() => this.onDriverClick(driver)}>{driver}</a>
+         <a className={className}
+            style={{cursor:'pointer', marginBottom: '2px'}}
+            onClick={() => this.onDriverClick(driver)}>{driver}</a>
         </td>
       </tr>
     );
@@ -22,6 +28,7 @@ class DriverSelectorDriver extends Component {
 DriverSelectorDriver.PropTypes = {
   driver: PropTypes.object.isRequired,
   onSelect: PropTypes.object.isRequired,
+  selectedDriver: PropTypes.object.isRequired,
 };
 
 export default DriverSelectorDriver;
