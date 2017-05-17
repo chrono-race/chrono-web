@@ -15,14 +15,14 @@ class DriverHistory extends Component {
 
     return (
       <div>
-        <table>
+        <table className='table table-striped timing-table'>
           <thead>
             <tr>
+              <th>#</th>
+              <th>S1</th>
+              <th>S2</th>
+              <th>S3</th>
               <th>Lap</th>
-              <th>S1 Time</th>
-              <th>S2 Time</th>
-              <th>S3 Time</th>
-              <th>Lap Time</th>
             </tr>
           </thead>
           <tbody> 

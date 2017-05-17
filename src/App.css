@@ -2,3 +2,10 @@
   text-align: center;
 }
 
+.timing-table > tbody > tr > td {
+  padding: 1px !important;
+}
+
+.timing-table > thead > tr > th {
+  text-align: center;
+}
