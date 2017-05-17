@@ -8,6 +8,20 @@ function toSectorTime(t) {
   return t.toFixed(3);
 }
 
+function toLapTime(t) {
+  if (t === null || t === undefined) {
+    return "";
+  }
+  const minutes = Math.floor(t / 60);
+  let seconds = (t % 60);
+  if (seconds < 10) {
+    seconds = "0" + seconds.toFixed(3);
+  } else {
+    seconds = seconds.toFixed(3);
+  }
+  return minutes + ":" + seconds;
+}
+
 class DriverHistoryLap extends Component {
   render() {
     const { lap } = this.props;
@@ -17,7 +31,7 @@ class DriverHistoryLap extends Component {
         <td>{toSectorTime(lap.get('s1Time'))}</td>
         <td>{toSectorTime(lap.get('s2Time'))}</td>
         <td>{toSectorTime(lap.get('s3Time'))}</td>
-        <td>{lap.get('lapTime')}</td>
+        <td>{toLapTime(lap.get('lapTime'))}</td>
       </tr>
     );
   }
