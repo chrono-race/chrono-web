@@ -19,10 +19,10 @@ class DriverHistory extends Component {
           <thead>
             <tr>
               <th>#</th>
-              <th>S1</th>
-              <th>S2</th>
-              <th>S3</th>
-              <th>Lap</th>
+              <th>s1</th>
+              <th>s2</th>
+              <th>s3</th>
+              <th>lap</th>
             </tr>
           </thead>
           <tbody> 

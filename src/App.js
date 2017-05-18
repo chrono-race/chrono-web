@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import DriverHistory from './driver-history/DriverHistoryContainer';
 import DriverSelector from './driver-selector/DriverSelectorContainer';
+import Page1 from './page1/Page1Container';
 
 class App extends Component {
   render() {
@@ -13,6 +14,9 @@ class App extends Component {
           </div>
           <div className="col-md-5 data-pane">
             <DriverHistory/>
+          </div>
+          <div className="col-md-5 data-pane">
+            <Page1/>
           </div>
         </div>
       </div>
