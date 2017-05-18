@@ -6,12 +6,12 @@ import DriverSelector from './driver-selector/DriverSelectorContainer';
 class App extends Component {
   render() {
     return (
-      <div className="App container-fluid">
-        <div className="row">
+      <div className="App container-fluid full-height">
+        <div className="row full-height">
           <div className="col-md-1" style={{paddingLeft: '0.8em', paddingTop: '0.8em', paddingRight: '0em'}}>
             <DriverSelector/>
           </div>
-          <div className="col-md-5" style={{paddingLeft: '0.8em', paddingTop: '0.8em', paddingRight: '0em'}}>
+          <div className="col-md-5 data-pane">
             <DriverHistory/>
           </div>
         </div>
@@ -19,5 +19,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
