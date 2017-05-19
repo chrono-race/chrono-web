@@ -21,12 +21,6 @@ function emptyLap(lapNumber) {
 export const newDriver = () => {
   return fromJS({ 
     laps: [],
-    best: {
-      s1Time: NaN,
-      s2Time: NaN,
-      s3Time: NaN,
-      lapTime: NaN,
-    }
   });
 };
 

@@ -4,13 +4,9 @@ import { newDriver, appendMessage } from './driver';
 should();
 
 describe('driver', () => {
-  it('starts with no laps and empty bests', () => {
+  it('starts with no laps', () => {
     const d = newDriver();
     assert(d.get('laps').isEmpty().should.equal(true));
-    assert(d.get('best').get('s1Time').should.be.NaN);
-    assert(d.get('best').get('s2Time').should.be.NaN);
-    assert(d.get('best').get('s3Time').should.be.NaN);
-    assert(d.get('best').get('lapTime').should.be.NaN);
   });
 
   it('adds first empty lap', () => {
