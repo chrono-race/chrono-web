@@ -20,4 +20,8 @@ class Page1Row extends Component {
   }
 }
 
+Page1Row.PropTypes = {
+  lastLap: PropTypes.object.isRequired,
+};
+
 export default Page1Row;
