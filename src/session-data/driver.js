@@ -32,6 +32,7 @@ export const newDriver = () => {
 
 export const appendMessage = (driver, msg) => {
   let laps = driver.get('laps');
+  let best = driver.get('best');
   while (laps.count() < msg.lapNumber) {
     laps = laps.push(fromJS(emptyLap(laps.count()+1)));
   }
@@ -40,6 +41,7 @@ export const appendMessage = (driver, msg) => {
   laps = laps.set(msg.lapNumber-1, lap);
   return fromJS({
     laps,
+    best,
   });
 };
 

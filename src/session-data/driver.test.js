@@ -36,6 +36,13 @@ describe('driver', () => {
       assert(d.get('laps').get(3).get('lapNumber').should.equal(4));
       assert(d.get('laps').get(3).get('lapTime').should.equal(93.333));
     });
+
+    it('preserves existing bests', () => {
+      let d = appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.123});
+
+      assert(d.get('laps').count().should.equal(1));
+      assert(d.get('best').get('s1Time').should.be.NaN);
+    });
   });
 
   describe('find bests', () => {
