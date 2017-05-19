@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App container-fluid full-height">
         <div className="row full-height">
-          <div className="col-md-1" style={{paddingLeft: '0.8em', paddingTop: '0.8em', paddingRight: '0em'}}>
+          <div className="col-md-1 left-pane">
             <DriverSelector/>
           </div>
           <div className="col-md-5 data-pane">

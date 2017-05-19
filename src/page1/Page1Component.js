@@ -36,7 +36,7 @@ class Page1 extends Component {
       .map(lap => createDriverRow(lap));
     return (
       <div>
-        <table className='table table-condensed timing-table'>
+        <table className='table timing-table'>
           <thead>
             <tr>
               <th>pos</th>

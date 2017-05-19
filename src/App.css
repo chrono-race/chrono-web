@@ -6,16 +6,30 @@ html, body, #root, .full-height {
   text-align: center;
 }
 
+.timing-table {
+    margin: 0px !important;
+    font-size: 10pt;
+}
+
 .timing-table > tbody > tr > td {
-  padding: 1px !important;
+  padding: 0px !important;
+  font-size: 8pt;
 }
 
 .timing-table > thead > tr > th {
   text-align: center;
+  padding: 1px !important;
+}
+
+.left-pane {
+  padding-left: 0.2em !important;
+  padding-top: 0.2em !important;
+  padding-right: 0em !important;
 }
 
 .data-pane {
-  margin: 0.8em 0.8em 0em 0.8em;
+  margin: 0.2em 0.2em 0em 0.2em;
+  padding: 0px !important;
   overflow-y: scroll;
   height: 50%;
 }
