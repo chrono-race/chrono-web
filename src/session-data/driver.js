@@ -38,14 +38,7 @@ export const appendMessage = (driver, msg) => {
   let lap = laps.get(msg.lapNumber-1);
   lap = lap.merge(msg);
   laps = laps.set(msg.lapNumber-1, lap);
-  const best = {
-    lapTime: laps.map(l => l.get('lapTime')).min() || NaN,
-    s1Time: NaN,
-    s2Time: NaN,
-    s3Time: NaN,
-  };
   return fromJS({
     laps,
-    best,
   });
 };

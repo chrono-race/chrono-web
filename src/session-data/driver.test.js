@@ -14,12 +14,11 @@ describe('driver', () => {
   });
 
   it('adds first empty lap', () => {
-    const d = appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.111});
+    const d = appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.123});
 
     assert(d.get('laps').count().should.equal(1));
     assert(d.get('laps').get(0).get('lapNumber').should.equal(1));
-    assert(d.get('laps').get(0).get('lapTime').should.equal(90.111));
-    assert(d.get('best').get('lapTime').should.equal(90.111));
+    assert(d.get('laps').get(0).get('lapTime').should.equal(90.123));
   });
 
   it('adds missing laps', () => {
