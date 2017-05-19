@@ -21,7 +21,7 @@ class Page1 extends Component {
       .valueSeq()
       .map(driver => getLastLap(driver))
       .sortBy(lap => lap.get('position'))
-      .map(lap => <Page1Row lastLap={lap}/>);
+      .map(lap => <Page1Row key={lap.get('driver')} lastLap={lap}/>);
     return (
       <div>
         <table className='table timing-table'>
