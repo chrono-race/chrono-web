@@ -21,6 +21,12 @@ function emptyLap(lapNumber) {
 export const newDriver = () => {
   return fromJS({ 
     laps: [],
+    best: {
+      s1Time: NaN,
+      s2Time: NaN,
+      s3Time: NaN,
+      lapTime: NaN,
+    }
   });
 };
 
@@ -34,5 +40,17 @@ export const appendMessage = (driver, msg) => {
   laps = laps.set(msg.lapNumber-1, lap);
   return fromJS({
     laps,
+  });
+};
+
+export const findBests = (driver) => {
+  let laps = driver.get('laps');
+  return fromJS({
+    best: {
+      s1Time: NaN,
+      s2Time: NaN,
+      s3Time: NaN,
+      lapTime: NaN,
+    }
   });
 };
