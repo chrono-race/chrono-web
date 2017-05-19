@@ -47,10 +47,10 @@ export const findBests = (driver) => {
   let laps = driver.get('laps');
   return fromJS({
     best: {
-      s1Time: laps.map(l => l.get('s1Time')).min() || NaN,
-      s2Time: laps.map(l => l.get('s2Time')).min() || NaN,
-      s3Time: laps.map(l => l.get('s3Time')).min() || NaN,
-      lapTime: laps.map(l => l.get('lapTime')).min() || NaN,
+      s1Time: laps.map(l => l.get('s1Time')).filter(t => !isNaN(t)).min() || NaN,
+      s2Time: laps.map(l => l.get('s2Time')).filter(t => !isNaN(t)).min() || NaN,
+      s3Time: laps.map(l => l.get('s3Time')).filter(t => !isNaN(t)).min() || NaN,
+      lapTime: laps.map(l => l.get('lapTime')).filter(t => !isNaN(t)).min() || NaN,
     }
   });
 };
