@@ -47,5 +47,16 @@ describe('driver', () => {
       assert(d.get('best').get('s3Time').should.be.NaN);
       assert(d.get('best').get('lapTime').should.be.NaN);
     });
+
+    it('is the best for a driver with laps', () => {
+      const msg1 = {lapNumber:1, s1Time: 31.111, s2Time: 32.222, s3Time: 33.333, lapTime: 94.111}
+      const msg2 = {lapNumber:2, s1Time: 31.222, s2Time: 32.020, s3Time: 33.999, lapTime: 94.444}
+      const d = findBests(appendMessage(appendMessage(newDriver(), msg1), msg2));
+
+      assert(d.get('best').get('s1Time').should.equal(31.111));
+      assert(d.get('best').get('s2Time').should.equal(32.020));
+      assert(d.get('best').get('s3Time').should.equal(33.333));
+      assert(d.get('best').get('lapTime').should.equal(94.111));
+    });
   });
 });
