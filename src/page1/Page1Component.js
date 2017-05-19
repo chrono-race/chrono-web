@@ -5,7 +5,11 @@ import Page1Row from './Page1Row';
 function getLastLap(driver) {
   const laps = driver.get('laps');
   if (laps.count() > 0) {
-    return laps.get(laps.count()-1);
+    const lastLap = laps.get(laps.count()-1);
+    if (laps.count() > 1 && lastLap.get('lapTime') === null) {
+      return lastLap.set('lapTime', laps.get(laps.count()-2).get('lapTime'));
+    }
+    return lastLap;
   }
   return undefined;
 }
