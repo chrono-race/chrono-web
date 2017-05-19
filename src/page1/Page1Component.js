@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { toSectorTime, toLapTime } from '../session-data/timing-utils'
+import Page1Row from './Page1Row';
 
 function getLastLap(driver) {
   const laps = driver.get('laps');
@@ -10,22 +10,6 @@ function getLastLap(driver) {
   return undefined;
 }
 
-function createDriverRow(lastLap) {
-  return (
-    <tr key={lastLap.get('driver')}>
-      <td>{lastLap.get('position')}</td>
-      <td>{lastLap.get('driver')}</td>
-      <td>{toSectorTime(lastLap.get('gap'))}</td>
-      <td>{toSectorTime(lastLap.get('interval'))}</td>
-      <td>{toLapTime(lastLap.get('lapTime'))}</td>
-      <td>{toSectorTime(lastLap.get('s1Time'))}</td>
-      <td>{toSectorTime(lastLap.get('s2Time'))}</td>
-      <td>{toSectorTime(lastLap.get('s3Time'))}</td>
-    </tr>
-  );
-}
-
-
 class Page1 extends Component {
   render() {
     const { session } = this.props
@@ -33,7 +17,7 @@ class Page1 extends Component {
       .valueSeq()
       .map(driver => getLastLap(driver))
       .sortBy(lap => lap.get('position'))
-      .map(lap => createDriverRow(lap));
+      .map(lap => <Page1Row lastLap={lap}/>);
     return (
       <div>
         <table className='table timing-table'>
