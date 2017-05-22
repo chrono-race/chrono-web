@@ -5,13 +5,13 @@ import DriverHistoryLap from './DriverHistoryLap';
 class DriverHistory extends Component {
   render() {
     const dhLaps = [];
-    const { driver } = this.props;
+    const { driver, sessionBests } = this.props;
     if (driver === undefined) {
       return (<div>No driver selected</div>);
     }
     const driverBests = driver.get('best');
     driver.get('laps').toArray().forEach((lap, lapNumber) => {
-      dhLaps.push(<DriverHistoryLap key={lapNumber} lap={lap} driverBests={driverBests}/>);
+      dhLaps.push(<DriverHistoryLap key={lapNumber} lap={lap} driverBests={driverBests} sessionBests={sessionBests}/>);
     });
 
     return (
@@ -37,6 +37,7 @@ class DriverHistory extends Component {
 
 DriverHistory.PropTypes = {
   driver: PropTypes.object.isRequired,
+  sessionBests: PropTypes.object.isRequired,
 };
 
 export default DriverHistory;

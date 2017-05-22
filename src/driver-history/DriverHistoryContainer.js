@@ -7,8 +7,9 @@ class DriverHistoryContainer extends Component {
   render() {
     const { session, selectedDriver } = this.props;
     const drivers = session.get('drivers');
+    const sessionBests = session.get('best');
     return (
-      <DriverHistory driver={drivers.get(selectedDriver)}/>
+      <DriverHistory driver={drivers.get(selectedDriver)} sessionBests={sessionBests}/>
     );
   }
 }

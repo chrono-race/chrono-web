@@ -14,8 +14,8 @@ function getPersonalOrSessionBest(time, personalBest, sessionBest) {
 
 class DriverHistoryLap extends Component {
   render() {
-    const { lap, driverBests } = this.props;
-    const s1Class = getPersonalOrSessionBest(lap.get('s1Time'), driverBests.get('s1Time'), null);
+    const { lap, driverBests, sessionBests } = this.props;
+    const s1Class = getPersonalOrSessionBest(lap.get('s1Time'), driverBests.get('s1Time'), sessionBests.get('s1Time'));
     return (
       <tr>
         <td>{lap.get('lapNumber')}</td>
@@ -31,6 +31,7 @@ class DriverHistoryLap extends Component {
 DriverHistoryLap.PropTypes = {
   lap: PropTypes.object.isRequired,
   driverBests: PropTypes.object.isRequired,
+  sessionBests: PropTypes.object.isRequired,
 };
 
 export default DriverHistoryLap;
