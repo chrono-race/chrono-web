@@ -18,14 +18,13 @@ function bestClass(type, lap, driverBests, sessionBests) {
 class DriverHistoryLap extends Component {
   render() {
     const { lap, driverBests, sessionBests } = this.props;
-    const s1Class = bestClass('s1Time', lap, driverBests, sessionBests);
     return (
       <tr>
         <td>{lap.get('lapNumber')}</td>
-        <td className={s1Class}>{toSectorTime(lap.get('s1Time'))}</td>
-        <td>{toSectorTime(lap.get('s2Time'))}</td>
-        <td>{toSectorTime(lap.get('s3Time'))}</td>
-        <td>{toLapTime(lap.get('lapTime'))}</td>
+        <td className={bestClass('s1Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s1Time'))}</td>
+        <td className={bestClass('s2Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s2Time'))}</td>
+        <td className={bestClass('s3Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s3Time'))}</td>
+        <td className={bestClass('lapTime', lap, driverBests, sessionBests)}>{toLapTime(lap.get('lapTime'))}</td>
       </tr>
     );
   }
