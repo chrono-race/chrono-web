@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { toSectorTime, toLapTime } from '../session-data/timing-utils';
 
-function getPersonalOrSessionBest(time, personalBest, sessionBest) {
+function bestClass(type, lap, driverBests, sessionBests) {
+  const time = lap.get(type);
+  const driverBest = driverBests.get(type);
+  const sessionBest = sessionBests.get(type);
   if (time === sessionBest) {
     return 'sessionBest';
-  } else if (time === personalBest) {
+  } else if (time === driverBest) {
     return 'personalBest';
   } else {
     return 'none';
@@ -15,7 +18,7 @@ function getPersonalOrSessionBest(time, personalBest, sessionBest) {
 class DriverHistoryLap extends Component {
   render() {
     const { lap, driverBests, sessionBests } = this.props;
-    const s1Class = getPersonalOrSessionBest(lap.get('s1Time'), driverBests.get('s1Time'), sessionBests.get('s1Time'));
+    const s1Class = bestClass('s1Time', lap, driverBests, sessionBests);
     return (
       <tr>
         <td>{lap.get('lapNumber')}</td>
