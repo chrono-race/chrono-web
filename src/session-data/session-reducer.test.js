@@ -22,12 +22,13 @@ describe('session reducer', () => {
   });
 
   it('resets state on receipt of backlog message', () => {
-    const initialState = fromJS({ drivers: { VAN: { } } });
+    const initialState = fromJS({ drivers: { VAN: { } }, best: { s1Time: 12.345 } });
     const action = actions.backlogReceived([]);
 
     const state = sessionReducer(initialState, action);
 
     assert(state.get('drivers').count().should.equal(0));
+    assert(state.get('best').get('s1Time').should.be.NaN);
   });
 
   it('adds a new driver to the session with first lap', () => {

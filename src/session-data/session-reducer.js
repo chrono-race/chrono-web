@@ -33,7 +33,8 @@ const defaultSessionState = fromJS({
 export default (state = defaultSessionState, action) => {
   switch (action.type) {
     case types.BACKLOG_RECEIVED:
-      return state.set('drivers', appendMessagesToDrivers(fromJS({}), action.messages));
+      state = defaultSessionState;
+      return state.set('drivers', appendMessagesToDrivers(state.get('drivers'), action.messages));
     case types.EVENTS_RECEIVED:
       return state.set('drivers', appendMessagesToDrivers(state.get('drivers'), action.messages));
     default:
