@@ -82,5 +82,16 @@ describe('driver', () => {
       assert(d.get('best').get('s3Time').should.equal(33.333));
       assert(d.get('best').get('lapTime').should.equal(94.444));
     });
+
+    it('ignores null values in finding best', () => {
+      const msg1 = {lapNumber:1, s1Time: null, s2Time: 32.222, s3Time: 33.333, lapTime: null}
+      const msg2 = {lapNumber:2, s1Time: 31.222, s2Time: 32.020, s3Time: 33.999, lapTime: 94.444}
+      const d = findBests(appendMessage(appendMessage(newDriver(), msg1), msg2));
+
+      assert(d.get('best').get('s1Time').should.equal(31.222));
+      assert(d.get('best').get('s2Time').should.equal(32.020));
+      assert(d.get('best').get('s3Time').should.equal(33.333));
+      assert(d.get('best').get('lapTime').should.equal(94.444));
+    });
   });
 });
