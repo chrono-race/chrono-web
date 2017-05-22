@@ -13,6 +13,14 @@ describe('session reducer', () => {
     assert(state.get('drivers').count().should.equal(0));
   });
 
+  it('has NaN session bests initially', () => {
+    const state = sessionReducer(undefined, {});
+    assert(state.get('best').get('s1Time').should.be.NaN);
+    assert(state.get('best').get('s2Time').should.be.NaN);
+    assert(state.get('best').get('s3Time').should.be.NaN);
+    assert(state.get('best').get('lapTime').should.be.NaN);
+  });
+
   it('resets state on receipt of backlog message', () => {
     const initialState = fromJS({ drivers: { VAN: { } } });
     const action = actions.backlogReceived([]);

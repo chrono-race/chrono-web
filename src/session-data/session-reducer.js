@@ -22,6 +22,12 @@ function appendMessagesToDrivers(drivers, messages) {
 
 const defaultSessionState = fromJS({
   drivers: {},
+  best: {
+    s1Time: NaN,
+    s2Time: NaN,
+    s3Time: NaN,
+    lapTime: NaN,
+  }
 });
 
 export default (state = defaultSessionState, action) => {
