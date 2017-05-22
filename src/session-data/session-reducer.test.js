@@ -70,5 +70,18 @@ describe('session reducer', () => {
 
     append.restore();
   });
+
+  it('recalculates session bests', () => {
+    const initialState = fromJS({ drivers: {} });
+    let state = sessionReducer(initialState, actions.eventsReceived([{driver: 'VAN', lapNumber: 1, s1Time: NaN, s2Time: 22.111, s3Time: 23.111, lapTime: 90.111}]));
+    state = sessionReducer(state, actions.eventsReceived([{driver: 'HAM', lapNumber: 1, s1Time: NaN, s2Time: 22.222, s3Time: 23.000, lapTime: 90.222}]));
+    state = sessionReducer(state, actions.eventsReceived([{driver: 'HAM', lapNumber: 2, s1Time: 21.111, s2Time: 22.222, s3Time: 23.001, lapTime: 90.000}]));
+
+    assert(state.get('best').get('s1Time').should.equal(21.111));
+    assert(state.get('best').get('s2Time').should.equal(22.111));
+    assert(state.get('best').get('s3Time').should.equal(23.000));
+    assert(state.get('best').get('lapTime').should.equal(90.000));
+  });
+
 });
 

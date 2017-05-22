@@ -20,6 +20,19 @@ function appendMessagesToDrivers(drivers, messages) {
   return updatedDrivers;
 }
 
+function findSessionBests(drivers) {
+  const s1Time = drivers.map(d => d.get('best').get('s1Time')).filter(t => !isNaN(t)).min() || NaN;
+  const s2Time = drivers.map(d => d.get('best').get('s2Time')).filter(t => !isNaN(t)).min() || NaN;
+  const s3Time = drivers.map(d => d.get('best').get('s3Time')).filter(t => !isNaN(t)).min() || NaN;
+  const lapTime = drivers.map(d => d.get('best').get('lapTime')).filter(t => !isNaN(t)).min() || NaN;
+  return fromJS({
+    s1Time,
+    s2Time,
+    s3Time,
+    lapTime,
+  });
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -34,9 +47,13 @@ export default (state = defaultSessionState, action) => {
   switch (action.type) {
     case types.BACKLOG_RECEIVED:
       state = defaultSessionState;
-      return state.set('drivers', appendMessagesToDrivers(state.get('drivers'), action.messages));
+      const backlogUpdatedDrivers = appendMessagesToDrivers(state.get('drivers'), action.messages);
+      return state.set('drivers', backlogUpdatedDrivers)
+        .set('best', findSessionBests(backlogUpdatedDrivers));
     case types.EVENTS_RECEIVED:
-      return state.set('drivers', appendMessagesToDrivers(state.get('drivers'), action.messages));
+      const updatedDrivers = appendMessagesToDrivers(state.get('drivers'), action.messages);
+      return state.set('drivers', updatedDrivers)
+        .set('best', findSessionBests(updatedDrivers));
     default:
       return state;
   }
