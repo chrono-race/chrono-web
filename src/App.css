@@ -29,17 +29,14 @@ html, body, #root, .full-height {
 
 .timing-table > tbody > tr > td.personalBest {
   color: #00FF00;
-  font-weight: bold;
 }
 
 .timing-table > tbody > tr > td.sessionBest {
   color: #FF00FF;
-  font-weight: bold;
 }
 
 .timing-table > tbody > tr > td.none {
   color: #FFFFFF;
-  font-weight: bold;
 }
 
 .left-pane {
