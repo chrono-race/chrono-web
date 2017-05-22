@@ -21,6 +21,18 @@ html, body, #root, .full-height {
   font-size: 8pt;
 }
 
+.timing-table > tbody > tr > td.personalBest {
+  color: #00FF00;
+}
+
+.timing-table > tbody > tr > td.sessionBest {
+  color: #FF00FF;
+}
+
+.timing-table > tbody > tr > td.none {
+  color: #FFFFFF;
+}
+
 .left-pane {
   padding-left: 0.2em !important;
   padding-top: 0.2em !important;
