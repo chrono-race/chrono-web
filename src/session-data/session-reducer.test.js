@@ -33,6 +33,7 @@ describe('session reducer', () => {
     assert(state.get('drivers').get('VAN').get('laps').count().should.equal(1));
     assert(state.get('drivers').get('VAN').get('laps').get(0).get('lapNumber').should.equal(1));
     assert(state.get('drivers').get('VAN').get('laps').get(0).get('lapTime').should.equal(90.123));
+    assert(state.get('drivers').get('VAN').get('best').get('lapTime').should.equal(90.123));
   });
 
   it('appends to a session on events message', () => {
@@ -50,6 +51,7 @@ describe('session reducer', () => {
       },
     });
     const append = sinon.stub(driver, 'appendMessage');
+    append.returns(initialState.get('drivers').get('VAN'));
     const message = {driver: 'VAN', lapNumber: 2, lapTime: 92.222};
     const action = actions.eventsReceived([message]);
 

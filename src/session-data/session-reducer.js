@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import * as types from '../actions/action-types';
-import { newDriver, appendMessage } from './driver';
+import { newDriver, appendMessage, findBests } from './driver';
 
 function appendMessagesToDrivers(drivers, messages) {
   let updatedDrivers = drivers;
@@ -11,6 +11,11 @@ function appendMessagesToDrivers(drivers, messages) {
     }
     driver = appendMessage(driver, msg);
     updatedDrivers = updatedDrivers.set(msg.driver, driver);
+  });
+  updatedDrivers.keySeq().forEach(name => {
+    let driver = updatedDrivers.get(name);
+    driver = findBests(driver);
+    updatedDrivers = updatedDrivers.set(name, driver);
   });
   return updatedDrivers;
 }
