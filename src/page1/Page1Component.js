@@ -17,11 +17,12 @@ function getLastLap(driver) {
 class Page1 extends Component {
   render() {
     const { session } = this.props
+    const sessionBests = session.get('best');
     const driverRows = session.get('drivers')
       .valueSeq()
       .map(driver => getLastLap(driver))
       .sortBy(lap => lap.get('position'))
-      .map(lap => <Page1Row key={lap.get('driver')} lastLap={lap}/>);
+      .map(lap => <Page1Row key={lap.get('driver')} lastLap={lap} driverBests={session.get('drivers').get(lap.get('driver')).get('best')} sessionBests={sessionBests}/>);
     return (
       <div>
         <table className='table timing-table'>
