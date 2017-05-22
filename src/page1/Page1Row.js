@@ -7,14 +7,14 @@ class Page1Row extends Component {
     const { lastLap } = this.props;
     return (
       <tr key={lastLap.get('driver')}>
-        <td>{lastLap.get('position')}</td>
-        <td>{lastLap.get('driver')}</td>
-        <td>{toSectorTime(lastLap.get('gap'))}</td>
-        <td>{toSectorTime(lastLap.get('interval'))}</td>
-        <td>{toLapTime(lastLap.get('lapTime'))}</td>
-        <td>{toSectorTime(lastLap.get('s1Time'))}</td>
-        <td>{toSectorTime(lastLap.get('s2Time'))}</td>
-        <td>{toSectorTime(lastLap.get('s3Time'))}</td>
+        <td width='6.6%'>{lastLap.get('position')}</td>
+        <td width='6.6%'>{lastLap.get('driver')}</td>
+        <td width='13.3%'>{toSectorTime(lastLap.get('gap'))}</td>
+        <td width='13.3%'>{toSectorTime(lastLap.get('interval'))}</td>
+        <td width='20.0%'>{toLapTime(lastLap.get('lapTime'))}</td>
+        <td width='13.3%'>{toSectorTime(lastLap.get('s1Time'))}</td>
+        <td width='13.3%'>{toSectorTime(lastLap.get('s2Time'))}</td>
+        <td width='13.3%'>{toSectorTime(lastLap.get('s3Time'))}</td>
       </tr>
     );
   }

@@ -20,11 +20,11 @@ class DriverHistoryLap extends Component {
     const { lap, driverBests, sessionBests } = this.props;
     return (
       <tr>
-        <td>{lap.get('lapNumber')}</td>
-        <td className={bestClass('s1Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s1Time'))}</td>
-        <td className={bestClass('s2Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s2Time'))}</td>
-        <td className={bestClass('s3Time', lap, driverBests, sessionBests)}>{toSectorTime(lap.get('s3Time'))}</td>
-        <td className={bestClass('lapTime', lap, driverBests, sessionBests)}>{toLapTime(lap.get('lapTime'))}</td>
+        <td width='4%'>{lap.get('lapNumber')}</td>
+        <td className={bestClass('s1Time', lap, driverBests, sessionBests)} width='24%'>{toSectorTime(lap.get('s1Time'))}</td>
+        <td className={bestClass('s2Time', lap, driverBests, sessionBests)} width='24%'>{toSectorTime(lap.get('s2Time'))}</td>
+        <td className={bestClass('s3Time', lap, driverBests, sessionBests)} width='24%'>{toSectorTime(lap.get('s3Time'))}</td>
+        <td className={bestClass('lapTime', lap, driverBests, sessionBests)} width='24%'>{toLapTime(lap.get('lapTime'))}</td>
       </tr>
     );
   }
