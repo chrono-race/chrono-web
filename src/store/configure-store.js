@@ -1,8 +1,6 @@
+import { createStore } from 'redux';
 import rootReducer from '../reducers/root-reducer';
-import {createStore} from 'redux';
 
-export default (initialState) => {
-  return createStore(rootReducer,
+export default initialState => createStore(rootReducer,
     initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-};
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // eslint-disable-line

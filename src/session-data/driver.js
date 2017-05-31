@@ -18,27 +18,25 @@ function emptyLap(lapNumber) {
   };
 }
 
-export const newDriver = () => {
-  return fromJS({ 
-    laps: [],
-    best: {
-      s1Time: NaN,
-      s2Time: NaN,
-      s3Time: NaN,
-      lapTime: NaN,
-    }
-  });
-};
+export const newDriver = () => (fromJS({
+  laps: [],
+  best: {
+    s1Time: NaN,
+    s2Time: NaN,
+    s3Time: NaN,
+    lapTime: NaN,
+  },
+}));
 
 export const appendMessage = (driver, msg) => {
   let laps = driver.get('laps');
-  let best = driver.get('best');
+  const best = driver.get('best');
   while (laps.count() < msg.lapNumber) {
-    laps = laps.push(fromJS(emptyLap(laps.count()+1)));
+    laps = laps.push(fromJS(emptyLap(laps.count() + 1)));
   }
-  let lap = laps.get(msg.lapNumber-1);
+  let lap = laps.get(msg.lapNumber - 1);
   lap = lap.merge(msg);
-  laps = laps.set(msg.lapNumber-1, lap);
+  laps = laps.set(msg.lapNumber - 1, lap);
   return fromJS({
     laps,
     best,
@@ -46,7 +44,7 @@ export const appendMessage = (driver, msg) => {
 };
 
 export const findBests = (driver) => {
-  let laps = driver.get('laps');
+  const laps = driver.get('laps');
   return fromJS({
     laps,
     best: {
@@ -54,6 +52,6 @@ export const findBests = (driver) => {
       s2Time: laps.map(l => l.get('s2Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
       s3Time: laps.map(l => l.get('s3Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
       lapTime: laps.map(l => l.get('lapTime')).filter(t => t !== null && !isNaN(t)).min() || NaN,
-    }
+    },
   });
 };

@@ -15,7 +15,7 @@ describe('driver', () => {
 
   describe('append message', () => {
     it('adds first empty lap', () => {
-      const d = appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.123});
+      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('laps').get(0).get('lapNumber').should.equal(1));
@@ -24,9 +24,9 @@ describe('driver', () => {
 
     it('adds missing laps', () => {
       let d = newDriver();
-      d = appendMessage(d, {driver: 'VAN', lapNumber: 1, lapTime: 90.123});
+      d = appendMessage(d, { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
-      d = appendMessage(d, {driver: 'VAN', lapNumber: 4, lapTime: 93.333});
+      d = appendMessage(d, { driver: 'VAN', lapNumber: 4, lapTime: 93.333 });
 
       assert(d.get('laps').count().should.equal(4));
       assert(d.get('laps').get(1).get('lapNumber').should.equal(2));
@@ -38,7 +38,7 @@ describe('driver', () => {
     });
 
     it('preserves existing bests', () => {
-      let d = appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.123});
+      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('best').get('s1Time').should.be.NaN);
@@ -56,14 +56,23 @@ describe('driver', () => {
     });
 
     it('preserves laps', () => {
-      const d = findBests(appendMessage(newDriver(), {driver: 'VAN', lapNumber: 1, lapTime: 90.123}));
+      const msg = { driver: 'VAN', lapNumber: 1, lapTime: 90.123 };
+      const d = findBests(appendMessage(newDriver(), msg));
 
       assert(d.get('laps').count().should.equal(1));
     });
 
     it('is the best for a driver with laps', () => {
-      const msg1 = {lapNumber:1, s1Time: 31.111, s2Time: 32.222, s3Time: 33.333, lapTime: 94.111}
-      const msg2 = {lapNumber:2, s1Time: 31.222, s2Time: 32.020, s3Time: 33.999, lapTime: 94.444}
+      const msg1 = { lapNumber: 1,
+        s1Time: 31.111,
+        s2Time: 32.222,
+        s3Time: 33.333,
+        lapTime: 94.111 };
+      const msg2 = { lapNumber: 2,
+        s1Time: 31.222,
+        s2Time: 32.020,
+        s3Time: 33.999,
+        lapTime: 94.444 };
       const d = findBests(appendMessage(appendMessage(newDriver(), msg1), msg2));
 
       assert(d.get('best').get('s1Time').should.equal(31.111));
@@ -73,8 +82,16 @@ describe('driver', () => {
     });
 
     it('ignores NaN values in finding best', () => {
-      const msg1 = {lapNumber:1, s1Time: NaN, s2Time: 32.222, s3Time: 33.333, lapTime: NaN}
-      const msg2 = {lapNumber:2, s1Time: 31.222, s2Time: 32.020, s3Time: 33.999, lapTime: 94.444}
+      const msg1 = { lapNumber: 1,
+        s1Time: NaN,
+        s2Time: 32.222,
+        s3Time: 33.333,
+        lapTime: NaN };
+      const msg2 = { lapNumber: 2,
+        s1Time: 31.222,
+        s2Time: 32.020,
+        s3Time: 33.999,
+        lapTime: 94.444 };
       const d = findBests(appendMessage(appendMessage(newDriver(), msg1), msg2));
 
       assert(d.get('best').get('s1Time').should.equal(31.222));
@@ -84,8 +101,16 @@ describe('driver', () => {
     });
 
     it('ignores null values in finding best', () => {
-      const msg1 = {lapNumber:1, s1Time: null, s2Time: 32.222, s3Time: 33.333, lapTime: null}
-      const msg2 = {lapNumber:2, s1Time: 31.222, s2Time: 32.020, s3Time: 33.999, lapTime: 94.444}
+      const msg1 = { lapNumber: 1,
+        s1Time: null,
+        s2Time: 32.222,
+        s3Time: 33.333,
+        lapTime: null };
+      const msg2 = { lapNumber: 2,
+        s1Time: 31.222,
+        s2Time: 32.020,
+        s3Time: 33.999,
+        lapTime: 94.444 };
       const d = findBests(appendMessage(appendMessage(newDriver(), msg1), msg2));
 
       assert(d.get('best').get('s1Time').should.equal(31.222));

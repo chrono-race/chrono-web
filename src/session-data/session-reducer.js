@@ -4,7 +4,7 @@ import { newDriver, appendMessage, findBests } from './driver';
 
 function appendMessagesToDrivers(drivers, messages) {
   let updatedDrivers = drivers;
-  messages.forEach(msg => {
+  messages.forEach((msg) => {
     let driver = updatedDrivers.get(msg.driver);
     if (driver === undefined) {
       driver = newDriver();
@@ -12,7 +12,7 @@ function appendMessagesToDrivers(drivers, messages) {
     driver = appendMessage(driver, msg);
     updatedDrivers = updatedDrivers.set(msg.driver, driver);
   });
-  updatedDrivers.keySeq().forEach(name => {
+  updatedDrivers.keySeq().forEach((name) => {
     let driver = updatedDrivers.get(name);
     driver = findBests(driver);
     updatedDrivers = updatedDrivers.set(name, driver);
@@ -40,21 +40,21 @@ const defaultSessionState = fromJS({
     s2Time: NaN,
     s3Time: NaN,
     lapTime: NaN,
-  }
+  },
 });
 
 export default (state = defaultSessionState, action) => {
-  switch (action.type) {
-    case types.BACKLOG_RECEIVED:
-      state = defaultSessionState;
-      const backlogUpdatedDrivers = appendMessagesToDrivers(state.get('drivers'), action.messages);
-      return state.set('drivers', backlogUpdatedDrivers)
-        .set('best', findSessionBests(backlogUpdatedDrivers));
-    case types.EVENTS_RECEIVED:
-      const updatedDrivers = appendMessagesToDrivers(state.get('drivers'), action.messages);
-      return state.set('drivers', updatedDrivers)
-        .set('best', findSessionBests(updatedDrivers));
-    default:
-      return state;
+  let startingState = state;
+  if (action.type === types.BACKLOG_RECEIVED) {
+    startingState = defaultSessionState;
   }
+
+  if (action.type === types.BACKLOG_RECEIVED ||
+    action.type === types.EVENTS_RECEIVED) {
+    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'), action.messages);
+    return startingState.set('drivers', backlogUpdatedDrivers)
+      .set('best', findSessionBests(backlogUpdatedDrivers));
+  }
+
+  return state;
 };
