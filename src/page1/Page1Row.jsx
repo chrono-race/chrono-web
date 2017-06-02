@@ -8,19 +8,19 @@ function bestClass(type, lap, driverBests, sessionBests) {
   const driverBest = driverBests.get(type);
   const sessionBest = sessionBests.get(type);
   if (time === sessionBest) {
-    return 'sessionBest';
+    return `${type} sessionBest`;
   } else if (time === driverBest) {
-    return 'personalBest';
+    return `${type} personalBest`;
   }
-  return 'none';
+  return `${type} none`;
 }
 
 const Page1Row = ({ lastLap, driverBests, sessionBests }) => (
   <tr key={lastLap.get('driver')}>
     <td width="6.6%" className="position">{lastLap.get('position')}</td>
-    <td width="6.6%">{lastLap.get('driver')}</td>
-    <td width="13.3%">{toSectorTime(lastLap.get('gap'))}</td>
-    <td width="13.3%">{toSectorTime(lastLap.get('interval'))}</td>
+    <td width="6.6%" className="driver">{lastLap.get('driver')}</td>
+    <td width="13.3%" className="gap">{toSectorTime(lastLap.get('gap'))}</td>
+    <td width="13.3%" className="interval">{toSectorTime(lastLap.get('interval'))}</td>
     <td width="20.0%" className={bestClass('lapTime', lastLap, driverBests, sessionBests)}>{toLapTime(lastLap.get('lapTime'))}</td>
     <td width="13.3%" className={bestClass('s1Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s1Time'))}</td>
     <td width="13.3%" className={bestClass('s2Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s2Time'))}</td>
