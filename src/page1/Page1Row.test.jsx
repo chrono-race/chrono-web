@@ -43,7 +43,7 @@ describe('page1 row', () => {
       interval: 3.45,
       s1Time: 12.345,
       s2Time: 23.456,
-      s3Time: NaN,
+      s3Time: null,
     });
     const driverBests = fromJS({});
     const sessionBests = fromJS({});
