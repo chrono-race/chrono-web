@@ -17,7 +17,7 @@ function bestClass(type, lap, driverBests, sessionBests) {
 
 const Page1Row = ({ lastLap, driverBests, sessionBests }) => (
   <tr key={lastLap.get('driver')}>
-    <td width="6.6%">{lastLap.get('position')}</td>
+    <td width="6.6%" className="position">{lastLap.get('position')}</td>
     <td width="6.6%">{lastLap.get('driver')}</td>
     <td width="13.3%">{toSectorTime(lastLap.get('gap'))}</td>
     <td width="13.3%">{toSectorTime(lastLap.get('interval'))}</td>
