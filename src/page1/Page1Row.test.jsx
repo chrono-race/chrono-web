@@ -56,4 +56,27 @@ describe('page1 row', () => {
     assert(wrapper.find('tr > td.gap').text().should.equal('LAP'));
     assert(wrapper.find('tr > td.interval').text().should.equal('17'));
   });
+
+  it('shows lap number + 1 for leader in sector 1', () => {
+    const lastLap = fromJS({
+      lapNumber: 17,
+      position: 1,
+      driver: 'VET',
+      gap: 1.23,
+      interval: 3.45,
+      s1Time: 12.345,
+      s2Time: 23.456,
+      s3Time: 34.567,
+    });
+    const driverBests = fromJS({});
+    const sessionBests = fromJS({});
+    const wrapper = shallow(<Page1Row
+      lastLap={lastLap} driverBests={driverBests} sessionBests={sessionBests}
+    />);
+    assert(wrapper.find('tr > td').length.should.equal(8));
+    assert(wrapper.find('tr > td.position').text().should.equal('1'));
+    assert(wrapper.find('tr > td.driver').text().should.equal('VET'));
+    assert(wrapper.find('tr > td.gap').text().should.equal('LAP'));
+    assert(wrapper.find('tr > td.interval').text().should.equal('18'));
+  });
 });

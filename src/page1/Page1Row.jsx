@@ -24,7 +24,10 @@ function toGapOrLap(lastLap) {
 
 function toIntervalOrLapNumber(lastLap) {
   if (lastLap.get('position') === 1) {
-    return lastLap.get('lapNumber');
+    if (isNaN(lastLap.get('s3Time'))) {
+      return lastLap.get('lapNumber');
+    }
+    return lastLap.get('lapNumber') + 1;
   }
   return toSectorTime(lastLap.get('interval'));
 }
