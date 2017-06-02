@@ -12,5 +12,8 @@
         },
         "sourceType": "module"
     },
-    "extends": "airbnb"
+    "extends": "airbnb",
+    "rules": {
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.js", "**/*.test.jsx"]}]
+    }
 }
