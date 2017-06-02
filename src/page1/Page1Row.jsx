@@ -15,12 +15,26 @@ function bestClass(type, lap, driverBests, sessionBests) {
   return `${type} none`;
 }
 
+function toGapOrLap(lastLap) {
+  if (lastLap.get('position') === 1) {
+    return 'LAP';
+  }
+  return toSectorTime(lastLap.get('gap'));
+}
+
+function toIntervalOrLapNumber(lastLap) {
+  if (lastLap.get('position') === 1) {
+    return lastLap.get('lapNumber');
+  }
+  return toSectorTime(lastLap.get('interval'));
+}
+
 const Page1Row = ({ lastLap, driverBests, sessionBests }) => (
   <tr key={lastLap.get('driver')}>
     <td width="6.6%" className="position">{lastLap.get('position')}</td>
     <td width="6.6%" className="driver">{lastLap.get('driver')}</td>
-    <td width="13.3%" className="gap">{toSectorTime(lastLap.get('gap'))}</td>
-    <td width="13.3%" className="interval">{toSectorTime(lastLap.get('interval'))}</td>
+    <td width="13.3%" className="gap">{toGapOrLap(lastLap)}</td>
+    <td width="13.3%" className="interval">{toIntervalOrLapNumber(lastLap)}</td>
     <td width="20.0%" className={bestClass('lapTime', lastLap, driverBests, sessionBests)}>{toLapTime(lastLap.get('lapTime'))}</td>
     <td width="13.3%" className={bestClass('s1Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s1Time'))}</td>
     <td width="13.3%" className={bestClass('s2Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s2Time'))}</td>
