@@ -95,7 +95,14 @@ html, body, #root, .full-height {
   height: 50%;
 }
 
-.full-height-container {
+.flex-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.auto-scroll-container {
+  overflow-y: auto;
   height: 100%;
 }
 

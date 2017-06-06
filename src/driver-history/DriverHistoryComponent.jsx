@@ -14,7 +14,7 @@ const DriverHistory = ({ driver, sessionBests }) => {
   });
 
   return (
-    <div className="full-height-container">
+    <div className="flex-container">
       <div className="timing-table-header">
         <table className="table table-striped timing-table driver-history">
           <thead>
