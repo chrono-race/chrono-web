@@ -18,7 +18,8 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-const socket = io.connect('http://34.253.50.71:8000/');
+console.log(`connecting to ${process.env.REACT_APP_SERVER}`);
+const socket = io.connect(process.env.REACT_APP_SERVER);
 socket.on('backlog', (data) => {
   console.log('Got backlog:', data.events);
   store.dispatch(backlogReceived(data.events));
