@@ -20,11 +20,24 @@ html, body, #root, .full-height {
   line-height: 1.25 !important;
 }
 
-.timing-table > thead > tr > th {
-  text-align: center;
-  padding: 0px !important;
-  font-size: 9pt;
-  line-height: 1.4 !important;
+.driver-history > tbody > tr > td.lapNumber {
+  width: 4%;
+}
+
+.driver-history > tbody > tr > td.s1Time {
+  width: 24%;
+}
+
+.driver-history > tbody > tr > td.s2Time {
+  width: 24%;
+}
+
+.driver-history > tbody > tr > td.s3Time {
+  width: 24%;
+}
+
+.driver-history > tbody > tr > td.lapTime {
+  width: 24%;
 }
 
 .timing-table > tbody > tr > td.personalBest {
@@ -39,6 +52,37 @@ html, body, #root, .full-height {
   color: #FFFFFF;
 }
 
+.timing-table > thead > tr > th {
+  text-align: center;
+  padding: 0px !important;
+  font-size: 9pt;
+  line-height: 1.4 !important;
+}
+
+.timing-table-header {
+  margin-right: 1.2em;
+}
+
+.driver-history > thead > tr > th.lapNumber {
+  width: 4%;
+}
+
+.driver-history > thead > tr > th.s1Time {
+  width: 24%;
+}
+
+.driver-history > thead > tr > th.s2Time {
+  width: 24%;
+}
+
+.driver-history > thead > tr > th.s3Time {
+  width: 24%;
+}
+
+.driver-history > thead > tr > th.lapTime {
+  width: 24%;
+}
+
 .left-pane {
   padding-left: 0.2em !important;
   padding-top: 0.2em !important;
@@ -48,6 +92,14 @@ html, body, #root, .full-height {
 .data-pane {
   margin: 0.2em 0.2em 0em 0.2em;
   padding: 0px !important;
-  overflow-y: scroll;
   height: 50%;
+}
+
+.full-height-container {
+  height: 100%;
+}
+
+.scrolling {
+  overflow-y: scroll;
+  height: 100%;
 }

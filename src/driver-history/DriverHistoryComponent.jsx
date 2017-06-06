@@ -14,21 +14,27 @@ const DriverHistory = ({ driver, sessionBests }) => {
   });
 
   return (
-    <div>
-      <table className="table table-striped timing-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>s1</th>
-            <th>s2</th>
-            <th>s3</th>
-            <th>lap</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dhLaps}
-        </tbody>
-      </table>
+    <div className="full-height-container">
+      <div className="timing-table-header">
+        <table className="table table-striped timing-table driver-history">
+          <thead>
+            <tr>
+              <th className="lapNumber">#</th>
+              <th className="s1Time">s1</th>
+              <th className="s2Time">s2</th>
+              <th className="s3Time">s3</th>
+              <th className="lapTime">lap</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div className="scrolling">
+        <table className="table table-striped timing-table driver-history">
+          <tbody>
+            {dhLaps}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
