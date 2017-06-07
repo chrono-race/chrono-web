@@ -26,5 +26,5 @@ socket.on('backlog', (data) => {
 });
 socket.on('events', (data) => {
   console.log('Got events:', data.events);
-  store.dispatch(eventsReceived([data.events]));
+  store.dispatch(eventsReceived(data.events));
 });
