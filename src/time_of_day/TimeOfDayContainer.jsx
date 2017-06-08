@@ -8,7 +8,7 @@ const TimeOfDayContainer = ({ time }) => (
 );
 
 TimeOfDayContainer.propTypes = {
-  time: PropTypes.string.isRequired,
+  time: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {

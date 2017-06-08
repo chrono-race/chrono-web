@@ -24,7 +24,7 @@ const Page1 = ({ time }) => (
   );
 
 Page1.propTypes = {
-  time: PropTypes.string.isRequired,
+  time: PropTypes.number.isRequired,
 };
 
 export default Page1;
