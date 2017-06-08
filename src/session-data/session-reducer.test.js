@@ -33,7 +33,7 @@ describe('session reducer', () => {
 
   it('adds a new driver to the session with first lap', () => {
     const initialState = fromJS({ drivers: {} });
-    const action = actions.backlogReceived([{ driver: 'VAN', lapNumber: 1, lapTime: 90.123 }]);
+    const action = actions.backlogReceived([{ type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 }]);
 
     const state = sessionReducer(initialState, action);
 
@@ -61,7 +61,7 @@ describe('session reducer', () => {
     });
     const append = sinon.stub(driver, 'appendMessage');
     append.returns(initialState.get('drivers').get('VAN'));
-    const message = { driver: 'VAN', lapNumber: 2, lapTime: 92.222 };
+    const message = { type: 'lap', driver: 'VAN', lapNumber: 2, lapTime: 92.222 };
     const action = actions.eventsReceived([message]);
 
     sessionReducer(initialState, action);
@@ -73,14 +73,30 @@ describe('session reducer', () => {
 
   it('recalculates session bests', () => {
     const initialState = fromJS({ drivers: {} });
-    let state = sessionReducer(initialState, actions.eventsReceived([{ driver: 'VAN', lapNumber: 1, s1Time: NaN, s2Time: 22.111, s3Time: 23.111, lapTime: 90.111 }]));
-    state = sessionReducer(state, actions.eventsReceived([{ driver: 'HAM', lapNumber: 1, s1Time: NaN, s2Time: 22.222, s3Time: 23.000, lapTime: 90.222 }]));
-    state = sessionReducer(state, actions.eventsReceived([{ driver: 'HAM', lapNumber: 2, s1Time: 21.111, s2Time: 22.222, s3Time: 23.001, lapTime: 90.000 }]));
+    let state = sessionReducer(initialState, actions.eventsReceived([{ type: 'lap', driver: 'VAN', lapNumber: 1, s1Time: NaN, s2Time: 22.111, s3Time: 23.111, lapTime: 90.111 }]));
+    state = sessionReducer(state, actions.eventsReceived([{ type: 'lap', driver: 'HAM', lapNumber: 1, s1Time: NaN, s2Time: 22.222, s3Time: 23.000, lapTime: 90.222 }]));
+    state = sessionReducer(state, actions.eventsReceived([{ type: 'lap', driver: 'HAM', lapNumber: 2, s1Time: 21.111, s2Time: 22.222, s3Time: 23.001, lapTime: 90.000 }]));
 
     assert(state.get('best').get('s1Time').should.equal(21.111));
     assert(state.get('best').get('s2Time').should.equal(22.111));
     assert(state.get('best').get('s3Time').should.equal(23.000));
     assert(state.get('best').get('lapTime').should.equal(90.000));
+  });
+
+  it('has no time of day initially', () => {
+    const state = sessionReducer(undefined, {});
+    assert(state.get('time').should.be.NaN);
+  });
+
+  it('returns time unchanged on unrelated message', () => {
+    const initialState = fromJS({ drivers: {}, time: 1001 });
+    const state = sessionReducer(initialState, actions.eventsReceived([{ type: 'test' }]));
+    assert(state.get('time').should.equal(1001));
+  });
+
+  it('updates time on receipt of time of day message', () => {
+    const state = sessionReducer(undefined, actions.eventsReceived([{ type: 'time', time: 1234 }]));
+    assert(state.get('time').should.equal(1234));
   });
 });
 

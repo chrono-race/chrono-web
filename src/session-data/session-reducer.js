@@ -33,6 +33,14 @@ function findSessionBests(drivers) {
   });
 }
 
+function updateTime(existingTime, messages) {
+  const msg = messages.reverse().find(x => x !== undefined);
+  if (msg !== undefined) {
+    return msg.time;
+  }
+  return existingTime;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -41,6 +49,7 @@ const defaultSessionState = fromJS({
     s3Time: NaN,
     lapTime: NaN,
   },
+  time: NaN,
 });
 
 export default (state = defaultSessionState, action) => {
@@ -51,9 +60,11 @@ export default (state = defaultSessionState, action) => {
 
   if (action.type === types.BACKLOG_RECEIVED ||
     action.type === types.EVENTS_RECEIVED) {
-    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'), action.messages);
+    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'), action.messages.filter(m => m.type === 'lap'));
+    const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)
-      .set('best', findSessionBests(backlogUpdatedDrivers));
+      .set('best', findSessionBests(backlogUpdatedDrivers))
+      .set('time', updatedTime);
   }
 
   return state;
