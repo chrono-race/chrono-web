@@ -10,8 +10,8 @@ class DriverHistory extends Component {
       (node.scrollTop + node.offsetHeight === node.scrollHeight);
   }
   componentDidUpdate() {
-    if (this.shouldScrollToBottom) {
-      const node = this.scrollingContainer;
+    const node = this.scrollingContainer;
+    if (this.shouldScrollToBottom && node !== null) {
       node.scrollTop = node.scrollHeight;
     }
   }
