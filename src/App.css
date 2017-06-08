@@ -6,6 +6,17 @@ html, body, #root, .full-height {
   text-align: center;
 }
 
+.first-row {
+  height: 50%;
+}
+
+.second-row {
+  height: 42%;
+}
+.third-row {
+  height: 8%;
+}
+
 .timing-table {
     margin: 0px !important;
 }
@@ -92,7 +103,7 @@ html, body, #root, .full-height {
 .data-pane {
   margin: 0.2em 0.2em 0em 0.2em;
   padding: 0px !important;
-  height: 50%;
+  height: 100%;
 }
 
 .flex-container {
@@ -109,4 +120,8 @@ html, body, #root, .full-height {
 .scrolling {
   overflow-y: scroll;
   height: 100%;
+}
+
+.time-of-day {
+  font-size: 26pt;
 }
