@@ -4,6 +4,7 @@ import DriverHistory from './driver-history/DriverHistoryContainer';
 import DriverSelector from './driver-selector/DriverSelectorContainer';
 import Page1 from './page1/Page1Container';
 import TimeOfDay from './time-of-day/TimeOfDayContainer';
+import RaceControlMessages from './race-control-messages/RaceControlMessagesContainer';
 
 const App = () => (
   <div className="App container-fluid full-height">
@@ -20,7 +21,9 @@ const App = () => (
     </div>
     <div className="row second-row" />
     <div className="row third-row">
-      <div className="col-md-4" />
+      <div className="col-md-6">
+        <RaceControlMessages />
+      </div>
       <div className="col-md-2">
         <TimeOfDay />
       </div>

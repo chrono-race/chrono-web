@@ -125,3 +125,9 @@ html, body, #root, .full-height {
 .time-of-day {
   font-size: 26pt;
 }
+
+.race-control-messages {
+  font-size: 8pt;
+  text-align: left;
+  overflow-y: scroll;
+}
