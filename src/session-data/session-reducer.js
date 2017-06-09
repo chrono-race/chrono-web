@@ -50,6 +50,7 @@ const defaultSessionState = fromJS({
     lapTime: NaN,
   },
   time: NaN,
+  messages: [],
 });
 
 export default (state = defaultSessionState, action) => {

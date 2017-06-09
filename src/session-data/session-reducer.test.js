@@ -98,5 +98,10 @@ describe('session reducer', () => {
     const state = sessionReducer(undefined, actions.eventsReceived([{ type: 'time', time: 1234 }]));
     assert(state.get('time').should.equal(1234));
   });
+
+  it('has no race control messages initially', () => {
+    const state = sessionReducer(undefined, {});
+    assert(state.get('messages').count().should.equal(0));
+  });
 });
 
