@@ -21,7 +21,7 @@ const App = () => (
     </div>
     <div className="row second-row" />
     <div className="row third-row">
-      <div className="col-md-6">
+      <div className="col-md-6 pane">
         <RaceControlMessages />
       </div>
       <div className="col-md-2">

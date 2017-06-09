@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import { PropTypes } from 'prop-types';
 
 const RaceControlMessages = ({ messages }) => {
-  const messageRows = messages.reverse().map(msg => <div>{msg}</div>);
+  const messageRows = messages.reverse().map(msg => <div className="message">{msg}</div>);
   return (<div className="race-control-messages">{messageRows}</div>);
 };
 

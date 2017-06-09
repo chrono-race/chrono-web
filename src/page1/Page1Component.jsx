@@ -24,7 +24,7 @@ const Page1 = ({ session }) => {
     .map(lap => <Page1Row key={lap.get('driver')} lastLap={lap} driverBests={session.get('drivers').get(lap.get('driver')).get('best')} sessionBests={sessionBests} />);
   return (
     <div className="auto-scroll-container">
-      <table className="table timing-table">
+      <table className="table table-striped timing-table">
         <thead>
           <tr>
             <th>pos</th>
