@@ -3,7 +3,7 @@ import './App.css';
 import DriverHistory from './driver-history/DriverHistoryContainer';
 import DriverSelector from './driver-selector/DriverSelectorContainer';
 import Page1 from './page1/Page1Container';
-import TimeOfDay from './time_of_day/TimeOfDayContainer';
+import TimeOfDay from './time-of-day/TimeOfDayContainer';
 
 const App = () => (
   <div className="App container-fluid full-height">
