@@ -41,6 +41,12 @@ function updateTime(existingTime, messages) {
   return existingTime;
 }
 
+function updateMessages(existingMessages, events) {
+  let updatedMessages = existingMessages;
+  events.forEach((e) => { updatedMessages = updatedMessages.update(m => m.push(e.message)); });
+  return updatedMessages;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -65,7 +71,8 @@ export default (state = defaultSessionState, action) => {
     const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)
       .set('best', findSessionBests(backlogUpdatedDrivers))
-      .set('time', updatedTime);
+      .set('time', updatedTime)
+      .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')));
   }
 
   return state;
