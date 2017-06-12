@@ -107,7 +107,7 @@ describe('session reducer', () => {
   it('adds to messages on receipt of race control message', () => {
     const state = sessionReducer(undefined, actions.eventsReceived([{ type: 'race_control_message', message: 'a message' }]));
     assert(state.get('messages').count().should.equal(1));
-    assert(state.get('messages').get(0).should.equal('a message'));
+    assert(state.get('messages').get(0).get('message').should.equal('a message'));
   });
 });
 

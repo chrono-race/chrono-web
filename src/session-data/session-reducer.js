@@ -43,7 +43,7 @@ function updateTime(existingTime, messages) {
 
 function updateMessages(existingMessages, events) {
   let updatedMessages = existingMessages;
-  events.forEach((e) => { updatedMessages = updatedMessages.update(m => m.push(e.message)); });
+  events.forEach((e) => { updatedMessages = updatedMessages.update(m => m.push(fromJS(e))); });
   return updatedMessages;
 }
 
