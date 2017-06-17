@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
-import { toSectorTime, toLapTime } from '../session-data/timing-utils';
+import { toSectorTime, toLapTime, toGapTime } from '../session-data/timing-utils';
 
 function bestClass(type, lap, driverBests, sessionBests) {
   const time = lap.get(type);
@@ -19,7 +19,7 @@ function toGapOrLap(lastLap) {
   if (lastLap.get('position') === 1) {
     return 'LAP';
   }
-  return toSectorTime(lastLap.get('gap'));
+  return toGapTime(lastLap.get('gap'));
 }
 
 function toIntervalOrLapNumber(lastLap) {
