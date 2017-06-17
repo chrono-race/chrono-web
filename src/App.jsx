@@ -4,6 +4,7 @@ import DriverHistory from './driver-history/DriverHistoryContainer';
 import DriverSelector from './driver-selector/DriverSelectorContainer';
 import Page1 from './page1/Page1Container';
 import TimeOfDay from './time-of-day/TimeOfDayContainer';
+import RaceName from './race-name/RaceNameContainer';
 import RaceControlMessages from './race-control-messages/RaceControlMessagesContainer';
 
 const App = () => (
@@ -26,6 +27,9 @@ const App = () => (
       </div>
       <div className="col-md-2">
         <TimeOfDay />
+      </div>
+      <div className="col-md-6">
+        <RaceName />
       </div>
     </div>
   </div>

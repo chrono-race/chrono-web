@@ -47,6 +47,14 @@ function updateMessages(existingMessages, events) {
   return updatedMessages;
 }
 
+function updateRacename(existingRacename, messages) {
+  const msg = messages.find(x => x !== undefined);
+  if (msg !== undefined) {
+    return msg.name;
+  }
+  return existingRacename;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -57,6 +65,7 @@ const defaultSessionState = fromJS({
   },
   time: NaN,
   messages: [],
+  racename:'',
 });
 
 export default (state = defaultSessionState, action) => {
@@ -67,12 +76,14 @@ export default (state = defaultSessionState, action) => {
 
   if (action.type === types.BACKLOG_RECEIVED ||
     action.type === types.EVENTS_RECEIVED) {
+
     const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'), action.messages.filter(m => m.type === 'lap'));
     const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)
       .set('best', findSessionBests(backlogUpdatedDrivers))
       .set('time', updatedTime)
-      .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')));
+      .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
+      .set('racename', updateRacename(startingState.get('racename'), action.messages.filter(m => m.type === 'racename')));
   }
 
   return state;
