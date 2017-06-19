@@ -4,13 +4,15 @@ import { newDriver, appendMessage, findBests } from './driver';
 should();
 
 describe('driver', () => {
-  it('newDriver is created with no laps and no bests', () => {
+  it('newDriver is created with no laps, no bests, empty current status and no stints', () => {
     const d = newDriver();
     assert(d.get('laps').isEmpty().should.equal(true));
     assert(d.get('best').get('s1Time').should.be.NaN);
     assert(d.get('best').get('s2Time').should.be.NaN);
     assert(d.get('best').get('s3Time').should.be.NaN);
     assert(d.get('best').get('lapTime').should.be.NaN);
+    assert(d.get('currentStatus').should.equal(''));
+    assert(d.get('stints').count().should.equal(0));
   });
 
   describe('append message', () => {

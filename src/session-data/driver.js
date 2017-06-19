@@ -26,6 +26,8 @@ export const newDriver = () => (fromJS({
     s3Time: NaN,
     lapTime: NaN,
   },
+  currentStatus: '',
+  stints: [],
 }));
 
 export const appendMessage = (driver, msg) => {
