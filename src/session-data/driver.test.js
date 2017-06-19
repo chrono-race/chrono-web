@@ -45,6 +45,14 @@ describe('driver', () => {
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('best').get('s1Time').should.be.NaN);
     });
+
+    it('preserves existing status & stints on receipt of lap message', () => {
+      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+
+      assert(d.get('laps').count().should.equal(1));
+      assert(d.get('currentStatus').should.equal(''));
+      assert(d.get('stints').count().should.equal(0));
+    });
   });
 
   describe('find bests', () => {

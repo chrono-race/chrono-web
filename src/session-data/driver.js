@@ -32,17 +32,13 @@ export const newDriver = () => (fromJS({
 
 export const appendMessage = (driver, msg) => {
   let laps = driver.get('laps');
-  const best = driver.get('best');
   while (laps.count() < msg.lapNumber) {
     laps = laps.push(fromJS(emptyLap(laps.count() + 1)));
   }
   let lap = laps.get(msg.lapNumber - 1);
   lap = lap.merge(msg);
   laps = laps.set(msg.lapNumber - 1, lap);
-  return fromJS({
-    laps,
-    best,
-  });
+  return driver.set('laps', laps);
 };
 
 export const findBests = (driver) => {
