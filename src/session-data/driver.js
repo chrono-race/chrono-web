@@ -30,7 +30,7 @@ export const newDriver = () => (fromJS({
   stints: [],
 }));
 
-export const appendMessage = (driver, msg) => {
+function appendLapMessage(driver, msg) {
   let laps = driver.get('laps');
   while (laps.count() < msg.lapNumber) {
     laps = laps.push(fromJS(emptyLap(laps.count() + 1)));
@@ -39,6 +39,19 @@ export const appendMessage = (driver, msg) => {
   lap = lap.merge(msg);
   laps = laps.set(msg.lapNumber - 1, lap);
   return driver.set('laps', laps);
+}
+
+function appendPitMessage(driver, msg) {
+  return driver.set('currentStatus', msg.currentStatus).set('stints', fromJS(msg.stints));
+}
+
+export const appendMessage = (driver, msg) => {
+  if (msg.type === 'lap') {
+    return appendLapMessage(driver, msg);
+  } else if (msg.type === 'pit') {
+    return appendPitMessage(driver, msg);
+  }
+  throw new Error(`unknown type: ${msg.type}`);
 };
 
 export const findBests = (driver) => {

@@ -17,7 +17,7 @@ describe('driver', () => {
 
   describe('append message', () => {
     it('adds first empty lap', () => {
-      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('laps').get(0).get('lapNumber').should.equal(1));
@@ -26,9 +26,9 @@ describe('driver', () => {
 
     it('adds missing laps', () => {
       let d = newDriver();
-      d = appendMessage(d, { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+      d = appendMessage(d, { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
-      d = appendMessage(d, { driver: 'VAN', lapNumber: 4, lapTime: 93.333 });
+      d = appendMessage(d, { type: 'lap', driver: 'VAN', lapNumber: 4, lapTime: 93.333 });
 
       assert(d.get('laps').count().should.equal(4));
       assert(d.get('laps').get(1).get('lapNumber').should.equal(2));
@@ -40,18 +40,31 @@ describe('driver', () => {
     });
 
     it('preserves existing bests', () => {
-      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('best').get('s1Time').should.be.NaN);
     });
 
     it('preserves existing status & stints on receipt of lap message', () => {
-      const d = appendMessage(newDriver(), { driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('currentStatus').should.equal(''));
       assert(d.get('stints').count().should.equal(0));
+    });
+
+    it('updates current status and stints on pit message', () => {
+      const d = appendMessage(newDriver(), { type: 'pit',
+        driver: 'VAN',
+        currentStatus: 'in pit',
+        stints: [
+        { startLap: 0, tyre: 'M' },
+        ] });
+
+      assert(d.get('currentStatus').should.equal('in pit'));
+      assert(d.get('stints').count().should.equal(1));
+      assert(d.get('stints').get(0).get('tyre').should.equal('M'));
     });
   });
 
@@ -66,19 +79,21 @@ describe('driver', () => {
     });
 
     it('preserves laps', () => {
-      const msg = { driver: 'VAN', lapNumber: 1, lapTime: 90.123 };
+      const msg = { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 };
       const d = findBests(appendMessage(newDriver(), msg));
 
       assert(d.get('laps').count().should.equal(1));
     });
 
     it('is the best for a driver with laps', () => {
-      const msg1 = { lapNumber: 1,
+      const msg1 = { type: 'lap',
+        lapNumber: 1,
         s1Time: 31.111,
         s2Time: 32.222,
         s3Time: 33.333,
         lapTime: 94.111 };
-      const msg2 = { lapNumber: 2,
+      const msg2 = { type: 'lap',
+        lapNumber: 2,
         s1Time: 31.222,
         s2Time: 32.020,
         s3Time: 33.999,
@@ -92,12 +107,14 @@ describe('driver', () => {
     });
 
     it('ignores NaN values in finding best', () => {
-      const msg1 = { lapNumber: 1,
+      const msg1 = { type: 'lap',
+        lapNumber: 1,
         s1Time: NaN,
         s2Time: 32.222,
         s3Time: 33.333,
         lapTime: NaN };
-      const msg2 = { lapNumber: 2,
+      const msg2 = { type: 'lap',
+        lapNumber: 2,
         s1Time: 31.222,
         s2Time: 32.020,
         s3Time: 33.999,
@@ -111,12 +128,14 @@ describe('driver', () => {
     });
 
     it('ignores null values in finding best', () => {
-      const msg1 = { lapNumber: 1,
+      const msg1 = { type: 'lap',
+        lapNumber: 1,
         s1Time: null,
         s2Time: 32.222,
         s3Time: 33.333,
         lapTime: null };
-      const msg2 = { lapNumber: 2,
+      const msg2 = { type: 'lap',
+        lapNumber: 2,
         s1Time: 31.222,
         s2Time: 32.020,
         s3Time: 33.999,
