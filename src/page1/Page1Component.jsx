@@ -40,6 +40,7 @@ const Page1 = ({ session }) => {
             <th>s1</th>
             <th>s2</th>
             <th>s3</th>
+            <th />
           </tr>
         </thead>
         <tbody>
