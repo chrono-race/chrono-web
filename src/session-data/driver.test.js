@@ -78,11 +78,13 @@ describe('driver', () => {
       assert(d.get('best').get('lapTime').should.be.NaN);
     });
 
-    it('preserves laps', () => {
+    it('preserves laps, currentStatus and stints', () => {
       const msg = { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 };
       const d = findBests(appendMessage(newDriver(), msg));
 
       assert(d.get('laps').count().should.equal(1));
+      assert(d.get('currentStatus').should.equal(''));
+      assert(d.get('stints').count().should.equal(0));
     });
 
     it('is the best for a driver with laps', () => {

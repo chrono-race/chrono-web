@@ -56,13 +56,10 @@ export const appendMessage = (driver, msg) => {
 
 export const findBests = (driver) => {
   const laps = driver.get('laps');
-  return fromJS({
-    laps,
-    best: {
-      s1Time: laps.map(l => l.get('s1Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
-      s2Time: laps.map(l => l.get('s2Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
-      s3Time: laps.map(l => l.get('s3Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
-      lapTime: laps.map(l => l.get('lapTime')).filter(t => t !== null && !isNaN(t)).min() || NaN,
-    },
-  });
+  return driver.set('best', fromJS({
+    s1Time: laps.map(l => l.get('s1Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
+    s2Time: laps.map(l => l.get('s2Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
+    s3Time: laps.map(l => l.get('s3Time')).filter(t => t !== null && !isNaN(t)).min() || NaN,
+    lapTime: laps.map(l => l.get('lapTime')).filter(t => t !== null && !isNaN(t)).min() || NaN,
+  }));
 };
