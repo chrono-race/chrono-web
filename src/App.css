@@ -142,3 +142,48 @@ html, body, #root, .full-height {
 .race-control-messages > .message {
   padding-right: 4px;
 }
+
+.used-E {
+  color: #FF00FF;
+}
+
+.new-E {
+  background: #FF00FF;
+  color: black;
+}
+
+.used-V {
+  color: #FF0000;
+}
+
+.new-V {
+  background: #FF0000;
+  color: black;
+}
+
+.used-S {
+  color: #FFFF00;
+}
+
+.new-S {
+  background: #FFFF00;
+  color: black;
+}
+
+.used-M {
+  color: #FFFFFF;
+}
+
+.new-M {
+  background: #FFFFFF;
+  color: black;
+}
+
+.used-H {
+  color: #FFA500;
+}
+
+.new-H {
+  background: #FFA500;
+  color: black;
+}

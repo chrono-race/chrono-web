@@ -21,7 +21,12 @@ const Page1 = ({ session }) => {
     .valueSeq()
     .map(driver => getLastLap(driver))
     .sortBy(lap => lap.get('position'))
-    .map(lap => <Page1Row key={lap.get('driver')} lastLap={lap} driverBests={session.get('drivers').get(lap.get('driver')).get('best')} sessionBests={sessionBests} />);
+    .map(lap => <Page1Row
+      key={lap.get('driver')}
+      lastLap={lap}
+      driver={session.get('drivers').get(lap.get('driver'))}
+      sessionBests={sessionBests}
+    />);
   return (
     <div className="auto-scroll-container">
       <table className="table table-striped timing-table">
