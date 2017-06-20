@@ -36,19 +36,23 @@ html, body, #root, .full-height {
 }
 
 .driver-history > tbody > tr > td.s1Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.s2Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.s3Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.lapTime {
-  width: 24%;
+  width: 16%;
+}
+
+.driver-history > tbody > tr > td.pit {
+  width: 8%;
 }
 
 .timing-table > tbody > tr > td.personalBest {
@@ -79,19 +83,27 @@ html, body, #root, .full-height {
 }
 
 .driver-history > thead > tr > th.s1Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.s2Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.s3Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.lapTime {
-  width: 24%;
+  width: 16%;
+}
+
+.driver-history > thead > tr > th.pit {
+  width: 8%;
+}
+
+.driver-history > thead > tr > th.tyre {
+  width: 4%;
 }
 
 .left-pane {

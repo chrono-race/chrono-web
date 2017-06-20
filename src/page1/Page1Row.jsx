@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
 import { toSectorTime, toLapTime } from '../session-data/timing-utils';
+import { tyreClass, tyreText, tyrePrompt } from '../session-data/tyres';
 
 function bestClass(type, lap, driverBests, sessionBests) {
   const time = lap.get(type);
@@ -30,46 +31,6 @@ function toIntervalOrLapNumber(lastLap) {
     return lastLap.get('lapNumber') + 1;
   }
   return toSectorTime(lastLap.get('interval'));
-}
-
-function tyreClass(driver, lastStint) {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
-  }
-  const tyreAge = lastStint.get('tyreAge') === 0 ? 'new' : 'used';
-  const tyreType = lastStint.get('tyre');
-  return `${tyreAge}-${tyreType}`;
-}
-
-function tyreText(driver, lastStint) {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
-  }
-  const code = lastStint.get('tyre');
-  switch (code) {
-    case 'E': return 'US';
-    case 'V': return 'SS';
-    case 'S': return 'S';
-    case 'M': return 'M';
-    case 'H': return 'H';
-    default: return code;
-  }
-}
-
-function tyrePrompt(driver, lastStint) {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
-  }
-  const tyreAge = lastStint.get('tyreAge') === 0 ? 'new' : 'used';
-  const code = lastStint.get('tyre');
-  switch (code) {
-    case 'E': return `${tyreAge} ultra soft`;
-    case 'V': return `${tyreAge} super soft`;
-    case 'S': return `${tyreAge} soft`;
-    case 'M': return `${tyreAge} medium`;
-    case 'H': return `${tyreAge} hard`;
-    default: return '';
-  }
 }
 
 const Page1Row = ({ lastLap, sessionBests, driver }) => {

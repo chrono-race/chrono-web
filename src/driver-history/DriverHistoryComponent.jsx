@@ -22,9 +22,14 @@ class DriverHistory extends Component {
     if (driver === undefined) {
       return (<div>No driver selected</div>);
     }
-    const driverBests = driver.get('best');
     driver.get('laps').toArray().forEach((lap) => {
-      dhLaps.push(<DriverHistoryLap key={lap.get('lapNumber')} lap={lap} driverBests={driverBests} sessionBests={sessionBests} />);
+      dhLaps.push(
+        <DriverHistoryLap
+          key={lap.get('lapNumber')}
+          lap={lap}
+          driver={driver}
+          sessionBests={sessionBests}
+        />);
     });
 
     return (
@@ -38,6 +43,8 @@ class DriverHistory extends Component {
                 <th className="s2Time">s2</th>
                 <th className="s3Time">s3</th>
                 <th className="lapTime">lap</th>
+                <th className="pit" />
+                <th className="tyre" />
               </tr>
             </thead>
           </table>
