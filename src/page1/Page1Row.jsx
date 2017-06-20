@@ -85,7 +85,12 @@ const Page1Row = ({ lastLap, sessionBests, driver }) => {
       <td width="13.3%" className={bestClass('s1Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s1Time'))}</td>
       <td width="13.3%" className={bestClass('s2Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s2Time'))}</td>
       <td width="13.3%" className={bestClass('s3Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s3Time'))}</td>
-      <td width="3%" className={tyreClass(driver, lastStint)} data-toggle="tooltip" title={tyrePrompt(driver, lastStint)}>{tyreText(driver, lastStint)}</td>
+      <td
+        width="3%"
+        className={tyreClass(driver, lastStint)}
+        data-toggle="tooltip"
+        title={tyrePrompt(driver, lastStint)}
+      >{tyreText(driver, lastStint)}</td>
     </tr>
   );
 };
