@@ -5,7 +5,7 @@ import DriverSelectorDriver from './DriverSelectorDriver';
 const DriverSelectorComponent = ({ drivers, onSelect, selectedDriver, showVs }) => {
   const driverRows = [];
   if (showVs) {
-    driverRows.push((<th style={{ textAlign: 'center' }}>vs</th>));
+    driverRows.push((<tr key="vs"><th style={{ textAlign: 'center' }}>vs</th></tr>));
   }
   drivers.forEach((driver, index) => driverRows.push((
     <DriverSelectorDriver
@@ -24,7 +24,11 @@ DriverSelectorComponent.propTypes = {
   drivers: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSelect: PropTypes.func.isRequired,
   selectedDriver: PropTypes.string.isRequired,
-  showVs: PropTypes.bool.isRequired,
+  showVs: PropTypes.bool,
+};
+
+DriverSelectorComponent.defaultProps = {
+  showVs: false,
 };
 
 export default DriverSelectorComponent;

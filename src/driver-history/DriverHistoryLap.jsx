@@ -34,7 +34,16 @@ function pitText(lapNumber, stints) {
   return '';
 }
 
-const DriverHistoryLap = ({ lap, driver, sessionBests }) => {
+function getDelta(driver, opponent, lapNumber) {
+  if (driver === undefined || opponent === undefined) {
+    return '';
+  }
+  const driverCumTime = driver.get('cumulativeTime').get(lapNumber - 1);
+  const opponentCumTime = opponent.get('cumulativeTime').get(lapNumber - 1);
+  return `${(driverCumTime - opponentCumTime).toFixed(3)}`;
+}
+
+const DriverHistoryLap = ({ lap, driver, opponent, sessionBests }) => {
   const driverBests = driver.get('best');
   const stint = stintForLap(lap.get('lapNumber'), driver) || Immutable.fromJS({});
   return (
@@ -51,15 +60,21 @@ const DriverHistoryLap = ({ lap, driver, sessionBests }) => {
         data-toggle="tooltip"
         title={tyrePrompt(stint)}
       >{tyreText(stint)}</td>
-
+      <td>{getDelta(driver, opponent, lap.get('lapNumber'))}</td>
     </tr>
   );
 };
 
 DriverHistoryLap.propTypes = {
   lap: PropTypes.instanceOf(Immutable.Map).isRequired,
-  driver: PropTypes.instanceOf(Immutable.Map).isRequired,
+  driver: PropTypes.instanceOf(Immutable.Map),
+  opponent: PropTypes.instanceOf(Immutable.Map),
   sessionBests: PropTypes.instanceOf(Immutable.Map).isRequired,
+};
+
+DriverHistoryLap.defaultProps = {
+  driver: undefined,
+  opponent: undefined,
 };
 
 export default DriverHistoryLap;

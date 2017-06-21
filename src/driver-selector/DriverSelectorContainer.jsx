@@ -30,11 +30,16 @@ const DriverSelectorContainer =
 
 DriverSelectorContainer.propTypes = {
   drivers: PropTypes.arrayOf(PropTypes.string).isRequired,
-  selectedDriver: PropTypes.string.isRequired,
-  selectedOpponent: PropTypes.string.isRequired,
+  selectedDriver: PropTypes.string,
+  selectedOpponent: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
   onSelectOpponent: PropTypes.func.isRequired,
   choice: PropTypes.string.isRequired,
+};
+
+DriverSelectorContainer.defaultProps = {
+  selectedDriver: '',
+  selectedOpponent: '',
 };
 
 function mapStateToProps(state) {

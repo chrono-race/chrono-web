@@ -17,7 +17,7 @@ class DriverHistory extends Component {
   }
 
   render() {
-    const { driver, sessionBests } = this.props;
+    const { driver, opponent, sessionBests } = this.props;
     const dhLaps = [];
     if (driver === undefined) {
       return (<div>No driver selected</div>);
@@ -28,6 +28,7 @@ class DriverHistory extends Component {
           key={lap.get('lapNumber')}
           lap={lap}
           driver={driver}
+          opponent={opponent}
           sessionBests={sessionBests}
         />);
     });
@@ -45,6 +46,7 @@ class DriverHistory extends Component {
                 <th className="lapTime">lap</th>
                 <th className="pit" />
                 <th className="tyre" />
+                <th className="delta" />
               </tr>
             </thead>
           </table>
@@ -63,11 +65,13 @@ class DriverHistory extends Component {
 
 DriverHistory.propTypes = {
   driver: PropTypes.instanceOf(Immutable.Map),
+  opponent: PropTypes.instanceOf(Immutable.Map),
   sessionBests: PropTypes.instanceOf(Immutable.Map).isRequired,
 };
 
 DriverHistory.defaultProps = {
   driver: undefined,
+  opponent: undefined,
 };
 
 export default DriverHistory;

@@ -4,23 +4,34 @@ import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import DriverHistory from './DriverHistoryComponent';
 
-const DriverHistoryContainer = ({ session, selectedDriver }) => {
+const DriverHistoryContainer = ({ session, selectedDriver, selectedOpponent }) => {
   const drivers = session.get('drivers');
   const sessionBests = session.get('best');
   return (
-    <DriverHistory driver={drivers.get(selectedDriver)} sessionBests={sessionBests} />
+    <DriverHistory
+      driver={drivers.get(selectedDriver)}
+      opponent={drivers.get(selectedOpponent)}
+      sessionBests={sessionBests}
+    />
   );
 };
 
 DriverHistoryContainer.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
-  selectedDriver: PropTypes.string.isRequired,
+  selectedDriver: PropTypes.string,
+  selectedOpponent: PropTypes.string,
+};
+
+DriverHistoryContainer.defaultProps = {
+  selectedDriver: '',
+  selectedOpponent: '',
 };
 
 function mapStateToProps(state) {
   return {
     session: state.session,
     selectedDriver: state.selectedDriver.get('selectedDriver'),
+    selectedOpponent: state.selectedDriver.get('selectedOpponent'),
   };
 }
 
