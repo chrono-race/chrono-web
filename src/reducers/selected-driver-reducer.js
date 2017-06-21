@@ -8,9 +8,9 @@ const defaultState = fromJS({
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.SELECT_DRIVER:
-      return fromJS({
-        selectedDriver: action.driver,
-      });
+      return state.set('selectedDriver', action.driver);
+    case types.SELECT_OPPONENT:
+      return state.set('selectedOpponent', action.driver);
     default:
       return state;
   }

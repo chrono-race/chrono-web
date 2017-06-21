@@ -13,11 +13,11 @@ const App = () => (
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-2 left-pane">
-              <DriverSelector />
+              <DriverSelector choice="driver" />
             </div>
             <div className="col-md-1" />
             <div className="col-md-2 opponent-pane">
-              <DriverSelector />
+              <DriverSelector choice="opponent" />
             </div>
           </div>
         </div>
