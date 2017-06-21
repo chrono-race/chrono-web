@@ -49,7 +49,7 @@ function appendPitMessage(driver, msg) {
 function recalculateCumulativeTime(driver) {
   return driver.get('laps').map((lap) => {
     if (lap.get('lapNumber') === 1) {
-      return lap.get('gap');
+      return lap.get('gap') || 0;
     }
     return 0;
   });

@@ -74,6 +74,13 @@ describe('driver', () => {
       assert(d.get('cumulativeTime').count().should.equal(1));
       assert(d.get('cumulativeTime').get(0).should.equal(12.34));
     });
+
+    it('sets cumulative time for first lap to 0 for leader', () => {
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123, gap: NaN });
+
+      assert(d.get('cumulativeTime').count().should.equal(1));
+      assert(d.get('cumulativeTime').get(0).should.equal(0));
+    });
   });
 
   describe('find bests', () => {
