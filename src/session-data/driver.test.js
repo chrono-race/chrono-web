@@ -13,15 +13,16 @@ describe('driver', () => {
     assert(d.get('best').get('lapTime').should.be.NaN);
     assert(d.get('currentStatus').should.equal(''));
     assert(d.get('stints').count().should.equal(0));
+    assert(d.get('cumulativeTime').count().should.equal(0));
   });
 
   describe('append message', () => {
     it('adds first empty lap', () => {
-      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 });
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123 });
 
       assert(d.get('laps').count().should.equal(1));
       assert(d.get('laps').get(0).get('lapNumber').should.equal(1));
-      assert(d.get('laps').get(0).get('lapTime').should.equal(90.123));
+      assert(d.get('laps').get(0).get('s2Time').should.equal(90.123));
     });
 
     it('adds missing laps', () => {
@@ -65,6 +66,13 @@ describe('driver', () => {
       assert(d.get('currentStatus').should.equal('in pit'));
       assert(d.get('stints').count().should.equal(1));
       assert(d.get('stints').get(0).get('tyre').should.equal('M'));
+    });
+
+    it('sets cumulative time for first lap to gap to leader', () => {
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123, gap: 12.34 });
+
+      assert(d.get('cumulativeTime').count().should.equal(1));
+      assert(d.get('cumulativeTime').get(0).should.equal(12.34));
     });
   });
 

@@ -28,6 +28,7 @@ export const newDriver = () => (fromJS({
   },
   currentStatus: '',
   stints: [],
+  cumulativeTime: [],
 }));
 
 function appendLapMessage(driver, msg) {
@@ -45,9 +46,19 @@ function appendPitMessage(driver, msg) {
   return driver.set('currentStatus', msg.currentStatus).set('stints', fromJS(msg.stints));
 }
 
+function recalculateCumulativeTime(driver) {
+  return driver.get('laps').map((lap) => {
+    if (lap.get('lapNumber') === 1) {
+      return lap.get('gap');
+    }
+    return 0;
+  });
+}
+
 export const appendMessage = (driver, msg) => {
   if (msg.type === 'lap') {
-    return appendLapMessage(driver, msg);
+    const updatedDriver = appendLapMessage(driver, msg);
+    return updatedDriver.set('cumulativeTime', recalculateCumulativeTime(updatedDriver));
   } else if (msg.type === 'pit') {
     return appendPitMessage(driver, msg);
   }
