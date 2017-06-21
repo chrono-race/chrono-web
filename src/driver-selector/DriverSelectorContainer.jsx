@@ -8,14 +8,23 @@ const DriverSelectorContainer =
   ({ drivers, selectedDriver, selectedOpponent, onSelect, onSelectOpponent, choice }) => {
     if (choice === 'driver') {
       return (
-        <DriverSelector drivers={drivers} selectedDriver={selectedDriver} onSelect={onSelect} />
+        <DriverSelector
+          drivers={drivers}
+          selectedDriver={selectedDriver}
+          onSelect={onSelect}
+        />
       );
     }
     if (selectedDriver === '') {
       return (<div />);
     }
     return (
-      <DriverSelector drivers={drivers} selectedDriver={selectedOpponent} onSelect={onSelectOpponent} />
+      <DriverSelector
+        drivers={drivers.filter(d => d !== selectedDriver)}
+        selectedDriver={selectedOpponent}
+        onSelect={onSelectOpponent}
+        showVs
+      />
     );
   };
 
