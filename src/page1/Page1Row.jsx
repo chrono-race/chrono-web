@@ -33,6 +33,13 @@ function toIntervalOrLapNumber(lastLap) {
   return toSectorTime(lastLap.get('interval'));
 }
 
+function inPitOr(driver, alternative) {
+  if (driver.get('currentStatus') === 'pit') {
+    return 'pit';
+  }
+  return alternative;
+}
+
 const Page1Row = ({ lastLap, sessionBests, driver }) => {
   const driverBests = driver !== undefined ? driver.get('best') : undefined;
   const lastStint = driver.get('stints').count() === 0 ? undefined : driver.get('stints').get(driver.get('stints').count() - 1);
@@ -48,10 +55,10 @@ const Page1Row = ({ lastLap, sessionBests, driver }) => {
       <td width="13.3%" className={bestClass('s3Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s3Time'))}</td>
       <td
         width="3%"
-        className={tyreClass(driver, lastStint)}
+        className={inPitOr(driver, tyreClass(lastStint))}
         data-toggle="tooltip"
-        title={tyrePrompt(driver, lastStint)}
-      >{tyreText(driver, lastStint)}</td>
+        title={inPitOr(driver, tyrePrompt(lastStint))}
+      >{inPitOr(driver, tyreText(lastStint))}</td>
     </tr>
   );
 };

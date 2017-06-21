@@ -47,10 +47,10 @@ const DriverHistoryLap = ({ lap, driver, sessionBests }) => {
       <td className="pit">{pitText(lap.get('lapNumber'), driver.get('stints'))}</td>
       <td
         width="3%"
-        className={tyreClass(Immutable.fromJS({}), stint)}
+        className={tyreClass(stint)}
         data-toggle="tooltip"
-        title={tyrePrompt(Immutable.fromJS({}), stint)}
-      >{tyreText(Immutable.fromJS({}), stint)}</td>
+        title={tyrePrompt(stint)}
+      >{tyreText(stint)}</td>
 
     </tr>
   );

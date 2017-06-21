@@ -1,16 +1,16 @@
 
-export const tyreClass = (driver, lastStint) => {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
+export const tyreClass = (lastStint) => {
+  if (lastStint === undefined) {
+    return '';
   }
   const tyreAge = lastStint.get('tyreAge') === 0 ? 'new' : 'used';
   const tyreType = lastStint.get('tyre');
   return `${tyreAge}-${tyreType}`;
 };
 
-export const tyreText = (driver, lastStint) => {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
+export const tyreText = (lastStint) => {
+  if (lastStint === undefined) {
+    return '';
   }
   const code = lastStint.get('tyre');
   switch (code) {
@@ -23,9 +23,9 @@ export const tyreText = (driver, lastStint) => {
   }
 };
 
-export const tyrePrompt = (driver, lastStint) => {
-  if (driver.get('currentStatus') === 'pit') {
-    return 'pit';
+export const tyrePrompt = (lastStint) => {
+  if (lastStint === undefined) {
+    return '';
   }
   const tyreAge = lastStint.get('tyreAge') === 0 ? 'new' : 'used';
   const code = lastStint.get('tyre');
