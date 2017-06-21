@@ -112,6 +112,12 @@ html, body, #root, .full-height {
   padding-right: 0em !important;
 }
 
+.opponent-pane {
+  padding-left: 0.4em !important;
+  padding-top: 0.2em !important;
+  padding-right: 0em !important;  
+}
+
 .data-pane {
   margin: 0.2em 0.2em 0em 0.2em;
   padding: 0px !important;
