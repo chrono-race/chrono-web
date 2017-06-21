@@ -47,11 +47,14 @@ function appendPitMessage(driver, msg) {
 }
 
 function recalculateCumulativeTime(driver) {
+  let time = 0;
   return driver.get('laps').map((lap) => {
     if (lap.get('lapNumber') === 1) {
-      return lap.get('gap') || 0;
+      time = lap.get('gap') || 0;
+      return time;
     }
-    return 0;
+    time += lap.get('lapTime');
+    return time;
   });
 }
 

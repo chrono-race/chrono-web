@@ -1,5 +1,8 @@
-import { assert, should } from 'chai';
+import chai, { assert, should } from 'chai';
+import chaiStats from 'chai-stats';
 import { newDriver, appendMessage, findBests } from './driver';
+
+chai.use(chaiStats);
 
 should();
 
@@ -80,6 +83,16 @@ describe('driver', () => {
 
       assert(d.get('cumulativeTime').count().should.equal(1));
       assert(d.get('cumulativeTime').get(0).should.equal(0));
+    });
+
+    it('sets cumulative time for second lap to gap to first lap gap + second lap time', () => {
+      const lap1 = { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123, gap: 12.34 };
+      const lap2 = { type: 'lap', driver: 'VAN', lapNumber: 2, lapTime: 90.123, gap: 22.34 };
+      const d = appendMessage(appendMessage(newDriver(), lap1), lap2);
+
+      assert(d.get('cumulativeTime').count().should.equal(2));
+      assert(d.get('cumulativeTime').get(0).should.equal(12.34));
+      assert.almostEqual(d.get('cumulativeTime').get(1), 102.463);
     });
   });
 
