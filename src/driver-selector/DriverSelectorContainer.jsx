@@ -17,7 +17,7 @@ DriverSelectorContainer.propTypes = {
 function mapStateToProps(state) {
   return {
     drivers: state.session.get('drivers').keySeq().toArray(),
-    selectedDriver: state.selectedDriver,
+    selectedDriver: state.selectedDriver.get('selectedDriver'),
   };
 }
 
