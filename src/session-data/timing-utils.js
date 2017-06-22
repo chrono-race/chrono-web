@@ -7,10 +7,11 @@ export const toSectorTime = (time) => {
 
 export const toGapTime = (time) => {
   if (time < 0) {
-    return time + 'L';
-  } else {
-    return toSectorTime(time);
+    const lapDown = -1 * time;
+    return `${lapDown}L`;
   }
+
+  return toSectorTime(time);
 };
 
 export const toLapTime = (t) => {
