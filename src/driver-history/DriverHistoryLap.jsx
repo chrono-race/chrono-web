@@ -3,18 +3,7 @@ import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
 import { toSectorTime, toLapTime } from '../session-data/timing-utils';
 import { tyreClass, tyreText, tyrePrompt } from '../session-data/tyres';
-
-function bestClass(type, lap, driverBests, sessionBests) {
-  const time = lap.get(type);
-  const driverBest = driverBests.get(type);
-  const sessionBest = sessionBests.get(type);
-  if (time === sessionBest) {
-    return `${type} sessionBest`;
-  } else if (time === driverBest) {
-    return `${type} personalBest`;
-  }
-  return `${type} none`;
-}
+import bestClass from './bestClass';
 
 function stintForLap(lapNumber, driver) {
   return driver.get('stints').findLast(stint => stint.get('startLap') <= lapNumber);
