@@ -67,7 +67,8 @@ export default (state = defaultSessionState, action) => {
 
   if (action.type === types.BACKLOG_RECEIVED ||
     action.type === types.EVENTS_RECEIVED) {
-    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'), action.messages.filter(m => m.type === 'lap'));
+    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'),
+      action.messages.filter(m => m.type === 'lap' || m.type === 'pit'));
     const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)
       .set('best', findSessionBests(backlogUpdatedDrivers))

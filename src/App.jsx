@@ -10,7 +10,17 @@ const App = () => (
   <div className="App container-fluid full-height">
     <div className="row first-row">
       <div className="col-md-1 left-pane">
-        <DriverSelector />
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-2 left-pane">
+              <DriverSelector choice="driver" />
+            </div>
+            <div className="col-md-1" />
+            <div className="col-md-2 opponent-pane">
+              <DriverSelector choice="opponent" />
+            </div>
+          </div>
+        </div>
       </div>
       <div className="col-md-5 data-pane">
         <DriverHistory />

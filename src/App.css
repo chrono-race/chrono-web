@@ -36,19 +36,23 @@ html, body, #root, .full-height {
 }
 
 .driver-history > tbody > tr > td.s1Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.s2Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.s3Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > tbody > tr > td.lapTime {
-  width: 24%;
+  width: 16%;
+}
+
+.driver-history > tbody > tr > td.pit {
+  width: 8%;
 }
 
 .timing-table > tbody > tr > td.personalBest {
@@ -79,25 +83,39 @@ html, body, #root, .full-height {
 }
 
 .driver-history > thead > tr > th.s1Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.s2Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.s3Time {
-  width: 24%;
+  width: 16%;
 }
 
 .driver-history > thead > tr > th.lapTime {
-  width: 24%;
+  width: 16%;
+}
+
+.driver-history > thead > tr > th.pit {
+  width: 8%;
+}
+
+.driver-history > thead > tr > th.tyre {
+  width: 4%;
 }
 
 .left-pane {
   padding-left: 0.2em !important;
   padding-top: 0.2em !important;
   padding-right: 0em !important;
+}
+
+.opponent-pane {
+  padding-left: 0.4em !important;
+  padding-top: 0.2em !important;
+  padding-right: 0em !important;  
 }
 
 .data-pane {
@@ -141,4 +159,49 @@ html, body, #root, .full-height {
 
 .race-control-messages > .message {
   padding-right: 4px;
+}
+
+.used-E {
+  color: #FF00FF;
+}
+
+.new-E {
+  background: #FF00FF;
+  color: black;
+}
+
+.used-V {
+  color: #FF0000;
+}
+
+.new-V {
+  background: #FF0000;
+  color: black;
+}
+
+.used-S {
+  color: #FFFF00;
+}
+
+.new-S {
+  background: #FFFF00;
+  color: black;
+}
+
+.used-M {
+  color: #FFFFFF;
+}
+
+.new-M {
+  background: #FFFFFF;
+  color: black;
+}
+
+.used-H {
+  color: #FFA500;
+}
+
+.new-H {
+  background: #FFA500;
+  color: black;
 }
