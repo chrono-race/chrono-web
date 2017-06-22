@@ -3,17 +3,17 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import RaceName from './RaceNameComponent';
 
-const RaceNameContainer = ({ racename }) => (
-  <RaceName racename={racename} />
+const RaceNameContainer = ({ raceName }) => (
+  <RaceName raceName={raceName} />
 );
 
 RaceNameContainer.propTypes = {
-  racename: PropTypes.string.isRequired,
+  raceName: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    racename: state.session.get('racename'),
+    raceName: state.session.get('raceName'),
   };
 }
 

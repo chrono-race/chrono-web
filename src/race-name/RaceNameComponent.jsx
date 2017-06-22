@@ -1,12 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const Page1 = ({ racename }) => (
-  <div>{racename}</div>
+const Page1 = ({ raceName }) => (
+  <div>{raceName}</div>
   );
 
 Page1.propTypes = {
-  racename: PropTypes.string.isRequired,
+  raceName: PropTypes.string.isRequired,
 };
 
 export default Page1;
