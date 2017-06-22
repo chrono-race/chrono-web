@@ -81,6 +81,32 @@ describe('session reducer', () => {
     append.restore();
   });
 
+  it('appends to a driver on pit message', () => {
+    const initialState = fromJS({
+      drivers: {
+        VAN: {
+          laps: [
+            {
+              lapNumber: 1,
+              lapTime: 90.111,
+            },
+          ],
+          appendMessage: () => {},
+        },
+      },
+    });
+    const append = sinon.stub(driver, 'appendMessage');
+    append.returns(initialState.get('drivers').get('VAN'));
+    const message = { type: 'pit', driver: 'VAN', currentState: 'in pit', stints: [] };
+    const action = actions.eventsReceived([message]);
+
+    sessionReducer(initialState, action);
+
+    assert(append.calledWith(sinon.match.any, message));
+
+    append.restore();
+  });
+
   it('recalculates session bests', () => {
     const initialState = fromJS({ drivers: {} });
     let state = sessionReducer(initialState, actions.eventsReceived([{ type: 'lap', driver: 'VAN', lapNumber: 1, s1Time: NaN, s2Time: 22.111, s3Time: 23.111, lapTime: 90.111 }]));
