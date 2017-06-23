@@ -38,7 +38,7 @@ const App = () => (
       <div className="col-md-2">
         <TimeOfDay />
       </div>
-      <div className="col-md-6">
+      <div className="col-md-4">
         <RaceName />
       </div>
     </div>
