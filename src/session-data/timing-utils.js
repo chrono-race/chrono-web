@@ -5,6 +5,15 @@ export const toSectorTime = (time) => {
   return time.toFixed(3);
 };
 
+export const toGapTime = (time) => {
+  if (time < 0) {
+    const lapDown = -1 * time;
+    return `${lapDown}L`;
+  }
+
+  return toSectorTime(time);
+};
+
 export const toLapTime = (t) => {
   if (t === null || t === undefined) {
     return '';
