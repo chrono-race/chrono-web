@@ -19,6 +19,8 @@ describe('session reducer', () => {
     assert(state.getIn('best', 's2Time').should.be.NaN);
     assert(state.getIn('best', 's3Time').should.be.NaN);
     assert(state.getIn('best', 'lapTime').should.be.NaN);
+    assert(state.get('time').should.be.NaN);
+    assert(state.get('raceName').should.be.empty);
   });
 
   it('resets state on receipt of backlog message', () => {
@@ -45,7 +47,15 @@ describe('session reducer', () => {
     assert(state.getIn(['drivers', 'VAN', 'best', 'lapTime']).should.equal(90.123));
   });
 
-  it('appends to a driver on lap message', () => {
+  it('sets race name on receipt of backlog message of type race_name', () => {
+    const initialState = fromJS({ drivers: {} });
+    const action = actions.backlogReceived([{ type: 'race_name', name: 'My Race' }]);
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('raceName').should.equal('My Race'));
+  });
+
+  it('appends to a session on events message', () => {
     const initialState = fromJS({
       drivers: {
         VAN: {

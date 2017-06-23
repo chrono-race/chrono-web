@@ -47,6 +47,14 @@ function updateMessages(existingMessages, events) {
   return updatedMessages;
 }
 
+function updateRaceName(existingRaceName, messages) {
+  const msg = messages.find(x => x !== undefined);
+  if (msg !== undefined) {
+    return msg.name;
+  }
+  return existingRaceName;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -57,6 +65,7 @@ const defaultSessionState = fromJS({
   },
   time: NaN,
   messages: [],
+  raceName: '',
 });
 
 export default (state = defaultSessionState, action) => {
@@ -73,7 +82,8 @@ export default (state = defaultSessionState, action) => {
     return startingState.set('drivers', backlogUpdatedDrivers)
       .set('best', findSessionBests(backlogUpdatedDrivers))
       .set('time', updatedTime)
-      .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')));
+      .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
+      .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')));
   }
 
   return state;
