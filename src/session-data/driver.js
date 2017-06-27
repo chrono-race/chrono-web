@@ -53,7 +53,12 @@ function recalculateCumulativeTime(driver) {
       time = lap.get('gap') || 0;
       return time;
     }
-    time += lap.get('lapTime');
+    const nextLapTime = lap.get('lapTime');
+    if (nextLapTime > 0) {
+      time += nextLapTime;
+    } else {
+      time = NaN;
+    }
     return time;
   });
 }
