@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 import flot from 'flot-for-node'; // eslint-disable-line no-unused-vars
+import normaliseTimes from './normalise-times';
+import plotStructure from './plot-structure';
 
 class RaceTraceComponent extends React.Component {
   componentDidMount() {
@@ -22,7 +24,6 @@ class RaceTraceComponent extends React.Component {
     const h = $(window).height();
     $(this.refs.plotContainer).width(w * 0.48);
     $(this.refs.plotContainer).height(h * 0.44);
-
 
     const chartOptions = {
       xaxis: {
@@ -61,20 +62,28 @@ class RaceTraceComponent extends React.Component {
         backgroundColor: 'transparent',
       },
     };
-    const chartData = [
-      {
-        label: 'VET',
-        shadowSize: 0,
-        xlines: { lineWidth: 5 },
-        color: '#FF0000',
-        data: [[0, 3], [10, 30], [20, 45], [30, 40]],
-      },
-      {
-        label: 'HAM',
-        shadowSize: 0,
-        color: '#CCCCCC',
-        data: [[0, 2], [10, 28], [20, 47], [30, 41]],
-      }];
+    // const chartData = [
+    //   {
+    //     label: 'VET',
+    //     shadowSize: 0,
+    //     xlines: { lineWidth: 5 },
+    //     color: '#FF0000',
+    //     data: [[0, 3], [10, 30], [20, 45], [30, 40]],
+    //   },
+    //   {
+    //     label: 'HAM',
+    //     shadowSize: 0,
+    //     color: '#CCCCCC',
+    //     data: [[0, 2], [10, 28], [20, 47], [30, 41]],
+    //   }];
+    const session = this.props.session;
+    const normalTimes = normaliseTimes(session);
+    const chartData = plotStructure(normalTimes);
+
+    if (chartData.length === 0) {
+      return;
+    }
+
     // $(this.refs.plotContainer).unbind('plothover', this.plotHover.bind(this));
     this.plot = $.plot(this.refs.plotContainer, chartData, chartOptions);
     // $(this.refs.plotContainer).bind('plothover', this.plotHover.bind(this));
@@ -95,6 +104,7 @@ class RaceTraceComponent extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    session: state.session,
   };
 }
 
