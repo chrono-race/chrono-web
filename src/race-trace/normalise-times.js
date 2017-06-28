@@ -1,4 +1,5 @@
 import offsetSlowLaps from './offset-slow-laps';
+import getNormalLaptime from './get-normal-laptime';
 
 // lapIndex is lapNumber-1
 function toLapNormalTime(time, lapIndex, best) {
@@ -8,14 +9,14 @@ function toLapNormalTime(time, lapIndex, best) {
   return time;
 }
 
-function toDriverNormalTime(driver, best) {
-  return driver.get('cumulativeTime').map((time, index) => toLapNormalTime(time, index, best));
+function toDriverNormalTime(driver, normalLap) {
+  return driver.get('cumulativeTime').map((time, index) => toLapNormalTime(time, index, normalLap));
 }
 
 function normaliseTimes(session) {
-  const best = session.get('best').get('lapTime');
-  const times = session.get('drivers').map(driver => toDriverNormalTime(driver, best));
-  return offsetSlowLaps(times, best);
+  const normalLap = getNormalLaptime(session);
+  const times = session.get('drivers').map(driver => toDriverNormalTime(driver, normalLap));
+  return offsetSlowLaps(times, normalLap);
 }
 
 export default normaliseTimes;

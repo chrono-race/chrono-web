@@ -5,7 +5,7 @@ import normaliseTimes from './normalise-times';
 should();
 
 describe('normalise times', () => {
-  it('outputs times reduced by fastest lap', () => {
+  it('outputs times reduced by leader\'s average lap', () => {
     const session = fromJS({
       drivers: {
         VAN: {
@@ -20,8 +20,8 @@ describe('normalise times', () => {
       },
     });
     const expectedTimes = fromJS({
-      VAN: [0, 1, 2],
-      ALO: [1, 3, 5],
+      VAN: [0, 0, 0],
+      ALO: [1, 2, 3],
     });
 
     const normalTimes = normaliseTimes(session);
@@ -39,13 +39,10 @@ describe('normalise times', () => {
           cumulativeTime: [1, 182, 274],
         },
       },
-      best: {
-        lapTime: 90,
-      },
     });
     const expectedTimes = fromJS({
-      VAN: [0, 0, 1],
-      ALO: [1, 2, 4],
+      VAN: [0, 0, 0],
+      ALO: [1, 2, 3],
     });
 
     const normalTimes = normaliseTimes(session);
