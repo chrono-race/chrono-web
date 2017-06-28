@@ -1,9 +1,6 @@
-import chai, { assert, should } from 'chai';
-import chaiStats from 'chai-stats';
+import { assert, should } from 'chai';
 import { fromJS } from 'immutable';
 import getNormalLaptime from './get-normal-laptime';
-
-chai.use(chaiStats);
 
 should();
 
@@ -20,7 +17,7 @@ describe('get normal laptime', () => {
       },
     });
 
-    assert.almostEqual(getNormalLaptime(session), 60.6666, 3);
+    assert(getNormalLaptime(session).should.equal(91));
   });
 
   it('ignores NaNs', () => {
@@ -35,6 +32,6 @@ describe('get normal laptime', () => {
       },
     });
 
-    assert.almostEqual(getNormalLaptime(session), 60.6666, 3);
+    assert(getNormalLaptime(session).should.equal(91));
   });
 });

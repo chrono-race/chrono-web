@@ -10,7 +10,7 @@ function getNormalLaptime(session) {
   const minCumulativeTime = session.get('drivers')
     .map(d => ignoreNaNs(d.get('cumulativeTime').get(lapCount - 1)))
     .min();
-  return minCumulativeTime / lapCount;
+  return minCumulativeTime / (lapCount - 1);
 }
 
 export default getNormalLaptime;
