@@ -42,6 +42,8 @@ class RaceTraceComponent extends React.Component {
         show: true,
         color: 'white',
         tickColor: 'white',
+        min: -10,
+        max: 50,
         font: {
           size: 11,
           lineHeight: 13,

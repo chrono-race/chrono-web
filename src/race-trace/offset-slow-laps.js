@@ -1,7 +1,7 @@
 import leaderOnLap from './leader-on-lap';
 import offsetTimes from './offset-times';
 
-function offsetSlowLaps(times, normalLap) {
+function offsetSlowLaps(times) {
   let updatedTimes = times;
 
   const maxLaps = updatedTimes.map(driver => driver.count()).max();
@@ -12,8 +12,13 @@ function offsetSlowLaps(times, normalLap) {
     const prevLap = leaderLaps.get(lap - 1);
     const thisLap = leaderLaps.get(lap);
     const lapTime = thisLap - prevLap;
-    if (lapTime > normalLap * 0.3) {
-      updatedTimes = offsetTimes(updatedTimes, thisLap, lapTime);
+    const leaderLapCount = leaderLaps.count();
+    const leaderTotal = leaderLaps.get(leaderLapCount - 1);
+
+    const newLap = (leaderTotal - lapTime) / (leaderLapCount - 2);
+
+    if (lapTime > newLap * 1.3) {
+      updatedTimes = offsetTimes(updatedTimes, thisLap, lapTime - newLap);
     }
   }
 
