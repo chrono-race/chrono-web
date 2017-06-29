@@ -53,7 +53,7 @@ class RaceTraceComponent extends React.Component {
         },
       },
       lines: {
-        lineWidth: 1,
+        lineWidth: 0.5,
       },
       grid: {
         borderWidth: 0,
@@ -80,7 +80,7 @@ class RaceTraceComponent extends React.Component {
     //   }];
     const session = this.props.session;
     const normalTimes = normaliseTimes(session);
-    const chartData = plotStructure(normalTimes);
+    const chartData = plotStructure(normalTimes, this.props.selectedDriver, this.props.selectedOpponent);
 
     if (chartData.length === 0) {
       return;
@@ -107,6 +107,8 @@ class RaceTraceComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     session: state.session,
+    selectedDriver: state.selectedDriver.get('selectedDriver'),
+    selectedOpponent: state.selectedDriver.get('selectedOpponent'),
   };
 }
 
