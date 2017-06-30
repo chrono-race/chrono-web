@@ -33,7 +33,7 @@ function offsetSlowLaps(times) {
   const leaderFinishTime = updatedTimes.get(leaderOnLap(times, maxLaps - 1)).get(maxLaps - 1);
   const typicalLap = (leaderFinishTime - total(slowLaps)) / (maxLaps - 1 - slowLaps.length);
 
-  for (let lap = 1; lap < maxLaps; lap++) {
+  for (let lap = 1; lap < maxLaps; lap++) { // eslint-disable-line no-plusplus
     const leader = leaderOnLap(updatedTimes, lap);
     const lapTimes = updatedTimes.get(leader);
     const prevLap = lapTimes.get(lap - 1);
