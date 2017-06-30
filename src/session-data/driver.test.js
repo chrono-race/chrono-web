@@ -78,6 +78,13 @@ describe('driver', () => {
       assert(d.get('cumulativeTime').get(0).should.equal(12.34));
     });
 
+    it('does not set cumulative time for first lap when gap to leader is negative', () => {
+      const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123, gap: -1 });
+
+      assert(d.get('cumulativeTime').count().should.equal(1));
+      assert(d.get('cumulativeTime').get(0).should.be.NaN);
+    });
+
     it('sets cumulative time for first lap to 0 for leader', () => {
       const d = appendMessage(newDriver(), { type: 'lap', driver: 'VAN', lapNumber: 1, s2Time: 90.123, gap: NaN });
 
