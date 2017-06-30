@@ -1,5 +1,4 @@
 import offsetSlowLaps from './offset-slow-laps';
-import getNormalLaptime from './get-normal-laptime';
 import leaderOnLap from './leader-on-lap';
 
 // lapIndex is lapNumber-1

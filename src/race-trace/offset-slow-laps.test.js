@@ -30,13 +30,11 @@ describe('offset slow laps', () => {
 
   it('offsets multiple slow laps for one driver', () => {
     const inputTimes = fromJS({
-      VAN: [0, 90, 230, 370, 460],
+      VAN: [0, 90, 230, 370, 460, 550],
     });
 
-    // a better algorithm would lead to non-recurring decimals here
-    // but these values are correct for the current implementation
     const expectedTimes = fromJS({
-      VAN: [0, 90, 196.66666666666669, 292.22222222222223, 382.22222222222223],
+      VAN: [0, 90, 180, 270, 360, 450],
     });
 
     assert(JSON.stringify(offsetSlowLaps(inputTimes))

@@ -54,13 +54,13 @@ describe('normalise times', () => {
     const session = fromJS({
       drivers: {
         VAN: {
-          cumulativeTime: [0, 80, 190, 330, 410],
+          cumulativeTime: [0, 90, 200, 290, 430, 520],
         },
       },
     });
 
     const expectedTimes = fromJS({
-      VAN: [0, -10, 10, 10, 0],
+      VAN: [0, -5, 10, 5, 5, 0],
     });
 
     const normalTimes = normaliseTimes(session);
@@ -72,16 +72,17 @@ describe('normalise times', () => {
     const session = fromJS({
       drivers: {
         VAN: {
-          cumulativeTime: [0, 80, 190, 330, 470, 550],
+          // lap times:            90, 110, 140, 140, 90, 90, 90
+          // with slow laps fixed: 90, 110,  94,  94, 90, 90, 90
+          // typical lap: 94
+          // delta to typical:     -4, +16,   0,   0, -4, -4, -4
+          cumulativeTime: [0, 90, 200, 340, 480, 570, 660, 750],
         },
       },
     });
 
-    // these times aren't ideal but are correct for current algorithm
-    // would be better if lap 4 and 5 both showed zero change but
-    // needs a more complex algorithm
     const expectedTimes = fromJS({
-      VAN: [0, -13.125, 3.75, 13.125, 13.125, 0],
+      VAN: [0, -4, 12, 12, 12, 8, 4, 0],
     });
 
     const normalTimes = normaliseTimes(session);
