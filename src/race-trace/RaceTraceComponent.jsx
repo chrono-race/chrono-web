@@ -99,7 +99,7 @@ class RaceTraceComponent extends React.Component {
 
     const session = this.props.session;
     const normalTimes = normaliseTimes(session);
-    const chartData = plotStructure(normalTimes, this.props.selectedDriver, this.props.selectedOpponent);
+    const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
     const chartOptions = createChartOptions(findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent));
 
     if (chartData.length === 0) {

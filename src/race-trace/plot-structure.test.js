@@ -10,16 +10,26 @@ describe('plot structure', () => {
       VAN: [0, 1, 2],
       ALO: [1, 3, 5],
     });
+    const drivers = fromJS({
+      VAN: {
+        color: '#ff0000',
+      },
+      ALO: {
+        color: '#00ff00',
+      },
+    });
 
     const expected = [
       {
+        color: '#ff0000',
         data: [[1, 0], [2, 1], [3, 2]],
       },
       {
+        color: '#00ff00',
         data: [[1, 1], [2, 3], [3, 5]],
       }];
 
-    const result = plotStructure(normalTimes);
+    const result = plotStructure(normalTimes, drivers);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expected)));
   });
@@ -30,19 +40,30 @@ describe('plot structure', () => {
       ALO: [1, 3, 5],
     });
 
+    const drivers = fromJS({
+      VAN: {
+        color: '#ff0000',
+      },
+      ALO: {
+        color: '#00ff00',
+      },
+    });
+
     const expected = [
       {
         label: 'VAN',
+        color: '#ff0000',
         data: [[1, 0], [2, 1], [3, 2]],
         lines: {
           lineWidth: 2,
         },
       },
       {
+        color: '#00ff00',
         data: [[1, 1], [2, 3], [3, 5]],
       }];
 
-    const result = plotStructure(normalTimes, 'VAN');
+    const result = plotStructure(normalTimes, drivers, 'VAN');
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expected)));
   });
@@ -53,19 +74,30 @@ describe('plot structure', () => {
       ALO: [1, 3, 5],
     });
 
+    const drivers = fromJS({
+      VAN: {
+        color: '#ff0000',
+      },
+      ALO: {
+        color: '#00ff00',
+      },
+    });
+
     const expected = [
       {
         label: 'VAN',
+        color: '#ff0000',
         data: [[1, 0], [2, 1], [3, 2]],
         lines: {
           lineWidth: 2,
         },
       },
       {
+        color: '#00ff00',
         data: [[1, 1], [2, 3], [3, 5]],
       }];
 
-    const result = plotStructure(normalTimes, '', 'VAN');
+    const result = plotStructure(normalTimes, drivers, '', 'VAN');
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expected)));
   });
