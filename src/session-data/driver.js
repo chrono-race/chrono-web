@@ -46,14 +46,29 @@ function appendPitMessage(driver, msg) {
   return driver.set('currentStatus', msg.currentStatus).set('stints', fromJS(msg.stints));
 }
 
+function gapOrZero(gap) {
+  if (gap === undefined || isNaN(gap) || gap === null) {
+    return 0;
+  }
+  if (gap < 0) {
+    return NaN;
+  }
+  return gap;
+}
+
 function recalculateCumulativeTime(driver) {
   let time = 0;
   return driver.get('laps').map((lap) => {
     if (lap.get('lapNumber') === 1) {
-      time = lap.get('gap') || 0;
+      time = gapOrZero(lap.get('gap'));
       return time;
     }
-    time += lap.get('lapTime');
+    const nextLapTime = lap.get('lapTime');
+    if (nextLapTime > 0) {
+      time += nextLapTime;
+    } else {
+      time = NaN;
+    }
     return time;
   });
 }

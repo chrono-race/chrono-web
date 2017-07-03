@@ -55,6 +55,31 @@ function updateRaceName(existingRaceName, messages) {
   return existingRaceName;
 }
 
+function appendDriverMessage(drivers, msg) {
+  let updatedDrivers = drivers;
+  msg.drivers.forEach((d) => {
+    let driver = updatedDrivers.get(d.tla);
+    if (driver === undefined) {
+      driver = newDriver();
+    }
+    driver = driver.set('color', `#${d.color}`)
+              .set('number', d.number)
+              .set('team', d.team)
+              .set('tla', d.tla);
+    updatedDrivers = updatedDrivers.set(d.tla, driver);
+  });
+
+  return updatedDrivers;
+}
+
+function appendDriverMessages(drivers, driversMessages) {
+  let updatedDrivers = drivers;
+  driversMessages.forEach((msg) => {
+    updatedDrivers = appendDriverMessage(updatedDrivers, msg);
+  });
+  return updatedDrivers;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -76,7 +101,8 @@ export default (state = defaultSessionState, action) => {
 
   if (action.type === types.BACKLOG_RECEIVED ||
     action.type === types.EVENTS_RECEIVED) {
-    const backlogUpdatedDrivers = appendMessagesToDrivers(startingState.get('drivers'),
+    const updatedDrivers = appendDriverMessages(startingState.get('drivers'), action.messages.filter(m => m.type === 'drivers'));
+    const backlogUpdatedDrivers = appendMessagesToDrivers(updatedDrivers,
       action.messages.filter(m => m.type === 'lap' || m.type === 'pit'));
     const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)

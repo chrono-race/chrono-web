@@ -33,6 +33,28 @@ describe('session reducer', () => {
     assert(state.getIn('best', 's1Time').should.be.NaN);
   });
 
+  it('adds a new driver to the session with drivers message', () => {
+    const initialState = fromJS({ drivers: {} });
+    const action = actions.backlogReceived([{ type: 'drivers',
+      drivers: [
+        {
+          color: 'ff0000',
+          number: '42',
+          team: 'racing',
+          tla: 'TST',
+        },
+      ] }]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('drivers').count().should.equal(1));
+    assert(state.get('drivers').has('TST').should.equal(true));
+    assert(state.get('drivers').get('TST').get('color').should.equal('#ff0000'));
+    assert(state.get('drivers').get('TST').get('number').should.equal('42'));
+    assert(state.get('drivers').get('TST').get('team').should.equal('racing'));
+    assert(state.get('drivers').get('TST').get('tla').should.equal('TST'));
+  });
+
   it('adds a new driver to the session with first lap', () => {
     const initialState = fromJS({ drivers: {} });
     const action = actions.backlogReceived([{ type: 'lap', driver: 'VAN', lapNumber: 1, lapTime: 90.123 }]);
