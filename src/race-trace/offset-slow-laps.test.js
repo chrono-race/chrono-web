@@ -28,6 +28,19 @@ describe('offset slow laps', () => {
       .should.equal(JSON.stringify(expectedTimes)));
   });
 
+  it('ignores trailing NaN laps', () => {
+    const inputTimes = fromJS({
+      VAN: [0, 90, 230, 320, NaN],
+    });
+
+    const expectedTimes = fromJS({
+      VAN: [0, 90, 180, 270, NaN],
+    });
+
+    assert(JSON.stringify(offsetSlowLaps(inputTimes))
+      .should.equal(JSON.stringify(expectedTimes)));
+  });
+
   it('offsets multiple slow laps for one driver', () => {
     const inputTimes = fromJS({
       VAN: [0, 90, 230, 370, 460, 550],

@@ -20,20 +20,20 @@ function total(slowLaps) {
 function offsetSlowLaps(times) {
   let updatedTimes = times;
 
-  const maxLaps = updatedTimes.map(driver => driver.count()).max();
-  if (maxLaps === undefined) {
+  const lastLapIndex = updatedTimes.map(driver => driver.findLastIndex(t => !isNaN(t))).max();
+  if (lastLapIndex === undefined) {
     return times;
   }
-  const leaderLaps = [...Array(maxLaps).keys()]
+  const leaderLaps = [...Array(lastLapIndex + 1).keys()]
     .filter((v, i) => i > 0)
     .map(lapNumber => getLeaderLapTime(lapNumber, times));
   const medianLap = median(leaderLaps.sort());
   const slowLaps = leaderLaps.filter(l => l > medianLap * 1.3);
 
-  const leaderFinishTime = updatedTimes.get(leaderOnLap(times, maxLaps - 1)).get(maxLaps - 1);
-  const typicalLap = (leaderFinishTime - total(slowLaps)) / (maxLaps - 1 - slowLaps.length);
+  const leaderFinishTime = updatedTimes.get(leaderOnLap(times, lastLapIndex)).get(lastLapIndex);
+  const typicalLap = (leaderFinishTime - total(slowLaps)) / (lastLapIndex - slowLaps.length);
 
-  for (let lap = 1; lap < maxLaps; lap++) { // eslint-disable-line no-plusplus
+  for (let lap = 1; lap <= lastLapIndex; lap++) { // eslint-disable-line no-plusplus
     const leader = leaderOnLap(updatedTimes, lap);
     const lapTimes = updatedTimes.get(leader);
     const prevLap = lapTimes.get(lap - 1);
