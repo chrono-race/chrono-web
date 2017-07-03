@@ -22,19 +22,18 @@ function toDriverNormalTime(driverTimes, normalLap) {
 }
 
 function findLeaderAverageLap(times) {
-  const maxLaps = times.map(driver => driver.count()).max();
-  if (maxLaps === undefined) {
+  const lastLapIndex = times.map(driver => driver.findLastIndex(t => !isNaN(t))).max();
+  if (lastLapIndex === undefined) {
     return undefined;
   }
-  const leader = leaderOnLap(times, maxLaps - 1);
-  const leaderTime = times.get(leader).get(maxLaps - 1);
-  return leaderTime / (maxLaps - 1);
+  const leader = leaderOnLap(times, lastLapIndex);
+  const leaderTime = times.get(leader).get(lastLapIndex);
+  return leaderTime / lastLapIndex;
 }
 
 function normaliseTimes(session) {
   const times = toTimeStructure(session);
   const noSlowLaps = offsetSlowLaps(times, 90);
-
   const normalLap = findLeaderAverageLap(noSlowLaps);
   return noSlowLaps.map(driverTimes => toDriverNormalTime(driverTimes, normalLap));
 }

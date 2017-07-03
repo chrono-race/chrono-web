@@ -29,6 +29,30 @@ describe('normalise times', () => {
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });
 
+  it('ignores NaN laptimes', () => {
+    const session = fromJS({
+      drivers: {
+        VAN: {
+          cumulativeTime: [0, 91, 182, NaN],
+        },
+        ALO: {
+          cumulativeTime: [1, 93, 185, NaN],
+        },
+      },
+      best: {
+        lapTime: 90,
+      },
+    });
+    const expectedTimes = fromJS({
+      VAN: [0, 0, 0, NaN],
+      ALO: [1, 2, 3, NaN],
+    });
+
+    const normalTimes = normaliseTimes(session);
+
+    assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
+  });
+
   it('offsets slow laps', () => {
     const session = fromJS({
       drivers: {
