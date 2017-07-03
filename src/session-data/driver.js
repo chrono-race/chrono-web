@@ -47,7 +47,7 @@ function appendPitMessage(driver, msg) {
 }
 
 function gapOrZero(gap) {
-  if (gap === undefined || isNaN(gap)) {
+  if (gap === undefined || isNaN(gap) || gap === null) {
     return 0;
   }
   if (gap < 0) {
