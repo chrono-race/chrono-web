@@ -20,6 +20,7 @@ const Page1 = ({ session }) => {
   const driverRows = session.get('drivers')
     .valueSeq()
     .map(driver => getLastLap(driver))
+    .filter(lap => lap !== undefined)
     .sortBy(lap => lap.get('position'))
     .map(lap => <Page1Row
       key={lap.get('driver')}
