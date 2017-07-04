@@ -36,6 +36,11 @@ describe('session reducer', () => {
     assert(state.get('active').should.equal(true));
   });
 
+  it('seconds until connect is nan by default', () => {
+    const state = sessionReducer(undefined, {});
+    assert(state.get('secondsUntilConnect').should.be.NaN);
+  });
+
   it('has NaN session bests initially', () => {
     const state = sessionReducer(undefined, {});
     assert(state.getIn('best', 's1Time').should.be.NaN);

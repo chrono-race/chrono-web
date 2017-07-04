@@ -96,6 +96,7 @@ const defaultSessionState = fromJS({
   messages: [],
   raceName: '',
   active: false,
+  secondsUntilConnect: NaN,
 });
 
 export default (state = defaultSessionState, action) => {
