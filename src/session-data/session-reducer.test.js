@@ -41,6 +41,15 @@ describe('session reducer', () => {
     assert(state.get('secondsUntilConnect').should.be.NaN);
   });
 
+  it('seconds until connect updates from waiting message', () => {
+    const initialState = fromJS({ drivers: {}, active: false });
+    const action = actions.backlogReceived([{ type: 'waiting', remainingSec: 42 }]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('secondsUntilConnect').should.equal(42));
+  });
+
   it('has NaN session bests initially', () => {
     const state = sessionReducer(undefined, {});
     assert(state.getIn('best', 's1Time').should.be.NaN);

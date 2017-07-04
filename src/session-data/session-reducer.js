@@ -84,6 +84,13 @@ function updateActive(active, messages) {
   return active || messages.length > 0;
 }
 
+function updateSecondsUntilConnect(initialValue, messages) {
+  if (messages.length > 0) {
+    return messages[messages.length - 1].remainingSec;
+  }
+  return initialValue;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -116,7 +123,8 @@ export default (state = defaultSessionState, action) => {
       .set('time', updatedTime)
       .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
       .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')))
-      .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')));
+      .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')))
+      .set('secondsUntilConnect', updateSecondsUntilConnect(startingState.get('secondsUntilConnect'), action.messages.filter(m => m.type === 'waiting')));
   }
 
   return state;
