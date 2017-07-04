@@ -80,6 +80,10 @@ function appendDriverMessages(drivers, driversMessages) {
   return updatedDrivers;
 }
 
+function updateActive(active, messages) {
+  return active || messages.length > 0;
+}
+
 const defaultSessionState = fromJS({
   drivers: {},
   best: {
@@ -91,6 +95,7 @@ const defaultSessionState = fromJS({
   time: NaN,
   messages: [],
   raceName: '',
+  active: false,
 });
 
 export default (state = defaultSessionState, action) => {
@@ -109,7 +114,8 @@ export default (state = defaultSessionState, action) => {
       .set('best', findSessionBests(backlogUpdatedDrivers))
       .set('time', updatedTime)
       .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
-      .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')));
+      .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')))
+      .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')));
   }
 
   return state;

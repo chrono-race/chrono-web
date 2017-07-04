@@ -13,6 +13,29 @@ describe('session reducer', () => {
     assert(state.get('drivers').count().should.equal(0));
   });
 
+  it('session is not active by default', () => {
+    const state = sessionReducer(undefined, {});
+    assert(state.get('active').should.equal(false));
+  });
+
+  it('does not mark session as active when a waiting message arrives', () => {
+    const initialState = fromJS({ drivers: {}, active: false });
+    const action = actions.backlogReceived([{ type: 'waiting', remainingSec: 42 }]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('active').should.equal(false));
+  });
+
+  it('marks session as active when any non-waiting message arrives', () => {
+    const initialState = fromJS({ drivers: {}, active: false });
+    const action = actions.backlogReceived([{ type: 'something' }]);
+
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('active').should.equal(true));
+  });
+
   it('has NaN session bests initially', () => {
     const state = sessionReducer(undefined, {});
     assert(state.getIn('best', 's1Time').should.be.NaN);
