@@ -209,3 +209,8 @@ html, body, #root, .full-height {
   width: 100%;
   height: 100%;
 }
+
+.not-active-timer {
+  padding: 50px;
+  margin: 25px;
+}
