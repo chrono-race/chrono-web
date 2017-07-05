@@ -43,8 +43,21 @@ DriverSelectorContainer.defaultProps = {
 };
 
 function mapStateToProps(state) {
+  const driversMap = state.session.get('drivers');
+  const localDrivers = driversMap.keySeq().toArray();
+
+  localDrivers.sort((a, b) => {
+    const driverA = driversMap.get(a);
+    const driverB = driversMap.get(b);
+
+    const driverATeamOrder = driverA.get('teamOrder');
+    const driverBTeamOrder = driverB.get('teamOrder');
+
+    return driverATeamOrder === driverBTeamOrder ? driverA.get('number') - driverB.get('number') : driverATeamOrder - driverBTeamOrder;
+  });
+
   return {
-    drivers: state.session.get('drivers').keySeq().toArray(),
+    drivers: localDrivers,
     selectedDriver: state.selectedDriver.get('selectedDriver'),
     selectedOpponent: state.selectedDriver.get('selectedOpponent'),
   };
