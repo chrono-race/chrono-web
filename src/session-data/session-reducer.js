@@ -65,7 +65,8 @@ function appendDriverMessage(drivers, msg) {
     driver = driver.set('color', `#${d.color}`)
               .set('number', d.number)
               .set('team', d.team)
-              .set('tla', d.tla);
+              .set('tla', d.tla)
+              .set('teamOrder', d.teamOrder);
     updatedDrivers = updatedDrivers.set(d.tla, driver);
   });
 

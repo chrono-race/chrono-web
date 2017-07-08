@@ -79,6 +79,7 @@ describe('session reducer', () => {
           number: '42',
           team: 'racing',
           tla: 'TST',
+          teamOrder: '2',
         },
       ] }]);
 
@@ -90,6 +91,7 @@ describe('session reducer', () => {
     assert(state.get('drivers').get('TST').get('number').should.equal('42'));
     assert(state.get('drivers').get('TST').get('team').should.equal('racing'));
     assert(state.get('drivers').get('TST').get('tla').should.equal('TST'));
+    assert(state.get('drivers').get('TST').get('teamOrder').should.equal('2'));
   });
 
   it('adds a new driver to the session with first lap', () => {
