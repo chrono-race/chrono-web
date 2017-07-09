@@ -27,6 +27,7 @@ const Page1 = ({ session }) => {
       lastLap={lap}
       driver={session.get('drivers').get(lap.get('driver'))}
       sessionBests={sessionBests}
+      totalLaps={session.get('totalLaps')}
     />);
   return (
     <div className="auto-scroll-container">
