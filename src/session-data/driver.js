@@ -33,6 +33,10 @@ export const newDriver = () => (fromJS({
 
 function appendLapMessage(driver, msg) {
   let laps = driver.get('laps');
+  if (isNaN(msg.lapNumber) || msg.lapNumber === undefined || msg.lapNumber === null) {
+    console.log(`ignoring ${JSON.stringify(msg)}`);
+    return driver;
+  }
   while (laps.count() < msg.lapNumber) {
     laps = laps.push(fromJS(emptyLap(laps.count() + 1)));
   }
