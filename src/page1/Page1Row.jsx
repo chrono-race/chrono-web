@@ -34,7 +34,7 @@ function toIntervalOrLapNumber(lastLap) {
 }
 
 function inPitOr(driver, alternative) {
-  if (driver.get('currentStatus') === 'pit') {
+  if (driver.get('currentStatus') === 'in pit') {
     return 'pit';
   }
   return alternative;

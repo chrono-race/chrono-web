@@ -31,6 +31,11 @@ html, body, #root, .full-height {
   line-height: 1.25 !important;
 }
 
+.timing-table > tbody > tr > td.pit {
+  color: #DD0000;
+  font-weight: bold;
+}
+
 .driver-history > tbody > tr > td.lapNumber {
   width: 4%;
 }
