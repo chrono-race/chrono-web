@@ -4,6 +4,7 @@ import Immutable from 'immutable';
 import { toSectorTime, toLapTime } from '../session-data/timing-utils';
 import { tyreClass, tyreText, tyrePrompt } from '../session-data/tyres';
 import bestClass from './bestClass';
+import getDelta from './getDelta';
 
 function stintForLap(lapNumber, driver) {
   return driver.get('stints').findLast(stint => stint.get('startLap') <= lapNumber);
@@ -21,15 +22,6 @@ function pitText(lapNumber, stints) {
     return 'Out';
   }
   return '';
-}
-
-function getDelta(driver, opponent, lapNumber) {
-  if (driver === undefined || opponent === undefined) {
-    return '';
-  }
-  const driverCumTime = driver.get('cumulativeTime').get(lapNumber - 1);
-  const opponentCumTime = opponent.get('cumulativeTime').get(lapNumber - 1);
-  return `${(driverCumTime - opponentCumTime).toFixed(3)}`;
 }
 
 const DriverHistoryLap = ({ lap, driver, opponent, sessionBests }) => {
