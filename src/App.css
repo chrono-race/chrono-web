@@ -6,15 +6,77 @@ html, body, #root, .full-height {
   text-align: center;
 }
 
-.first-row {
-  height: 44%;
+.driver-selection {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 4%;
+  height: 85%;
 }
 
-.second-row {
-  height: 44%;
+.opponent-selection {
+  position: absolute;
+  left: 4%;
+  top: 0%;
+  width: 4%;
+  height: 85%;
 }
-.third-row {
-  height: 11%;
+
+.race-meta-data {
+  position: absolute;
+  left: 8%;
+  top: 0%;
+  width: 42%;
+  height: 6%;
+}
+
+.race-meta-data > .race-name {
+  float: left;
+  padding: 0.5em;
+}
+
+.race-meta-data > .clock {
+  float: right;
+  padding: 0.5em;
+}
+
+.driver-history-container {
+  position: absolute;
+  left: 8%;
+  top: 6%;
+  width: 42%;
+  height: 39%;
+}
+
+.race-control-messages {
+  position: absolute;
+  left: 0%;
+  top: 85%;
+  width: 50%;
+  height: 15%;
+}
+
+.page1 {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  width: 50%;
+  height: 45%;
+  padding: 0.2em;
+  text-align: center;
+}
+
+.race-trace {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 50%;
+  height: 55%;
+}
+
+.plot-container {
+  width: 100%;
+  height: 100%;
 }
 
 .timing-table {
@@ -37,27 +99,44 @@ html, body, #root, .full-height {
 }
 
 .driver-history > tbody > tr > td.lapNumber {
-  width: 4%;
+  width: 8%;
+  text-align: center;
 }
 
 .driver-history > tbody > tr > td.s1Time {
   width: 16%;
+  text-align: center;
 }
 
 .driver-history > tbody > tr > td.s2Time {
   width: 16%;
+  text-align: center;
 }
 
 .driver-history > tbody > tr > td.s3Time {
   width: 16%;
+  text-align: center;
 }
 
 .driver-history > tbody > tr > td.lapTime {
   width: 16%;
+  text-align: center;
 }
 
 .driver-history > tbody > tr > td.pit {
-  width: 8%;
+  width: 12%;
+  text-align: center;
+}
+
+.driver-history > tbody > tr > td.tyre {
+  width: 3%;
+  text-align: center;
+}
+
+.driver-history > tbody > tr > td.gap {
+  width: 13%;
+  text-align: right;
+  padding-right: 0.5em !important;
 }
 
 .timing-table > tbody > tr > td.personalBest {
@@ -84,23 +163,23 @@ html, body, #root, .full-height {
 }
 
 .driver-history > thead > tr > th.lapNumber {
-  width: 4%;
+  width: 8%;
 }
 
 .driver-history > thead > tr > th.s1Time {
-  width: 16%;
+  width: 16.25%;
 }
 
 .driver-history > thead > tr > th.s2Time {
-  width: 16%;
+  width: 16.25%;
 }
 
 .driver-history > thead > tr > th.s3Time {
-  width: 16%;
+  width: 16.25%;
 }
 
 .driver-history > thead > tr > th.lapTime {
-  width: 16%;
+  width: 16.25%;
 }
 
 .driver-history > thead > tr > th.pit {
@@ -109,28 +188,6 @@ html, body, #root, .full-height {
 
 .driver-history > thead > tr > th.tyre {
   width: 4%;
-}
-
-.left-pane {
-  padding-left: 0.2em !important;
-  padding-top: 0.2em !important;
-  padding-right: 0em !important;
-}
-
-.opponent-pane {
-  padding-left: 0.4em !important;
-  padding-top: 0.2em !important;
-  padding-right: 0em !important;  
-}
-
-.data-pane {
-  padding: 0.2em 0.2em 0em 0.2em;
-  height: 100%;
-}
-
-.pane {
-  padding: 2px !important;
-  height: 100%;
 }
 
 .flex-container {
@@ -150,14 +207,13 @@ html, body, #root, .full-height {
 }
 
 .time-of-day {
-  font-size: 36pt;
+  font-size: 15px;
 }
 
 .race-control-messages {
   font-size: 8pt;
   text-align: left;
   overflow-y: scroll;
-  height: 100%;
   line-height: 1.3;
 }
 
@@ -210,12 +266,8 @@ html, body, #root, .full-height {
   color: black;
 }
 
-.race-trace {
-  width: 100%;
-  height: 100%;
-}
-
 .not-active-timer {
   padding: 50px;
   margin: 25px;
 }
+

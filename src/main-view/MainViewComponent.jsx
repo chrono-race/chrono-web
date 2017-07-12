@@ -9,43 +9,31 @@ import RaceTrace from '../race-trace/RaceTraceComponent';
 
 const MainViewComponent = () => (
   <div className="full-height">
-    <div className="row first-row">
-      <div className="col-md-1 left-pane">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-2 left-pane">
-              <DriverSelector choice="driver" />
-            </div>
-            <div className="col-md-1" />
-            <div className="col-md-2 opponent-pane">
-              <DriverSelector choice="opponent" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-md-5 data-pane">
-        <DriverHistory />
-      </div>
-      <div className="col-md-6 data-pane">
-        <Page1 />
-      </div>
+    <div className="driver-selection">
+      <DriverSelector choice="driver" />
     </div>
-    <div className="row second-row full-height">
-      <div className="col-md-5 full-height" />
-      <div className="col-md-6 full-height">
-        <RaceTrace />
-      </div>
+    <div className="opponent-selection">
+      <DriverSelector choice="opponent" />
     </div>
-    <div className="row third-row">
-      <div className="col-md-6 pane">
-        <RaceControlMessages />
-      </div>
-      <div className="col-md-2">
-        <TimeOfDay />
-      </div>
-      <div className="col-md-4">
+    <div className="race-meta-data">
+      <div className="race-name">
         <RaceName />
       </div>
+      <div className="clock">
+        <TimeOfDay />
+      </div>
+    </div>
+    <div className="driver-history-container">
+      <DriverHistory />
+    </div>
+    <div className="race-control-messages">
+      <RaceControlMessages />
+    </div>
+    <div className="page1">
+      <Page1 />
+    </div>
+    <div className="race-trace">
+      <RaceTrace />
     </div>
   </div>
 );

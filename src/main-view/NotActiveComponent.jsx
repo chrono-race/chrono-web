@@ -20,11 +20,13 @@ function getConnectMessage(time) {
 }
 
 const NotActiveComponent = ({ secondsUntilConnect }) => (
-  <div className="row">
-    <div className="col-md-4" />
-    <div className="col-md-4 panel not-active-timer">
-      There is no session currently active <br /><br />
-      {getConnectMessage(secondsUntilConnect)}
+  <div className="App container-fluid full-height">
+    <div className="row">
+      <div className="col-md-4" />
+      <div className="col-md-4 panel not-active-timer">
+        There is no session currently active <br /><br />
+        {getConnectMessage(secondsUntilConnect)}
+      </div>
     </div>
   </div>
 );

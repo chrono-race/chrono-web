@@ -3,9 +3,7 @@ import './App.css';
 import MainView from './main-view/MainViewSwitcher';
 
 const App = () => (
-  <div className="App container-fluid full-height">
-    <MainView />
-  </div>
+  <MainView />
 );
 
 export default App;

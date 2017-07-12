@@ -12,7 +12,7 @@ const RaceControlMessageRow = msg => (
 
 const RaceControlMessages = ({ messages }) => {
   const messageRows = messages.reverse().map(msg => RaceControlMessageRow(msg));
-  return (<div className="race-control-messages container-fluid">{messageRows}</div>);
+  return (<div className="container-fluid">{messageRows}</div>);
 };
 
 RaceControlMessages.propTypes = {

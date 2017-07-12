@@ -36,12 +36,11 @@ const DriverHistoryLap = ({ lap, driver, opponent, sessionBests }) => {
       <td className={bestClass('lapTime', lap, driverBests, sessionBests)}>{toLapTime(lap.get('lapTime'))}</td>
       <td className="pit">{pitText(lap.get('lapNumber'), driver.get('stints'))}</td>
       <td
-        width="3%"
-        className={tyreClass(stint)}
+        className={`tyre ${tyreClass(stint)}`}
         data-toggle="tooltip"
         title={tyrePrompt(stint)}
       >{tyreText(stint)}</td>
-      <td>{getDelta(driver, opponent, lap.get('lapNumber'))}</td>
+      <td className="gap">{getDelta(driver, opponent, lap.get('lapNumber'))}</td>
     </tr>
   );
 };

@@ -92,11 +92,6 @@ class RaceTraceComponent extends React.Component {
     this.renderPlot();
   }
   renderPlot() {
-    const w = $(window).width();
-    const h = $(window).height();
-    $(this.refs.plotContainer).width(w * 0.48);
-    $(this.refs.plotContainer).height(h * 0.44);
-
     const session = this.props.session;
     const normalTimes = normaliseTimes(session);
     const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
@@ -110,7 +105,7 @@ class RaceTraceComponent extends React.Component {
   }
   render() {
     return (
-      <div className="race-trace" ref="plotContainer" />
+      <div className="plot-container" ref="plotContainer" />
     );
   }
 }
