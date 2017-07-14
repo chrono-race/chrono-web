@@ -1,6 +1,8 @@
 import { fromJS } from 'immutable';
 import * as types from '../actions/action-types';
 import { newDriver, appendMessage, findBests } from './driver';
+import findFreeAirLaps from './free-air-laps';
+import paceModel from './pace-model.js';
 
 function appendMessagesToDrivers(drivers, messages) {
   let updatedDrivers = drivers;
@@ -118,6 +120,8 @@ export default (state = defaultSessionState, action) => {
     const updatedDrivers = appendDriverMessages(startingState.get('drivers'), action.messages.filter(m => m.type === 'drivers'));
     const backlogUpdatedDrivers = appendMessagesToDrivers(updatedDrivers,
       action.messages.filter(m => m.type === 'lap' || m.type === 'pit'));
+    const freeAirLaps = findFreeAirLaps(backlogUpdatedDrivers);
+    const model = paceModel(backlogUpdatedDrivers, freeAirLaps);
     const updatedTime = updateTime(startingState.get('time'), action.messages.filter(m => m.type === 'time'));
     return startingState.set('drivers', backlogUpdatedDrivers)
       .set('best', findSessionBests(backlogUpdatedDrivers))
@@ -125,6 +129,8 @@ export default (state = defaultSessionState, action) => {
       .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
       .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')))
       .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')))
+      .set('freeAirLaps', freeAirLaps)
+      .set('paceModel', model)
       .set('secondsUntilConnect', updateSecondsUntilConnect(startingState.get('secondsUntilConnect'), action.messages.filter(m => m.type === 'waiting')));
   }
 
