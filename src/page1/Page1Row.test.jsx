@@ -24,7 +24,7 @@ describe('page1 row', () => {
     });
     const sessionBests = fromJS({});
     const wrapper = shallow(<Page1Row
-      lastLap={lastLap} driver={driver} sessionBests={sessionBests}
+      lastLap={lastLap} driver={driver} sessionBests={sessionBests} totalLaps={20}
     />);
     assert(wrapper.find('tr > td').length.should.equal(9));
     assert(wrapper.find('tr > td.position').text().should.equal('4'));
@@ -54,13 +54,13 @@ describe('page1 row', () => {
     });
     const sessionBests = fromJS({});
     const wrapper = shallow(<Page1Row
-      lastLap={lastLap} driver={driver} sessionBests={sessionBests}
+      lastLap={lastLap} driver={driver} sessionBests={sessionBests} totalLaps={20}
     />);
     assert(wrapper.find('tr > td').length.should.equal(9));
     assert(wrapper.find('tr > td.position').text().should.equal('1'));
     assert(wrapper.find('tr > td.driver').text().should.equal('VET'));
     assert(wrapper.find('tr > td.gap').text().should.equal('LAP'));
-    assert(wrapper.find('tr > td.interval').text().should.equal('17'));
+    assert(wrapper.find('tr > td.interval').text().should.equal('17/20'));
   });
 
   it('shows lap number + 1 for leader in sector 1', () => {
@@ -80,13 +80,39 @@ describe('page1 row', () => {
     });
     const sessionBests = fromJS({});
     const wrapper = shallow(<Page1Row
-      lastLap={lastLap} driver={driver} sessionBests={sessionBests}
+      lastLap={lastLap} driver={driver} sessionBests={sessionBests} totalLaps={20}
     />);
     assert(wrapper.find('tr > td').length.should.equal(9));
     assert(wrapper.find('tr > td.position').text().should.equal('1'));
     assert(wrapper.find('tr > td.driver').text().should.equal('VET'));
     assert(wrapper.find('tr > td.gap').text().should.equal('LAP'));
-    assert(wrapper.find('tr > td.interval').text().should.equal('18'));
+    assert(wrapper.find('tr > td.interval').text().should.equal('18/20'));
+  });
+
+  it('shows lap number == total laps for leader in sector 1', () => {
+    const lastLap = fromJS({
+      lapNumber: 20,
+      position: 1,
+      driver: 'VET',
+      gap: 1.23,
+      interval: 3.45,
+      s1Time: 12.345,
+      s2Time: 23.456,
+      s3Time: 34.567,
+    });
+    const driver = fromJS({
+      best: {},
+      stints: [],
+    });
+    const sessionBests = fromJS({});
+    const wrapper = shallow(<Page1Row
+      lastLap={lastLap} driver={driver} sessionBests={sessionBests} totalLaps={20}
+    />);
+    assert(wrapper.find('tr > td').length.should.equal(9));
+    assert(wrapper.find('tr > td.position').text().should.equal('1'));
+    assert(wrapper.find('tr > td.driver').text().should.equal('VET'));
+    assert(wrapper.find('tr > td.gap').text().should.equal('LAP'));
+    assert(wrapper.find('tr > td.interval').text().should.equal('20/20'));
   });
 
   it('shows pit for driver in pits', () => {
@@ -107,7 +133,7 @@ describe('page1 row', () => {
       stints: [],
     });
     const wrapper = shallow(<Page1Row
-      lastLap={lastLap} driver={driver} sessionBests={sessionBests}
+      lastLap={lastLap} driver={driver} sessionBests={sessionBests} totalLaps={20}
     />);
     assert(wrapper.find('tr > td').length.should.equal(9));
     assert(wrapper.find('tr > td.pit').text().should.equal('pit'));
