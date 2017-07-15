@@ -23,12 +23,17 @@ function toGapOrLap(lastLap) {
   return toGapTime(lastLap.get('gap'));
 }
 
-function toIntervalOrLapNumber(lastLap) {
+function toIntervalOrLapNumber(lastLap, totalLaps) {
   if (lastLap.get('position') === 1) {
-    if (lastLap.get('s3Time') == null) {
-      return lastLap.get('lapNumber');
+    let lapNumberToDisplay = lastLap.get('lapNumber');
+
+    if (lastLap.get('s3Time') && lapNumberToDisplay !== totalLaps) {
+      /* we have S3 time from last lap and lapNumber is not same as total laps
+         so we show the next lap is in progress */
+      lapNumberToDisplay += 1;
     }
-    return lastLap.get('lapNumber') + 1;
+
+    return `${lapNumberToDisplay}/${totalLaps}`;
   }
   return toSectorTime(lastLap.get('interval'));
 }
@@ -40,7 +45,7 @@ function inPitOr(driver, alternative) {
   return alternative;
 }
 
-const Page1Row = ({ lastLap, sessionBests, driver }) => {
+const Page1Row = ({ lastLap, sessionBests, driver, totalLaps }) => {
   const driverBests = driver !== undefined ? driver.get('best') : undefined;
   const lastStint = driver.get('stints').count() === 0 ? undefined : driver.get('stints').get(driver.get('stints').count() - 1);
   return (
@@ -48,7 +53,7 @@ const Page1Row = ({ lastLap, sessionBests, driver }) => {
       <td width="6.6%" className="position">{lastLap.get('position')}</td>
       <td width="6.6%" className="driver">{lastLap.get('driver')}</td>
       <td width="13.3%" className="gap">{toGapOrLap(lastLap)}</td>
-      <td width="13.3%" className="interval">{toIntervalOrLapNumber(lastLap)}</td>
+      <td width="13.3%" className="interval">{toIntervalOrLapNumber(lastLap, totalLaps)}</td>
       <td width="16.6%" className={bestClass('lapTime', lastLap, driverBests, sessionBests)}>{toLapTime(lastLap.get('lapTime'))}</td>
       <td width="13.3%" className={bestClass('s1Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s1Time'))}</td>
       <td width="13.3%" className={bestClass('s2Time', lastLap, driverBests, sessionBests)}>{toSectorTime(lastLap.get('s2Time'))}</td>
@@ -67,6 +72,7 @@ Page1Row.propTypes = {
   lastLap: PropTypes.instanceOf(Immutable.Map).isRequired,
   sessionBests: PropTypes.instanceOf(Immutable.Map).isRequired,
   driver: PropTypes.instanceOf(Immutable.Map).isRequired,
+  totalLaps: PropTypes.number.isRequired,
 };
 
 export default Page1Row;
