@@ -7,12 +7,14 @@ import flot from 'flot-for-node'; // eslint-disable-line no-unused-vars
 import normaliseTimes from './normalise-times';
 import plotStructure from './plot-structure';
 
-function createChartOptions(minMax) {
+function createChartOptions(minMax, totalLaps) {
   return {
     xaxis: {
       show: true,
       color: 'white',
       tickColor: 'white',
+      min: 1,
+      max: totalLaps,
       font: {
         size: 10,
         lineHeight: 13,
@@ -95,7 +97,7 @@ class RaceTraceComponent extends React.Component {
     const session = this.props.session;
     const normalTimes = normaliseTimes(session);
     const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
-    const chartOptions = createChartOptions(findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent));
+    const chartOptions = createChartOptions(findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent), session.get('totalLaps'));
 
     if (chartData.length === 0) {
       return;
