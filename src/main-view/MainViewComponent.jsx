@@ -6,7 +6,7 @@ import TimeOfDay from '../time-of-day/TimeOfDayContainer';
 import RaceName from '../race-name/RaceNameContainer';
 import RaceControlMessages from '../race-control-messages/RaceControlMessagesContainer';
 import RaceTrace from '../race-trace/RaceTraceComponent';
-import TyreModel from '../pace-model/FuelModelComponent';
+import FuelModel from '../pace-model/FuelModelContainer';
 
 const MainViewComponent = () => (
   <div className="full-height">
@@ -28,7 +28,7 @@ const MainViewComponent = () => (
       <DriverHistory />
     </div>
     <div className="pace-model-container">
-      <TyreModel />
+      <FuelModel />
     </div>
     <div className="race-control-messages">
       <RaceControlMessages />

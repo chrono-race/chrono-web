@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
 import $ from 'jquery';
@@ -167,11 +166,4 @@ FuelModelComponent.defaultProps = {
   selectedDriver: '',
 };
 
-function mapStateToProps(state) {
-  return {
-    session: state.session,
-    selectedDriver: state.selectedDriver.get('selectedDriver'),
-  };
-}
-
-export default connect(mapStateToProps)(FuelModelComponent);
+export default FuelModelComponent;
