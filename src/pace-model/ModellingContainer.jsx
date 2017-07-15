@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import FuelModelComponent from './FuelModelComponent';
 
-const FuelModelContainer = ({ session, selectedDriver }) => {
+const ModellingContainer = ({ session, selectedDriver }) => {
   const paceModel = session.get('paceModel');
   if (paceModel.fuelEffect === undefined) {
     return (
@@ -16,12 +16,12 @@ const FuelModelContainer = ({ session, selectedDriver }) => {
   );
 };
 
-FuelModelContainer.propTypes = {
+ModellingContainer.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
   selectedDriver: PropTypes.string,
 };
 
-FuelModelContainer.defaultProps = {
+ModellingContainer.defaultProps = {
   selectedDriver: '',
 };
 
@@ -32,4 +32,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(FuelModelContainer);
+export default connect(mapStateToProps)(ModellingContainer);
