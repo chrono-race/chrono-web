@@ -108,12 +108,20 @@ describe('session reducer', () => {
     assert(state.getIn(['drivers', 'VAN', 'best', 'lapTime']).should.equal(90.123));
   });
 
-  it('sets race name on receipt of backlog message of type race_name', () => {
+  it('sets race name on receipt of backlog message of type race_meta_data', () => {
     const initialState = fromJS({ drivers: {} });
-    const action = actions.backlogReceived([{ type: 'race_name', name: 'My Race' }]);
+    const action = actions.backlogReceived([{ type: 'race_meta_data', name: 'My Race' }]);
     const state = sessionReducer(initialState, action);
 
     assert(state.get('raceName').should.equal('My Race'));
+  });
+
+  it('sets total laps on receipt of backlog message of type race_meta_data', () => {
+    const initialState = fromJS({ drivers: {} });
+    const action = actions.backlogReceived([{ type: 'race_meta_data', totalLaps: 51 }]);
+    const state = sessionReducer(initialState, action);
+
+    assert(state.get('totalLaps').should.equal(51));
   });
 
   it('appends to a session on events message', () => {

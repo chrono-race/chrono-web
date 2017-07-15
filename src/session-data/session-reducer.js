@@ -57,6 +57,14 @@ function updateRaceName(existingRaceName, messages) {
   return existingRaceName;
 }
 
+function updateTotalLaps(existingTotalLaps, messages) {
+  const msg = messages.find(x => x !== undefined);
+  if (msg !== undefined) {
+    return msg.totalLaps;
+  }
+  return existingTotalLaps;
+}
+
 function appendDriverMessage(drivers, msg) {
   let updatedDrivers = drivers;
   msg.drivers.forEach((d) => {
@@ -107,6 +115,7 @@ const defaultSessionState = fromJS({
   raceName: '',
   active: false,
   secondsUntilConnect: NaN,
+  totalLaps: NaN,
 });
 
 export default (state = defaultSessionState, action) => {
@@ -127,7 +136,8 @@ export default (state = defaultSessionState, action) => {
       .set('best', findSessionBests(backlogUpdatedDrivers))
       .set('time', updatedTime)
       .set('messages', updateMessages(startingState.get('messages'), action.messages.filter(m => m.type === 'race_control_message')))
-      .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_name')))
+      .set('raceName', updateRaceName(startingState.get('raceName'), action.messages.filter(m => m.type === 'race_meta_data')))
+      .set('totalLaps', updateTotalLaps(startingState.get('totalLaps'), action.messages.filter(m => m.type === 'race_meta_data')))
       .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')))
       .set('freeAirLaps', freeAirLaps)
       .set('paceModel', model)

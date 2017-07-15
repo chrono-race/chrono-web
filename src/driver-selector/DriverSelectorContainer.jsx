@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import Immutable from 'immutable';
 import DriverSelector from './DriverSelectorComponent';
 import { selectDriver, selectOpponent } from './driver-selector-actions';
 
@@ -20,7 +21,7 @@ const DriverSelectorContainer =
     }
     return (
       <DriverSelector
-        drivers={drivers.filter(d => d !== selectedDriver)}
+        drivers={drivers.filter(d => d.get('tla') !== selectedDriver)}
         selectedDriver={selectedOpponent}
         onSelect={onSelectOpponent}
         showVs
@@ -29,7 +30,7 @@ const DriverSelectorContainer =
   };
 
 DriverSelectorContainer.propTypes = {
-  drivers: PropTypes.arrayOf(PropTypes.string).isRequired,
+  drivers: PropTypes.instanceOf(Immutable.Map).isRequired,
   selectedDriver: PropTypes.string,
   selectedOpponent: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
@@ -43,21 +44,8 @@ DriverSelectorContainer.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  const driversMap = state.session.get('drivers');
-  const localDrivers = driversMap.keySeq().toArray();
-
-  localDrivers.sort((a, b) => {
-    const driverA = driversMap.get(a);
-    const driverB = driversMap.get(b);
-
-    const driverATeamOrder = driverA.get('teamOrder');
-    const driverBTeamOrder = driverB.get('teamOrder');
-
-    return driverATeamOrder === driverBTeamOrder ? driverA.get('number') - driverB.get('number') : driverATeamOrder - driverBTeamOrder;
-  });
-
   return {
-    drivers: localDrivers,
+    drivers: state.session.get('drivers'),
     selectedDriver: state.selectedDriver.get('selectedDriver'),
     selectedOpponent: state.selectedDriver.get('selectedOpponent'),
   };
