@@ -1,7 +1,8 @@
+import { fromJS } from 'immutable';
 
 function removeSlowLaps(laps) {
   const min = Math.min(...laps.map(lap => lap.lapTime));
-  return laps.filter(lap => lap.lapTime < min * 1.1);
+  return laps.filter(lap => lap.lapTime < min * 1.05);
 }
 
 function isFreeAirForDriver(time, driver) {
@@ -58,7 +59,7 @@ function findDriverFreeAirLaps(driver, allDrivers) {
 //   tyre
 //   lapTime
 function findFreeAirLaps(drivers) {
-  return drivers.map(driver => removeSlowLaps(findDriverFreeAirLaps(driver, drivers)));
+  return fromJS(drivers.map(driver => removeSlowLaps(findDriverFreeAirLaps(driver, drivers))));
 }
 
 export default findFreeAirLaps;

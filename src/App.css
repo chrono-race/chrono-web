@@ -48,6 +48,14 @@ html, body, #root, .full-height {
   height: 39%;
 }
 
+.pace-model-container {
+  position: absolute;
+  left: 8%;
+  top: 45%;
+  width: 42%;
+  height: 40%;
+}
+
 .race-control-messages {
   position: absolute;
   left: 0%;
