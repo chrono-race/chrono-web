@@ -271,3 +271,6 @@ html, body, #root, .full-height {
   margin: 25px;
 }
 
+.session-list-selector {
+  color: #212121;
+}
