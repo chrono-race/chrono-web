@@ -9,3 +9,13 @@ export const eventsReceived = messages => ({
   type: types.EVENTS_RECEIVED,
   messages,
 });
+
+export const sessionListReceived = sessions => ({
+  type: types.SESSION_LIST_RECEIVED,
+  sessions,
+});
+
+export const socketConnected = socket => ({
+  type: types.SOCKET_CONNECTED,
+  socket,
+});

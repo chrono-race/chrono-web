@@ -1,5 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import Immutable from 'immutable';
+import SessionList from './SessionListComponent';
 
 function toSimpleTime(time) {
   let hours = Math.floor(time / 3600);
@@ -19,13 +21,14 @@ function getConnectMessage(time) {
   return (<div>Connecting in <b>{toSimpleTime(time)}</b></div>);
 }
 
-const NotActiveComponent = ({ secondsUntilConnect }) => (
+const NotActiveComponent = ({ secondsUntilConnect, sessions, onSelect }) => (
   <div className="App container-fluid full-height">
     <div className="row">
       <div className="col-md-4" />
       <div className="col-md-4 panel not-active-timer">
         There is no session currently active <br /><br />
-        {getConnectMessage(secondsUntilConnect)}
+        {getConnectMessage(secondsUntilConnect)} <br /><br />
+        <SessionList sessions={sessions} onSelect={onSelect} />
       </div>
     </div>
   </div>
@@ -33,6 +36,8 @@ const NotActiveComponent = ({ secondsUntilConnect }) => (
 
 NotActiveComponent.propTypes = {
   secondsUntilConnect: PropTypes.number.isRequired,
+  sessions: PropTypes.instanceOf(Immutable.List).isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default NotActiveComponent;
