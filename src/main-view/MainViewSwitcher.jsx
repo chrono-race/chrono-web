@@ -14,7 +14,7 @@ class MainViewContainer extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/sessions')
+    fetch(`${process.env.REACT_APP_SERVER}sessions`)
     .then(res => res.json())
     .then((json) => {
       this.props.onSessionsReceived(json);
@@ -26,7 +26,7 @@ class MainViewContainer extends React.Component {
 
   onSelectSession(session) {
     console.log(`Loading ${session}...`);
-    fetch(`http://localhost:8000/sessions/${session}`)
+    fetch(`${process.env.REACT_APP_SERVER}sessions/${session}`)
     .then(res => res.json())
     .then((json) => {
       console.log('Session loaded');
