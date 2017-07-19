@@ -6,7 +6,7 @@ import App from './App';
 import configureStore from './store/configure-store';
 import './index.css';
 import './css/main.css';
-import { backlogReceived, eventsReceived } from './actions/data-actions';
+import { backlogReceived, eventsReceived, socketConnected } from './actions/data-actions';
 
 const store = configureStore();
 
@@ -20,6 +20,7 @@ ReactDOM.render(
 
 console.log(`connecting to ${process.env.REACT_APP_SERVER}`);
 const socket = io.connect(process.env.REACT_APP_SERVER);
+store.dispatch(socketConnected(socket));
 socket.on('backlog', (data) => {
   console.log('Got backlog:', data.events);
   store.dispatch(backlogReceived(data.events));

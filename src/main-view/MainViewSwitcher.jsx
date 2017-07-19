@@ -25,6 +25,8 @@ class MainViewContainer extends React.Component {
   }
 
   onSelectSession(session) {
+    console.log('Disconnecting socket');
+    this.props.connection.socket.disconnect();
     console.log(`Loading ${session}...`);
     fetch(`${process.env.REACT_APP_SERVER}sessions/${session}`)
     .then(res => res.json())
@@ -60,11 +62,13 @@ MainViewContainer.propTypes = {
   onSessionsReceived: PropTypes.func.isRequired,
   onSessionLoaded: PropTypes.func.isRequired,
   sessionList: PropTypes.instanceOf(Immutable.List),
+  connection: PropTypes.object,  // eslint-disable-line
 };
 
 MainViewContainer.defaultProps = {
   secondsUntilConnect: NaN,
   sessionList: Immutable.fromJS([]),
+  connection: {},
 };
 
 function mapStateToProps(state) {
@@ -72,6 +76,7 @@ function mapStateToProps(state) {
     active: state.session.get('active'),
     secondsUntilConnect: state.session.get('secondsUntilConnect'),
     sessionList: state.sessionList,
+    connection: state.connection,
   };
 }
 
