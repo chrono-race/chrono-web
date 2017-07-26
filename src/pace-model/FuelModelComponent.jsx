@@ -45,24 +45,24 @@ function createChartOptions() {
   };
 }
 
-function fuelCorrect(lap, paceModel, selectedDriver) {
-  let tyreDeg = paceModel.tyreModel[lap.tyre];
-  if (paceModel.drivers[selectedDriver] !== undefined &&
-      paceModel.drivers[selectedDriver].tyreModel[lap.tyre] !== undefined) {
-    tyreDeg = paceModel.drivers[selectedDriver].tyreModel[lap.tyre].gain;
-  }
-  const lapTime = lap.lapTime - (lap.stintLapIndex * tyreDeg);
+function fuelPaceCorrect(lap, paceModel, selectedDriver) {
+  const tyreDeg = paceModel.tyreModel.deg[lap.tyre];
+  const tyreOffset = lap.tyre === paceModel.tyreModel.baseTyre
+    ? 0
+    : paceModel.tyreModel.delta[lap.tyre];
+  const pace = paceModel.driverModel[selectedDriver];
+  const lapTime = lap.lapTime - tyreOffset - pace - (lap.stintLapIndex * tyreDeg);
   return [lap.raceLapIndex + 1, lapTime];
 }
 
-function getDriverTyreCorrectedLapTimes(session, paceModel, selectedDriver) {
+function getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, selectedDriver) {
   if (selectedDriver === '') {
     return [];
   }
 
-  const driverFreeAirLaps = session.get('freeAirLaps').get(selectedDriver);
+  const driverFreeAirLaps = freeAirLaps.get(selectedDriver);
 
-  return driverFreeAirLaps.map(lap => fuelCorrect(lap, paceModel, selectedDriver));
+  return driverFreeAirLaps.map(lap => fuelPaceCorrect(lap, paceModel, selectedDriver));
 }
 
 function degLine(tyreCorrectedLaps, deg) {
@@ -97,50 +97,60 @@ class FuelModelComponent extends React.Component {
   }
   renderPlot() {
     const paceModel = this.props.session.get('paceModel');
-    const tyreCorrectedLapTimes = getDriverTyreCorrectedLapTimes(this.props.session,
-      paceModel, this.props.selectedDriver);
+    const freeAirLaps = this.props.session.get('freeAirLaps');
+
+    // const tyreCorrectedLapTimes = getDriverTyreCorrectedLapTimes(freeAirLaps,
+    //   paceModel, this.props.selectedDriver);
+
+    const driverList = freeAirLaps
+      .filter(laps => laps.length > 1)
+      .map((laps, driver) => driver).toArray();
+
+    const tyreCorrectedLapTimes = [];
+    driverList.forEach((driver) => {
+      getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, driver)
+        .forEach(lap => tyreCorrectedLapTimes.push(lap));
+    });
+
 
     const chartData = [];
+    chartData.push(
+      {
+        data: tyreCorrectedLapTimes,
+        points: {
+          show: true,
+          radius: 2,
+          symbol: 'circle',
+          lineWidth: 0,
+          fillColor: '#6666FF',
+        },
+      },
+    );
     if (this.props.selectedDriver !== '') {
       chartData.push(
         {
-          data: tyreCorrectedLapTimes,
+          data: getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, this.props.selectedDriver),
           points: {
             show: true,
             radius: 2,
             symbol: 'circle',
             lineWidth: 0,
-            fillColor: '#FF0000',
+            fillColor: '#FFFF00',
           },
         },
-      );
-      const driverModel = paceModel.drivers[this.props.selectedDriver];
-      if (driverModel !== undefined && driverModel.meanSquaredError < 0.5) {
-        chartData.push(
-          {
-            label: `&nbsp;${this.props.selectedDriver} fuel effect`,
-            data: this.props.selectedDriver === ''
-              ? []
-              : degLine(tyreCorrectedLapTimes, driverModel.fuelEffect),
-            lines: {
-              lineWidth: 0.5,
-            },
-            color: '#FF0000',
-          },
-        );
-      } else {
-        chartData.push(
-          {
-            label: '&nbsp;Avg fuel effect',
-            data: degLine(tyreCorrectedLapTimes, paceModel.fuelEffect),
-            lines: {
-              lineWidth: 0.5,
-            },
-            color: '#6666FF',
-          },
-        );
-      }
+    );
     }
+    chartData.push(
+      {
+        label: '&nbsp;Avg fuel effect',
+        data: degLine(tyreCorrectedLapTimes, paceModel.fuelEffect),
+        lines: {
+          lineWidth: 0.5,
+        },
+        color: '#00FF00',
+      },
+      );
+    // }
 
     const chartOptions = createChartOptions();
 
