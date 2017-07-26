@@ -12,7 +12,27 @@ const ModellingContainer = ({ session, selectedDriver }) => {
     );
   }
   return (
-    <FuelModelComponent session={session} selectedDriver={selectedDriver} />
+    <div className="table-container">
+      <div>
+        <ul className="nav nav-tabs">
+          <li className="active">
+            <a href="#fuel" data-toggle="tab">Fuel Effect</a>
+          </li>
+          <li>
+            <a href="#tyres" data-toggle="tab">Tyre Deg</a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="tab-content table-row">
+        <div className="tab-pane active full-height" id="fuel">
+          <FuelModelComponent session={session} selectedDriver={selectedDriver} />
+        </div>
+        <div className="tab-pane" id="tyres">
+          Tyre deg!
+        </div>
+      </div>
+    </div>
   );
 };
 

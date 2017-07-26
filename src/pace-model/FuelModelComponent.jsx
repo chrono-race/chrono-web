@@ -99,9 +99,6 @@ class FuelModelComponent extends React.Component {
     const paceModel = this.props.session.get('paceModel');
     const freeAirLaps = this.props.session.get('freeAirLaps');
 
-    // const tyreCorrectedLapTimes = getDriverTyreCorrectedLapTimes(freeAirLaps,
-    //   paceModel, this.props.selectedDriver);
-
     const driverList = freeAirLaps
       .filter(laps => laps.length > 1)
       .map((laps, driver) => driver).toArray();
@@ -149,14 +146,9 @@ class FuelModelComponent extends React.Component {
         },
         color: '#00FF00',
       },
-      );
-    // }
+    );
 
     const chartOptions = createChartOptions();
-
-    // if (chartData.length === 0) {
-    //   return;
-    // }
 
     this.plot = $.plot(this.refs.fuelPlotContainer, chartData, chartOptions);
   }
