@@ -135,7 +135,7 @@ class FuelModelComponent extends React.Component {
     }
     chartData.push(
       {
-        label: '&nbsp;Avg fuel effect',
+        label: '&nbsp;Fuel effect',
         data: degLine(tyreCorrectedLapTimes, paceModel.fuelEffect),
         lines: {
           lineWidth: 0.5,
