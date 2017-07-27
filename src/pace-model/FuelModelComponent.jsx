@@ -66,17 +66,13 @@ function getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, selectedDriver) 
 }
 
 function degLine(tyreCorrectedLaps, deg) {
-  const minLapTime = Math.min(...tyreCorrectedLaps.map(l => l[1]));
-  const maxLapTime = Math.max(...tyreCorrectedLaps.map(l => l[1]));
-
   const minLap = Math.min(...tyreCorrectedLaps.map(l => l[0]));
   const maxLap = Math.max(...tyreCorrectedLaps.map(l => l[0]));
 
-  const midY = (minLapTime + maxLapTime) / 2;
-  const halfX = (minLap + maxLap) / 2;
+  const deltaX = maxLap - minLap;
 
-  const minY = midY - (deg * halfX);
-  const maxY = midY + (deg * halfX);
+  const minY = 0;
+  const maxY = deg * deltaX;
 
   return [[minLap, minY], [maxLap, maxY]];
 }
