@@ -296,6 +296,11 @@ html, body, #root, .full-height {
 
 .model-tabs > .nav > li > a {
   padding: 4px 6px !important;
+  cursor: pointer;
+}
+
+.model-tabs > .nav > li > a:focus {
+  outline: 0px;
 }
 
 .model-content {
