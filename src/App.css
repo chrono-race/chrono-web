@@ -320,4 +320,14 @@ html, body, #root, .full-height {
   width: 20%;
   height: 100%;
   vertical-align: top;
+  text-align: center;
+  padding-top: 4px;
+}
+
+.model-param {
+  font-size: 12px;
+}
+
+.model-value {
+  font-size: 15px;
 }

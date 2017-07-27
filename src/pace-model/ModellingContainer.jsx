@@ -30,7 +30,8 @@ const ModellingContainer = ({ session, selectedDriver }) => {
             <FuelModelComponent session={session} selectedDriver={selectedDriver} />
           </div>
           <div className="model-info">
-            Deg params
+            <div className="model-param">Fuel Effect</div>
+            <div className="model-value">{paceModel.fuelEffect.toFixed(3)} sec/lap</div>
           </div>
         </div>
       </div>
