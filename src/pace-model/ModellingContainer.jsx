@@ -12,8 +12,8 @@ const ModellingContainer = ({ session, selectedDriver }) => {
     );
   }
   return (
-    <div className="table-container">
-      <div>
+    <div className="model-table">
+      <div className="model-tabs">
         <ul className="nav nav-tabs">
           <li className="active">
             <a href="#fuel" data-toggle="tab">Fuel Effect</a>
@@ -24,12 +24,14 @@ const ModellingContainer = ({ session, selectedDriver }) => {
         </ul>
       </div>
 
-      <div className="tab-content table-row">
-        <div className="tab-pane active full-height" id="fuel">
-          <FuelModelComponent session={session} selectedDriver={selectedDriver} />
-        </div>
-        <div className="tab-pane" id="tyres">
-          Tyre deg!
+      <div className="model-content">
+        <div className="model-content-table">
+          <div className="model-plot">
+            <FuelModelComponent session={session} selectedDriver={selectedDriver} />
+          </div>
+          <div className="model-info">
+            Deg params
+          </div>
         </div>
       </div>
     </div>
