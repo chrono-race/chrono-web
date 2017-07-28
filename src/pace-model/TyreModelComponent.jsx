@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
 import $ from 'jquery';
 import flot from 'flot-for-node'; // eslint-disable-line no-unused-vars
+import { tyreCode } from '../session-data/tyres';
 
 function createChartOptions() {
   return {
@@ -48,7 +49,10 @@ function createChartOptions() {
 function fuelPaceCorrect(lap, paceModel, selectedDriver) {
   const fuelEffect = paceModel.fuelEffect;
   const pace = paceModel.driverModel[selectedDriver];
-  const lapTime = lap.lapTime - pace - (lap.raceLapIndex * fuelEffect);
+  const tyreOffset = lap.tyre === paceModel.tyreModel.baseTyre
+    ? 0
+    : paceModel.tyreModel.delta[lap.tyre];
+  const lapTime = lap.lapTime - tyreOffset - pace - (lap.raceLapIndex * fuelEffect);
   return [lap.stintLapIndex + 1, lapTime];
 }
 
@@ -136,7 +140,7 @@ class TyreModelComponent extends React.Component {
     }
     chartData.push(
       {
-        label: `&nbsp;${selectedTyre} tyre deg`,
+        label: `&nbsp;${tyreCode(selectedTyre)} tyre deg`,
         data: degLine(fuelCorrectedLapTimes, paceModel.tyreModel.deg[selectedTyre]),
         lines: {
           lineWidth: 0.5,

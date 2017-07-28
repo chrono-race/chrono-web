@@ -330,10 +330,18 @@ html, body, #root, .full-height {
   padding-top: 4px;
 }
 
+.model-block {
+  padding-bottom: 20px;
+}
+
 .model-param {
   font-size: 12px;
 }
 
 .model-value {
   font-size: 15px;
+}
+
+.model-sub-value {
+  font-size: 12px;
 }

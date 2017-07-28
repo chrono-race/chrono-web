@@ -2,9 +2,17 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
+import { tyreCode } from '../session-data/tyres';
 import FuelModelComponent from './FuelModelComponent';
 import TyreModelComponent from './TyreModelComponent';
 import { selectModellingTab } from './model-actions';
+
+const toFixed = (num) => {
+  if (num < 0) {
+    return num.toFixed(3);
+  }
+  return `+${num.toFixed(3)}`;
+};
 
 const fuelTab = (session, selectedDriver, paceModel) => (
   <div className="model-content">
@@ -14,9 +22,40 @@ const fuelTab = (session, selectedDriver, paceModel) => (
       </div>
       <div className="model-info">
         <div className="model-param">Fuel Effect</div>
-        <div className="model-value">{paceModel.fuelEffect.toFixed(3)} sec/lap</div>
+        <div className="model-value">{toFixed(paceModel.fuelEffect)} sec/lap</div>
       </div>
     </div>
+  </div>
+);
+
+const deltaIfAny = (delta, baseTyre) => {
+  if (delta !== undefined) {
+    return (<div className="model-sub-value">{toFixed(delta)} sec vs {tyreCode(baseTyre)}</div>);
+  }
+  return (<div />);
+};
+const tyreChoice = (tyre, deg, delta, baseTyre) => (
+  <div key={tyre} className="model-block">
+    <div className={`model-param used-${tyre}`}>{tyreCode(tyre)} Tyre</div>
+    <div className="model-value">{toFixed(deg)} sec/lap</div>
+    {deltaIfAny(delta, baseTyre)}
+  </div>
+);
+
+const getDelta = (tyre, deltaMap, baseTyre) => {
+  if (tyre === baseTyre) {
+    return undefined;
+  }
+  return deltaMap[tyre];
+};
+
+const tyreChooser = (session, paceModel) => (
+  <div>
+    {Object.keys(paceModel.tyreModel.deg)
+           .map(tyre => tyreChoice(
+              tyre, paceModel.tyreModel.deg[tyre],
+              getDelta(tyre, paceModel.tyreModel.delta, paceModel.tyreModel.baseTyre),
+              paceModel.tyreModel.baseTyre))}
   </div>
 );
 
@@ -24,11 +63,10 @@ const tyresTab = (session, selectedDriver, paceModel) => (
   <div className="model-content">
     <div className="model-content-table">
       <div className="model-plot">
-        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre="S"  />
+        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre="S" />
       </div>
       <div className="model-info">
-        <div className="model-param">Tyre Deg</div>
-        {/* <div className="model-value">{paceModel.fuelEffect.toFixed(3)} sec/lap</div>*/}
+        {tyreChooser(session, paceModel)}
       </div>
     </div>
   </div>

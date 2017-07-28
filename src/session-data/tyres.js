@@ -8,11 +8,8 @@ export const tyreClass = (lastStint) => {
   return `${tyreAge}-${tyreType}`;
 };
 
-export const tyreText = (lastStint) => {
-  if (lastStint === undefined) {
-    return '';
-  }
-  const code = lastStint.get('tyre');
+export const tyreCode = (tyre) => {
+  const code = tyre;
   switch (code) {
     case 'E': return 'US';
     case 'V': return 'SS';
@@ -21,6 +18,13 @@ export const tyreText = (lastStint) => {
     case 'H': return 'H';
     default: return code;
   }
+};
+
+export const tyreText = (lastStint) => {
+  if (lastStint === undefined) {
+    return '';
+  }
+  return tyreCode(lastStint.get('tyre'));
 };
 
 export const tyrePrompt = (lastStint) => {
