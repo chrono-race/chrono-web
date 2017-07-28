@@ -5,7 +5,7 @@ import Immutable from 'immutable';
 import { tyreCode } from '../session-data/tyres';
 import FuelModelComponent from './FuelModelComponent';
 import TyreModelComponent from './TyreModelComponent';
-import { selectModellingTab } from './model-actions';
+import { selectModellingTab, selectModellingTyre } from './model-actions';
 
 const toFixed = (num) => {
   if (num < 0) {
@@ -34,9 +34,17 @@ const deltaIfAny = (delta, baseTyre) => {
   }
   return (<div />);
 };
-const tyreChoice = (tyre, deg, delta, baseTyre) => (
+const tyreChoice = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => (
   <div key={tyre} className="model-block">
-    <div className={`model-param used-${tyre}`}>{tyreCode(tyre)} Tyre</div>
+    <div className={`model-param used-${tyre}`}>
+      <input
+        type="radio"
+        checked={selectedTyre === tyre ? 'selected' : ''}
+        onClick={onSelect}
+      />
+      &nbsp;
+      {tyreCode(tyre)}
+    </div>
     <div className="model-value">{toFixed(deg)} sec/lap</div>
     {deltaIfAny(delta, baseTyre)}
   </div>
@@ -49,35 +57,38 @@ const getDelta = (tyre, deltaMap, baseTyre) => {
   return deltaMap[tyre];
 };
 
-const tyreChooser = (session, paceModel) => (
+const tyreChooser = (session, paceModel, selectedTyre, selectTyre) => (
   <div>
     {Object.keys(paceModel.tyreModel.deg)
            .map(tyre => tyreChoice(
-              tyre, paceModel.tyreModel.deg[tyre],
+              tyre,
+              paceModel.tyreModel.deg[tyre],
               getDelta(tyre, paceModel.tyreModel.delta, paceModel.tyreModel.baseTyre),
-              paceModel.tyreModel.baseTyre))}
+              paceModel.tyreModel.baseTyre,
+              selectedTyre,
+              () => selectTyre(tyre)))}
   </div>
 );
 
-const tyresTab = (session, selectedDriver, paceModel) => (
+const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) => (
   <div className="model-content">
     <div className="model-content-table">
       <div className="model-plot">
-        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre="S" />
+        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre={selectedTyre} />
       </div>
       <div className="model-info">
-        {tyreChooser(session, paceModel)}
+        {tyreChooser(session, paceModel, selectedTyre, selectTyre)}
       </div>
     </div>
   </div>
 );
 
-const tabContent = (selectedTab, session, selectedDriver, paceModel) => {
+const tabContent = (selectedTab, session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
   if (selectedTab === 'fuel') {
     return fuelTab(session, selectedDriver, paceModel);
   }
   if (selectedTab === 'tyres') {
-    return tyresTab(session, selectedDriver, paceModel);
+    return tyresTab(session, selectedDriver, paceModel, selectedTyre, selectTyre);
   }
   return (<div />);
 };
@@ -89,7 +100,7 @@ const tab = (selectedTab, tabName, tabTitle, onClick) => (
 );
 
 const ModellingContainer = ({ session, selectedDriver, showTyreDeg, selectedTab,
-  showFuelEffect }) => {
+  showFuelEffect, selectedTyre, selectTyre }) => {
   const paceModel = session.get('paceModel');
   if (paceModel.fuelEffect === undefined) {
     return (
@@ -106,7 +117,7 @@ const ModellingContainer = ({ session, selectedDriver, showTyreDeg, selectedTab,
         </ul>
       </div>
 
-      {tabContent(selectedTab, session, selectedDriver, paceModel)}
+      {tabContent(selectedTab, session, selectedDriver, paceModel, selectedTyre, selectTyre)}
     </div>
   );
 };
@@ -117,6 +128,8 @@ ModellingContainer.propTypes = {
   showTyreDeg: PropTypes.func.isRequired,
   showFuelEffect: PropTypes.func.isRequired,
   selectedTab: PropTypes.string.isRequired,
+  selectedTyre: PropTypes.string.isRequired,
+  selectTyre: PropTypes.func.isRequired,
 };
 
 ModellingContainer.defaultProps = {
@@ -128,6 +141,7 @@ function mapStateToProps(state) {
     session: state.session,
     selectedDriver: state.selectedDriver.get('selectedDriver'),
     selectedTab: state.modelling.get('selectedTab'),
+    selectedTyre: state.modelling.get('selectedTyre'),
   };
 }
 
@@ -135,6 +149,7 @@ function mapDispatchToProps(dispatch) {
   return {
     showFuelEffect: () => dispatch(selectModellingTab('fuel')),
     showTyreDeg: () => dispatch(selectModellingTab('tyres')),
+    selectTyre: tyre => dispatch(selectModellingTyre(tyre)),
   };
 }
 
