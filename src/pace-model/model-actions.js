@@ -5,3 +5,9 @@ export const selectModellingTab = tab =>  // eslint-disable-line import/prefer-d
     type: types.SELECT_MODEL_TAB,
     tab,
   });
+
+export const selectModellingTyre = tyre =>
+ ({
+   type: types.SELECT_MODEL_TYRE,
+   tyre,
+ });

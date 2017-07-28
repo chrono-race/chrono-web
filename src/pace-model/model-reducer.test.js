@@ -9,11 +9,18 @@ describe('model reducer', () => {
     const state = modelReducer(undefined, {});
 
     assert(state.get('selectedTab').should.equal('fuel'));
+    assert(state.get('selectedTyre').should.equal(''));
   });
 
   it('updates selected tab', () => {
     const state = modelReducer(undefined, actions.selectModellingTab('tyres'));
 
     assert(state.get('selectedTab').should.equal('tyres'));
+  });
+
+  it('updates selected tyre', () => {
+    const state = modelReducer(undefined, actions.selectModellingTyre('V'));
+
+    assert(state.get('selectedTyre').should.equal('V'));
   });
 });
