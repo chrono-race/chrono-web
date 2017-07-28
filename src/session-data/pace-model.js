@@ -104,7 +104,10 @@ function calcModel(drivers, freeAirLaps) {
 
   let reg = math.zeros(numCols - 1, numCols - 1);
   // we want to regularize the tyre delta column(s)
-  for (let i = 3; i < 2 + numTyres; i++) { // eslint-disable-line
+  // for 2 tyres column indices 3->3
+  // for 3 tyres column indices 4->5
+  // for 4 tyres column indices 5->7
+  for (let i = numTyres+1; i <= (2*numTyres) - 1; i++) { // eslint-disable-line
     reg = math.subset(reg, math.index(i, i), 1);
   }
 
