@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import FuelModelComponent from './FuelModelComponent';
+import TyreModelComponent from './TyreModelComponent';
 import { selectModellingTab } from './model-actions';
 
 const fuelTab = (session, selectedDriver, paceModel) => (
@@ -19,9 +20,26 @@ const fuelTab = (session, selectedDriver, paceModel) => (
   </div>
 );
 
+const tyresTab = (session, selectedDriver, paceModel) => (
+  <div className="model-content">
+    <div className="model-content-table">
+      <div className="model-plot">
+        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre="S"  />
+      </div>
+      <div className="model-info">
+        <div className="model-param">Tyre Deg</div>
+        {/* <div className="model-value">{paceModel.fuelEffect.toFixed(3)} sec/lap</div>*/}
+      </div>
+    </div>
+  </div>
+);
+
 const tabContent = (selectedTab, session, selectedDriver, paceModel) => {
   if (selectedTab === 'fuel') {
     return fuelTab(session, selectedDriver, paceModel);
+  }
+  if (selectedTab === 'tyres') {
+    return tyresTab(session, selectedDriver, paceModel);
   }
   return (<div />);
 };

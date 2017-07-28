@@ -45,24 +45,21 @@ function createChartOptions() {
   };
 }
 
-function tyrePaceCorrect(lap, paceModel, selectedDriver) {
-  const tyreDeg = paceModel.tyreModel.deg[lap.tyre];
-  const tyreOffset = lap.tyre === paceModel.tyreModel.baseTyre
-    ? 0
-    : paceModel.tyreModel.delta[lap.tyre];
+function fuelPaceCorrect(lap, paceModel, selectedDriver) {
+  const fuelEffect = paceModel.fuelEffect;
   const pace = paceModel.driverModel[selectedDriver];
-  const lapTime = lap.lapTime - tyreOffset - pace - (lap.stintLapIndex * tyreDeg);
-  return [lap.raceLapIndex + 1, lapTime];
+  const lapTime = lap.lapTime - pace - (lap.raceLapIndex * fuelEffect);
+  return [lap.stintLapIndex + 1, lapTime];
 }
 
-function getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, selectedDriver) {
+function getDriverFuelCorrectedLapTimes(freeAirLaps, paceModel, selectedDriver) {
   if (selectedDriver === '') {
     return [];
   }
 
   const driverFreeAirLaps = freeAirLaps.get(selectedDriver);
 
-  return driverFreeAirLaps.map(lap => tyrePaceCorrect(lap, paceModel, selectedDriver));
+  return driverFreeAirLaps.map(lap => fuelPaceCorrect(lap, paceModel, selectedDriver));
 }
 
 function degLine(tyreCorrectedLaps, deg) {
@@ -77,7 +74,7 @@ function degLine(tyreCorrectedLaps, deg) {
   return [[minLap, minY], [maxLap, maxY]];
 }
 
-class FuelModelComponent extends React.Component {
+class TyreModelComponent extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions.bind(this));
     this.renderPlot();
@@ -93,23 +90,27 @@ class FuelModelComponent extends React.Component {
   }
   renderPlot() {
     const paceModel = this.props.session.get('paceModel');
-    const freeAirLaps = this.props.session.get('freeAirLaps');
+    const allFreeAirLaps = this.props.session.get('freeAirLaps');
+    const selectedTyre = this.props.tyre;
 
-    const driverList = freeAirLaps
+    const tyreFreeAirLaps = allFreeAirLaps
+      .map(laps => laps.filter(lap => lap.tyre === selectedTyre));
+
+    const driverList = tyreFreeAirLaps
       .filter(laps => laps.length > 1)
       .map((laps, driver) => driver).toArray();
 
-    const tyreCorrectedLapTimes = [];
+    const fuelCorrectedLapTimes = [];
     driverList.forEach((driver) => {
-      getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, driver)
-        .forEach(lap => tyreCorrectedLapTimes.push(lap));
+      getDriverFuelCorrectedLapTimes(tyreFreeAirLaps, paceModel, driver)
+        .forEach(lap => fuelCorrectedLapTimes.push(lap));
     });
 
 
     const chartData = [];
     chartData.push(
       {
-        data: tyreCorrectedLapTimes,
+        data: fuelCorrectedLapTimes,
         points: {
           show: true,
           radius: 2,
@@ -122,7 +123,7 @@ class FuelModelComponent extends React.Component {
     if (this.props.selectedDriver !== '') {
       chartData.push(
         {
-          data: getDriverTyreCorrectedLapTimes(freeAirLaps, paceModel, this.props.selectedDriver),
+          data: getDriverFuelCorrectedLapTimes(tyreFreeAirLaps, paceModel, this.props.selectedDriver),
           points: {
             show: true,
             radius: 2,
@@ -135,8 +136,8 @@ class FuelModelComponent extends React.Component {
     }
     chartData.push(
       {
-        label: '&nbsp;Fuel effect',
-        data: degLine(tyreCorrectedLapTimes, paceModel.fuelEffect),
+        label: `&nbsp;${selectedTyre} tyre deg`,
+        data: degLine(fuelCorrectedLapTimes, paceModel.tyreModel.deg[selectedTyre]),
         lines: {
           lineWidth: 0.5,
         },
@@ -155,13 +156,14 @@ class FuelModelComponent extends React.Component {
   }
 }
 
-FuelModelComponent.propTypes = {
+TyreModelComponent.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
   selectedDriver: PropTypes.string,
+  tyre: PropTypes.string.isRequired,
 };
 
-FuelModelComponent.defaultProps = {
+TyreModelComponent.defaultProps = {
   selectedDriver: '',
 };
 
-export default FuelModelComponent;
+export default TyreModelComponent;
