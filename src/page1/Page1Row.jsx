@@ -51,6 +51,9 @@ const Page1Row = ({ lastLap, sessionBests, driver, totalLaps }) => {
   return (
     <tr key={lastLap.get('driver')}>
       <td width="6.6%" className="position">{lastLap.get('position')}</td>
+      <td width="3px">
+        <div style={{ background: driver.get('color'), marginTop: '2px', minHeight: '10px', minWidth: '3px', width: '3px' }} />
+      </td>
       <td width="6.6%" className="driver">{lastLap.get('driver')}</td>
       <td width="13.3%" className="gap">{toGapOrLap(lastLap)}</td>
       <td width="13.3%" className="interval">{toIntervalOrLapNumber(lastLap, totalLaps)}</td>

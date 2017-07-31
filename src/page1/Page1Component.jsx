@@ -35,6 +35,7 @@ const Page1 = ({ session }) => {
         <thead>
           <tr>
             <th>pos</th>
+            <th />
             <th>driver</th>
             <th>gap</th>
             <th>int</th>
