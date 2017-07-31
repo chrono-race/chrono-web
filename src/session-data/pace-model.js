@@ -91,7 +91,11 @@ function calcModel(drivers, freeAirLaps) {
 
   // dumpCsv(freeAirLaps, tyres, driverList);
 
-  const modelLaps = math.matrix(getModelLaps(freeAirLaps, tyres, driverList));
+  const modelLapsArray = getModelLaps(freeAirLaps, tyres, driverList);
+  if (modelLapsArray.length === 0) {
+    return {};
+  }
+  const modelLaps = math.matrix(modelLapsArray);
 
   const numDrivers = driverList.length;
   const numLaps = math.subset(math.size(modelLaps), math.index(0));

@@ -144,6 +144,7 @@ describe('session reducer', () => {
             },
           ],
           appendMessage: () => {},
+          cumulativeTime: [],
         },
       },
     });
@@ -170,6 +171,7 @@ describe('session reducer', () => {
             },
           ],
           appendMessage: () => {},
+          cumulativeTime: [],
         },
       },
     });

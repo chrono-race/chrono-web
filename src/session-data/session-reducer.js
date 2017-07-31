@@ -22,6 +22,7 @@ function appendMessagesToDrivers(drivers, messages) {
   return updatedDrivers;
 }
 
+
 function findSessionBests(drivers) {
   const s1Time = drivers.map(d => d.get('best').get('s1Time')).filter(t => !isNaN(t)).min() || NaN;
   const s2Time = drivers.map(d => d.get('best').get('s2Time')).filter(t => !isNaN(t)).min() || NaN;
