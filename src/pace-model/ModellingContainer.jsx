@@ -101,6 +101,11 @@ const tab = (selectedTab, tabName, tabTitle, onClick) => (
 
 const ModellingContainer = ({ session, selectedDriver, showTyreDeg, selectedTab,
   showFuelEffect, selectedTyre, selectTyre }) => {
+  const isOffline = session.get('isOffline');
+  // only show fuel effect & tyre deg for offline sessions
+  if (!isOffline) {
+    return (<div />);
+  }
   const paceModel = session.get('paceModel');
   if (paceModel.fuelEffect === undefined) {
     return (
