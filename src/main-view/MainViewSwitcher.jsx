@@ -5,7 +5,7 @@ import Immutable from 'immutable';
 import fetch from 'node-fetch';
 import MainView from './MainViewComponent';
 import NotActive from './NotActiveComponent';
-import { sessionListReceived, backlogReceived } from '../actions/data-actions';
+import { sessionListReceived, offlineBacklogReceived } from '../actions/data-actions';
 
 class MainViewContainer extends React.Component {
   constructor() {
@@ -83,7 +83,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSessionsReceived: sessions => dispatch(sessionListReceived(sessions)),
-    onSessionLoaded: events => dispatch(backlogReceived(events)),
+    onSessionLoaded: events => dispatch(offlineBacklogReceived(events)),
   };
 }
 

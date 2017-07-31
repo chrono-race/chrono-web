@@ -68,6 +68,15 @@ describe('session reducer', () => {
 
     assert(state.get('drivers').count().should.equal(0));
     assert(state.getIn('best', 's1Time').should.be.NaN);
+    assert(state.get('isOffline').should.equal(false));
+  });
+
+  it('marks session as offline on receipt of offline backlog', () => {
+    const action = actions.offlineBacklogReceived([]);
+
+    const state = sessionReducer(undefined, action);
+
+    assert(state.get('isOffline').should.equal(true));
   });
 
   it('adds a new driver to the session with drivers message', () => {

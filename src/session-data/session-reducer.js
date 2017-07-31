@@ -141,7 +141,8 @@ export default (state = defaultSessionState, action) => {
       .set('active', updateActive(startingState.get('active'), action.messages.filter(m => m.type !== 'waiting')))
       .set('freeAirLaps', freeAirLaps)
       .set('paceModel', model)
-      .set('secondsUntilConnect', updateSecondsUntilConnect(startingState.get('secondsUntilConnect'), action.messages.filter(m => m.type === 'waiting')));
+      .set('secondsUntilConnect', updateSecondsUntilConnect(startingState.get('secondsUntilConnect'), action.messages.filter(m => m.type === 'waiting')))
+      .set('isOffline', action.isOffline);
   }
 
   return state;
