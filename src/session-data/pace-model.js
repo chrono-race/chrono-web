@@ -1,19 +1,19 @@
 import { fromJS } from 'immutable';
 import math from 'mathjs';
 
-function toHeaderArray(referenceTyre, tyres, drivers) {
-  const r = [];
-  r.push('raceLapIndex');
-  tyres.forEach(tyre => r.push(`${tyre} stint lap`));
-  tyres.forEach((tyre) => {
-    if (tyre !== referenceTyre) {
-      r.push(`${tyre} delta vs ${referenceTyre}`);
-    }
-  });
-  drivers.forEach(d => r.push(`${d} pace`));
-  r.push('lap time');
-  return r;
-}
+// function toHeaderArray(referenceTyre, tyres, drivers) {
+//   const r = [];
+//   r.push('raceLapIndex');
+//   tyres.forEach(tyre => r.push(`${tyre} stint lap`));
+//   tyres.forEach((tyre) => {
+//     if (tyre !== referenceTyre) {
+//       r.push(`${tyre} delta vs ${referenceTyre}`);
+//     }
+//   });
+//   drivers.forEach(d => r.push(`${d} pace`));
+//   r.push('lap time');
+//   return r;
+// }
 
 // row of:
 //   raceLapIndex
@@ -68,12 +68,12 @@ function getModelLaps(freeAirLaps, tyres, driverList) {
   });
   return rows;
 }
-function dumpCsv(freeAirLaps, tyres, driverList) {
-  const headerRow = toHeaderArray(tyres[0], tyres, driverList);
-  const rows = [headerRow, ...getModelLaps(freeAirLaps, tyres, driverList)];
+// function dumpCsv(freeAirLaps, tyres, driverList) {
+//   const headerRow = toHeaderArray(tyres[0], tyres, driverList);
+//   const rows = [headerRow, ...getModelLaps(freeAirLaps, tyres, driverList)];
 
-  console.log(`read:\n${rows.join('\n')}`);
-}
+//   console.log(`read:\n${rows.join('\n')}`);
+// }
 
 function calcModel(drivers, freeAirLaps) {
   if (freeAirLaps.size === 0) {
@@ -103,7 +103,10 @@ function calcModel(drivers, freeAirLaps) {
   const numTyres = (numCols - numDrivers - 1) / 2;
 
   const X = math.subset(modelLaps, math.index(math.range(0, numLaps), math.range(0, numCols - 1)));
-  const y = math.subset(modelLaps, math.index(math.range(0, numLaps), math.range(numCols - 1, numCols)));
+  const y = math.subset(
+    modelLaps,
+    math.index(math.range(0, numLaps),
+    math.range(numCols - 1, numCols)));
   const lambda = 0.01;
 
   let reg = math.zeros(numCols - 1, numCols - 1);

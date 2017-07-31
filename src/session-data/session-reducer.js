@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import * as types from '../actions/action-types';
 import { newDriver, appendMessage, findBests } from './driver';
 import findFreeAirLaps from './free-air-laps';
-import paceModel from './pace-model.js';
+import paceModel from './pace-model';
 
 function appendMessagesToDrivers(drivers, messages) {
   let updatedDrivers = drivers;
