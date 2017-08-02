@@ -77,8 +77,8 @@ const modelHelp = (show, selectedTab) => {
                 </span>,&nbsp;
                 against tyre age for each type of tyre.
                 Model laptime starts at zero and increases as tyres age.
-                The line shows average tyre deg, that is how much slower each lap is due to tyre age. This value
-                and the pace difference to the quickest tyre are shown.
+                The line shows average tyre deg, i.e. how much slower each lap is due to tyre age. This value
+                &amp; the pace difference to the quickest tyre are shown.
       </span>);
       break;
     default:
@@ -127,6 +127,28 @@ const tyreChoice = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => (
   </div>
 );
 
+const tyreChoice2 = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => {
+  let className = 'btn btn-primary btn-xs btn-block tyre-button';
+  let rowClassName = 'tyre-row';
+  if (selectedTyre === tyre) {
+    className += ' active';
+    rowClassName = 'active-tyre';
+  }
+  return (
+    <tr key={tyre} className={rowClassName} onClick={onSelect}>
+      <td>
+        <a className={className} onClick={onSelect} tabIndex="-3">
+          {tyreCode(tyre)}
+        </a>
+      </td>
+      <td>
+        <div className="model-tyre-deg">{toFixed(deg)} sec/lap</div>
+        <div className="model-tyre-delta">{deltaIfAny(delta, baseTyre)}</div>
+      </td>
+    </tr>
+  );
+};
+
 const getDelta = (tyre, deltaMap, baseTyre) => {
   if (tyre === baseTyre) {
     return undefined;
@@ -135,16 +157,16 @@ const getDelta = (tyre, deltaMap, baseTyre) => {
 };
 
 const tyreChooser = (session, paceModel, selectedTyre, selectTyre) => (
-  <div>
+  <table>
     {Object.keys(paceModel.tyreModel.deg)
-           .map(tyre => tyreChoice(
+           .map(tyre => tyreChoice2(
               tyre,
               paceModel.tyreModel.deg[tyre],
               getDelta(tyre, paceModel.tyreModel.delta, paceModel.tyreModel.baseTyre),
               paceModel.tyreModel.baseTyre,
               selectedTyre,
               () => selectTyre(tyre)))}
-  </div>
+  </table>
 );
 
 const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) => (
