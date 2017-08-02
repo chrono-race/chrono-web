@@ -155,18 +155,24 @@ const tyreChooser = (session, paceModel, selectedTyre, selectTyre) => (
   </table>
 );
 
-const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) => (
-  <div className="model-content">
-    <div className="model-content-table">
-      <div className="model-plot">
-        <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre={selectedTyre} />
-      </div>
-      <div className="model-info">
-        {tyreChooser(session, paceModel, selectedTyre, selectTyre)}
+const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
+  let chosenTyre = selectedTyre;
+  if (selectedTyre === '') {
+    chosenTyre = paceModel.tyreModel.baseTyre;
+  }
+  return (
+    <div className="model-content">
+      <div className="model-content-table">
+        <div className="model-plot">
+          <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre={chosenTyre} />
+        </div>
+        <div className="model-info">
+          {tyreChooser(session, paceModel, chosenTyre, selectTyre)}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const tabContent = (selectedTab, session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
   if (selectedTab === 'fuel') {
