@@ -10,6 +10,7 @@ describe('model reducer', () => {
 
     assert(state.get('selectedTab').should.equal('fuel'));
     assert(state.get('selectedTyre').should.equal(''));
+    assert(state.get('showModelHelp').should.equal(false));
   });
 
   it('updates selected tab', () => {
@@ -22,5 +23,17 @@ describe('model reducer', () => {
     const state = modelReducer(undefined, actions.selectModellingTyre('V'));
 
     assert(state.get('selectedTyre').should.equal('V'));
+  });
+
+  it('toggles model help on', () => {
+    const state = modelReducer(undefined, actions.toggleModelHelp());
+
+    assert(state.get('showModelHelp').should.equal(true));
+  });
+
+  it('toggles model help back off', () => {
+    const state = modelReducer(modelReducer(undefined, actions.toggleModelHelp()), actions.toggleModelHelp());
+
+    assert(state.get('showModelHelp').should.equal(false));
   });
 });

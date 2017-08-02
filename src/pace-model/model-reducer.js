@@ -4,6 +4,7 @@ import * as types from '../actions/action-types';
 const defaultState = fromJS({
   selectedTab: 'fuel',
   selectedTyre: '',
+  showModelHelp: false,
 });
 
 export default (state = defaultState, action) => {
@@ -12,6 +13,8 @@ export default (state = defaultState, action) => {
       return state.set('selectedTab', action.tab);
     case types.SELECT_MODEL_TYRE:
       return state.set('selectedTyre', action.tyre);
+    case types.TOGGLE_MODEL_HELP:
+      return state.set('showModelHelp', !state.get('showModelHelp'));
     default:
       return state;
   }
