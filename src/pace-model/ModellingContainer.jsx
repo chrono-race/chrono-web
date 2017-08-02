@@ -33,7 +33,7 @@ const modelHelp = (show, selectedTab) => {
                 <span
                   className="help-tooltip"
                   data-toggle="tooltip"
-                  title="laptimes are decreased to offset the effect of tyre age and delta to the quickest tyre (see tyre deg tab)"
+                  title="laptimes are decreased to offset the effect of tyre age and delta to the quickest tyre (see tyre deg tab)" // eslint-disable-line
                 >
                   tyre
                 </span>&nbsp;
@@ -41,13 +41,14 @@ const modelHelp = (show, selectedTab) => {
                 <span
                   className="help-tooltip"
                   data-toggle="tooltip"
-                  title="differences in underlying driver pace are normalized so that each driver's initial model laptime on the quickest tyre is 0 sec"
+                  title="differences in underlying driver pace are normalized so that each driver's initial model laptime on the quickest tyre is 0 sec"  // eslint-disable-line
                 >
                   driver pace
                 </span>,&nbsp;
                 against lap number.
                 Model laptime starts at zero and reduces each lap as fuel (weight) reduces.
-                The line shows average fuel effect, this gradient is how much faster each lap is due to the fuel effect (ignoring tyre wear).</span>);
+                The line shows average fuel effect, this gradient is how much faster
+                each lap is due to the fuel effect (ignoring tyre wear).</span>);
       break;
     case 'tyres':
       help = (<span>
@@ -63,7 +64,7 @@ const modelHelp = (show, selectedTab) => {
                 <span
                   className="help-tooltip"
                   data-toggle="tooltip"
-                  title="laptimes are increased to offset the effect of burning off fuel (see fuel tab)"
+                  title="laptimes are increased to offset the effect of burning off fuel (see fuel tab)" // eslint-disable-line
                 >
                 fuel effect
                 </span>&nbsp;
@@ -71,14 +72,14 @@ const modelHelp = (show, selectedTab) => {
                 <span
                   className="help-tooltip"
                   data-toggle="tooltip"
-                  title="differences in underlying driver pace are normalized so that each driver's initial model laptime is 0 sec"
+                  title="differences in underlying driver pace are normalized so that each driver's initial model laptime is 0 sec" // eslint-disable-line
                 >
                   driver pace
                 </span>,&nbsp;
                 against tyre age for each type of tyre.
                 Model laptime starts at zero and increases as tyres age.
-                The line shows average tyre deg, i.e. how much slower each lap is due to tyre age. This value
-                &amp; the pace difference to the quickest tyre are shown.
+                The line shows average tyre deg, i.e. how much slower each lap is due to tyre age.
+                This value &amp; the pace difference to the quickest tyre are shown.
       </span>);
       break;
     default:
@@ -111,41 +112,26 @@ const deltaIfAny = (delta, baseTyre) => {
   }
   return (<div />);
 };
-const tyreChoice = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => (
-  <div key={tyre} className="model-block">
-    <div className={`model-param used-${tyre}`}>
-      <input
-        type="radio"
-        checked={selectedTyre === tyre ? 'selected' : ''}
-        onClick={onSelect}
-      />
-      &nbsp;
-      {tyreCode(tyre)}
-    </div>
-    <div className="model-value">{toFixed(deg)} sec/lap</div>
-    {deltaIfAny(delta, baseTyre)}
-  </div>
-);
 
-const tyreChoice2 = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => {
+const tyreChoice = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => {
   let className = 'btn btn-primary btn-xs btn-block tyre-button';
   let rowClassName = 'tyre-row';
   if (selectedTyre === tyre) {
     className += ' active';
     rowClassName = 'active-tyre';
   }
-  return (
-    <tr key={tyre} className={rowClassName} onClick={onSelect}>
-      <td>
-        <a className={className} onClick={onSelect} tabIndex="-3">
-          {tyreCode(tyre)}
-        </a>
-      </td>
-      <td>
-        <div className="model-tyre-deg">{toFixed(deg)} sec/lap</div>
-        <div className="model-tyre-delta">{deltaIfAny(delta, baseTyre)}</div>
-      </td>
-    </tr>
+  // eslint-disable-next-line
+  return (<tr key={tyre} className={rowClassName} onClick={onSelect}>
+    <td>
+      <a className={className} onClick={onSelect} tabIndex="-3">
+        {tyreCode(tyre)}
+      </a>
+    </td>
+    <td>
+      <div className="model-tyre-deg">{toFixed(deg)} sec/lap</div>
+      <div className="model-tyre-delta">{deltaIfAny(delta, baseTyre)}</div>
+    </td>
+  </tr>
   );
 };
 
@@ -159,7 +145,7 @@ const getDelta = (tyre, deltaMap, baseTyre) => {
 const tyreChooser = (session, paceModel, selectedTyre, selectTyre) => (
   <table>
     {Object.keys(paceModel.tyreModel.deg)
-           .map(tyre => tyreChoice2(
+           .map(tyre => tyreChoice(
               tyre,
               paceModel.tyreModel.deg[tyre],
               getDelta(tyre, paceModel.tyreModel.delta, paceModel.tyreModel.baseTyre),

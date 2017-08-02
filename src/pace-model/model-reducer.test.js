@@ -32,7 +32,8 @@ describe('model reducer', () => {
   });
 
   it('toggles model help back off', () => {
-    const state = modelReducer(modelReducer(undefined, actions.toggleModelHelp()), actions.toggleModelHelp());
+    const state = modelReducer(modelReducer(undefined, actions.toggleModelHelp()),
+      actions.toggleModelHelp());
 
     assert(state.get('showModelHelp').should.equal(false));
   });
