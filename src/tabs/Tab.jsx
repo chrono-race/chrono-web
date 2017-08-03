@@ -6,7 +6,7 @@ class Tab extends React.Component {
   render() {
     const children = React.Children.map(this.props.children, child => React.cloneElement(child));
     return (
-      <div>{children}</div>
+      <div className="tab">{children}</div>
     );
   }
 }

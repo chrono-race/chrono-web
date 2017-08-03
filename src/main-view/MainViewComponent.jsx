@@ -28,14 +28,29 @@ const MainViewComponent = () => (
     </div>
     <div className="driver-history-container">
       <TabContainer>
-        <Tab title="driver history">
-          <div>The driver history</div>
+        <Tab title="lap history">
+          <DriverHistory />
         </Tab>
-        <Tab title="other">
-          <div>Another</div>
+        <Tab title="moo">
+          <div>
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+            The driver history<br />
+          </div>
         </Tab>
       </TabContainer>
-      {/* <DriverHistory />*/}
     </div>
     <div className="pace-model-container">
       <Modelling />
