@@ -6,6 +6,7 @@ import { tyreCode } from '../session-data/tyres';
 import FuelModelComponent from './FuelModelComponent';
 import TyreModelComponent from './TyreModelComponent';
 import * as actions from './model-actions';
+import FuelTab from './FuelTab';
 
 const toFixed = (num) => {
   if (num < 0) {
@@ -92,20 +93,6 @@ const modelHelp = (show, selectedTab) => {
   );
 };
 
-const fuelTab = (session, selectedDriver, paceModel) => (
-  <div className="model-content">
-    <div className="model-content-table">
-      <div className="model-plot">
-        <FuelModelComponent session={session} selectedDriver={selectedDriver} />
-      </div>
-      <div className="model-info">
-        <div className="model-param">Fuel Effect</div>
-        <div className="model-value">{toFixed(paceModel.fuelEffect)} sec/lap</div>
-      </div>
-    </div>
-  </div>
-);
-
 const deltaIfAny = (delta, baseTyre) => {
   if (delta !== undefined) {
     return (<div className="model-sub-value">{toFixed(delta)} sec vs {tyreCode(baseTyre)}</div>);
@@ -176,7 +163,8 @@ const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) 
 
 const tabContent = (selectedTab, session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
   if (selectedTab === 'fuel') {
-    return fuelTab(session, selectedDriver, paceModel);
+    // return fuelTab(session, selectedDriver, paceModel);
+    return (<FuelTab session={session} selectedDriver={selectedDriver} paceModel={paceModel} />);
   }
   if (selectedTab === 'tyres') {
     return tyresTab(session, selectedDriver, paceModel, selectedTyre, selectTyre);
