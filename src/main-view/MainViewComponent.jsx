@@ -7,6 +7,8 @@ import RaceName from '../race-name/RaceNameContainer';
 import RaceControlMessages from '../race-control-messages/RaceControlMessagesContainer';
 import RaceTrace from '../race-trace/RaceTraceComponent';
 import Modelling from '../pace-model/ModellingContainer';
+import TabContainer from '../tabs/TabContainer';
+import Tab from '../tabs/Tab';
 
 const MainViewComponent = () => (
   <div className="full-height">
@@ -25,7 +27,15 @@ const MainViewComponent = () => (
       </div>
     </div>
     <div className="driver-history-container">
-      <DriverHistory />
+      <TabContainer>
+        <Tab title="driver history">
+          <div>The driver history</div>
+        </Tab>
+        <Tab title="other">
+          <div>Another</div>
+        </Tab>
+      </TabContainer>
+      {/* <DriverHistory />*/}
     </div>
     <div className="pace-model-container">
       <Modelling />

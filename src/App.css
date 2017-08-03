@@ -392,3 +392,16 @@ tr.tyre-row {
 tr.active-tyre {
   background: #2d2d2d;
 }
+
+.tab-container > .nav > li > a {
+  padding: 4px 6px !important;
+  cursor: pointer;
+}
+
+.tab-container > .nav > li > a:focus {
+  outline: 0px;
+}
+
+.tab-container > a:focus {
+  outline: 0px;
+}
