@@ -9,6 +9,7 @@ import RaceTrace from '../race-trace/RaceTraceComponent';
 import Modelling from '../pace-model/ModellingContainer';
 import TabContainer from '../tabs/TabContainer';
 import Tab from '../tabs/Tab';
+import PitLaneTime from '../pit-time/PitLaneTimeContainer';
 
 const MainViewComponent = () => (
   <div className="full-height">
@@ -31,24 +32,8 @@ const MainViewComponent = () => (
         <Tab title="lap history">
           <DriverHistory />
         </Tab>
-        <Tab title="moo">
-          <div>
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-            The driver history<br />
-          </div>
+        <Tab title="pit time">
+          <PitLaneTime />
         </Tab>
       </TabContainer>
     </div>
