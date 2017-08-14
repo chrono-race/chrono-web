@@ -2,18 +2,9 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
-import { tyreCode } from '../session-data/tyres';
-import FuelModelComponent from './FuelModelComponent';
-import TyreModelComponent from './TyreModelComponent';
 import * as actions from './model-actions';
 import FuelTab from './FuelTab';
-
-const toFixed = (num) => {
-  if (num < 0) {
-    return num.toFixed(3);
-  }
-  return `+${num.toFixed(3)}`;
-};
+import TyresTab from './TyresTab';
 
 const modelHelp = (show, selectedTab) => {
   if (!show) {
@@ -93,81 +84,15 @@ const modelHelp = (show, selectedTab) => {
   );
 };
 
-const deltaIfAny = (delta, baseTyre) => {
-  if (delta !== undefined) {
-    return (<div className="model-sub-value">{toFixed(delta)} sec vs {tyreCode(baseTyre)}</div>);
-  }
-  return (<div />);
-};
-
-const tyreChoice = (tyre, deg, delta, baseTyre, selectedTyre, onSelect) => {
-  let className = 'btn btn-primary btn-xs btn-block tyre-button';
-  let rowClassName = 'tyre-row';
-  if (selectedTyre === tyre) {
-    className += ' active';
-    rowClassName = 'active-tyre';
-  }
-  // eslint-disable-next-line
-  return (<tr key={tyre} className={rowClassName} onClick={onSelect}>
-    <td>
-      <a className={className} onClick={onSelect} tabIndex="-3">
-        {tyreCode(tyre)}
-      </a>
-    </td>
-    <td>
-      <div className="model-tyre-deg">{toFixed(deg)} sec/lap</div>
-      <div className="model-tyre-delta">{deltaIfAny(delta, baseTyre)}</div>
-    </td>
-  </tr>
-  );
-};
-
-const getDelta = (tyre, deltaMap, baseTyre) => {
-  if (tyre === baseTyre) {
-    return undefined;
-  }
-  return deltaMap[tyre];
-};
-
-const tyreChooser = (session, paceModel, selectedTyre, selectTyre) => (
-  <table>
-    {Object.keys(paceModel.tyreModel.deg)
-           .map(tyre => tyreChoice(
-              tyre,
-              paceModel.tyreModel.deg[tyre],
-              getDelta(tyre, paceModel.tyreModel.delta, paceModel.tyreModel.baseTyre),
-              paceModel.tyreModel.baseTyre,
-              selectedTyre,
-              () => selectTyre(tyre)))}
-  </table>
-);
-
-const tyresTab = (session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
-  let chosenTyre = selectedTyre;
-  if (selectedTyre === '') {
-    chosenTyre = paceModel.tyreModel.baseTyre;
-  }
-  return (
-    <div className="model-content">
-      <div className="model-content-table">
-        <div className="model-plot">
-          <TyreModelComponent session={session} selectedDriver={selectedDriver} tyre={chosenTyre} />
-        </div>
-        <div className="model-info">
-          {tyreChooser(session, paceModel, chosenTyre, selectTyre)}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const tabContent = (selectedTab, session, selectedDriver, paceModel, selectedTyre, selectTyre) => {
   if (selectedTab === 'fuel') {
-    // return fuelTab(session, selectedDriver, paceModel);
     return (<FuelTab session={session} selectedDriver={selectedDriver} paceModel={paceModel} />);
   }
   if (selectedTab === 'tyres') {
-    return tyresTab(session, selectedDriver, paceModel, selectedTyre, selectTyre);
+    return (<TyresTab
+      session={session} selectedDriver={selectedDriver} paceModel={paceModel}
+      selectedTyre={selectedTyre} selectTyre={selectTyre}
+    />);
   }
   return (<div />);
 };
