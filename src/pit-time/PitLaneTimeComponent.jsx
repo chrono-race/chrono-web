@@ -23,7 +23,6 @@ const findStintPitLaneTime = (driver, stint, freeAirLaps) => {
       const averageS3 = get3LapAverage(laps, startLap - 5, 's3Time');
       const averageS1 = get3LapAverage(laps, startLap, 's1Time');
       const timeLost = (inLapS3 - averageS3) + (outLapS1 - averageS1);
-      console.log(`driver ${driver.get('tla')} stint starting on lap ${startLap} with in s3 ${inLapS3} (${averageS3}) and out s1 ${outLapS1} (${averageS1}) == ${timeLost} - isFreeAir ${isFreeAir}`);
       return {
         lapNumber: startLap - 1,
         driver: driver.get('tla'),
@@ -45,7 +44,6 @@ const findPitLaneTimes = session =>
   session.get('drivers').valueSeq().flatMap(driver => findDriverPitLaneTimes(driver, session.get('freeAirLaps').get(driver.get('tla'))));
 
 const PitLaneTime = ({ session }) => {
-  console.log('finding pit times');
   const times = findPitLaneTimes(session);
   const rows = [];
   times.forEach((time) => {
