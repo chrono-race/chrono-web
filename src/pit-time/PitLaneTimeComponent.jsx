@@ -43,8 +43,17 @@ const findDriverPitLaneTimes = (driver, freeAirLaps) =>
 const findPitLaneTimes = session =>
   session.get('drivers').valueSeq().flatMap(driver => findDriverPitLaneTimes(driver, session.get('freeAirLaps').get(driver.get('tla'))));
 
-const PitLaneTime = ({ session }) => {
-  const times = findPitLaneTimes(session);
+const heading = (title, sortBy, sortField, currentSortField) => {
+  const sortSymbol = sortField === currentSortField
+    ? (<div className="sort-symbol">&darr;</div>)
+    : (<div className="sort-symbol">&nbsp;</div>);
+  return (
+    <a onClick={() => sortBy(sortField)} tabIndex="-1">{title} {sortSymbol}</a>
+  );
+};
+
+const PitLaneTime = ({ session, sortBy, sortColumn }) => {
+  const times = findPitLaneTimes(session).sortBy(x => x[sortColumn]);
   const rows = [];
   times.forEach((time) => {
     rows.push(
@@ -58,12 +67,16 @@ const PitLaneTime = ({ session }) => {
   return (
     <div>
       <table className="pit-lane-time-table">
-        <tr>
-          <th>lap #</th>
-          <th>driver</th>
-          <th>pit lane time</th>
-        </tr>
-        {rows}
+        <thead>
+          <tr>
+            <th>{heading('lap #', sortBy, 'lapNumber', sortColumn)}</th>
+            <th>{heading('driver', sortBy, 'driver', sortColumn)}</th>
+            <th>{heading('pit lane time', sortBy, 'timeLost', sortColumn)}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
       </table>
     </div>
   );
@@ -71,6 +84,8 @@ const PitLaneTime = ({ session }) => {
 
 PitLaneTime.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
+  sortBy: PropTypes.func.isRequired,
+  sortColumn: PropTypes.string.isRequired,
 };
 
 export default PitLaneTime;

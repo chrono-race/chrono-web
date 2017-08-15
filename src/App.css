@@ -426,20 +426,38 @@ tr.active-tyre {
   border-collapse: separate;
 }
 
-.pit-lane-time-table > tr > th {
+.pit-lane-time-table > thead > tr > th {
   font-size: 9pt;
   line-height: 1.25 !important;  
   text-align: center;
-  padding-left: 8px !important;
-  padding-right: 8px !important;
+  padding-left: 12px !important;
+  padding-right: 4px !important;
   background: #303030;
   margin: 1px !important;
 }
 
-.pit-lane-time-table > tr > td {
+.pit-lane-time-table > tbody > tr > td {
   padding: 0px !important;
   font-size: 8pt;
   line-height: 1.25 !important;  
   text-align: center;
   background: #272727;
+}
+
+.pit-lane-time-table > thead > tr > th > a {
+  text-decoration: none;
+  color: white;
+}
+
+.pit-lane-time-table > thead > tr > th > a:hover {
+  text-decoration: underline;
+}
+
+.pit-lane-time-table > thead > tr > th > a:focus {
+  outline: 0px;
+}
+
+.sort-symbol {
+  float: right;
+  width: 12px;
 }
