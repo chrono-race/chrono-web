@@ -3,6 +3,7 @@ import * as types from '../actions/action-types';
 import { newDriver, appendMessage, findBests } from './driver';
 import findFreeAirLaps from './free-air-laps';
 import paceModel from './pace-model';
+import pitLaneTimes from './pit-lane-times';
 
 function appendMessagesToDrivers(drivers, messages) {
   let updatedDrivers = drivers;
@@ -117,6 +118,7 @@ const defaultSessionState = fromJS({
   active: false,
   secondsUntilConnect: NaN,
   totalLaps: NaN,
+  pitLaneTimes: [],
 });
 
 export default (state = defaultSessionState, action) => {
@@ -143,7 +145,8 @@ export default (state = defaultSessionState, action) => {
       .set('freeAirLaps', freeAirLaps)
       .set('paceModel', model)
       .set('secondsUntilConnect', updateSecondsUntilConnect(startingState.get('secondsUntilConnect'), action.messages.filter(m => m.type === 'waiting')))
-      .set('isOffline', action.isOffline);
+      .set('isOffline', action.isOffline)
+      .set('pitLaneTimes', pitLaneTimes(backlogUpdatedDrivers, freeAirLaps));
   }
 
   return state;

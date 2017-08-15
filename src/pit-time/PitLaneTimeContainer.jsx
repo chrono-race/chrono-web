@@ -5,19 +5,19 @@ import Immutable from 'immutable';
 import * as actions from './pit-time-actions';
 import PitLaneTime from './PitLaneTimeComponent';
 
-const PitLaneTimeContainer = ({ session, sortBy, sortColumn }) => (
-  <PitLaneTime session={session} sortBy={sortBy} sortColumn={sortColumn}  />
+const PitLaneTimeContainer = ({ pitLaneTimes, sortBy, sortColumn }) => (
+  <PitLaneTime pitLaneTimes={pitLaneTimes} sortBy={sortBy} sortColumn={sortColumn} />
 );
 
 PitLaneTimeContainer.propTypes = {
-  session: PropTypes.instanceOf(Immutable.Map).isRequired,
+  pitLaneTimes: PropTypes.instanceOf(Immutable.List).isRequired,
   sortBy: PropTypes.func.isRequired,
   sortColumn: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    session: state.session,
+    pitLaneTimes: state.session.get('pitLaneTimes').toList(),
     sortColumn: state.pitTime.get('sortByColumn'),
   };
 }
