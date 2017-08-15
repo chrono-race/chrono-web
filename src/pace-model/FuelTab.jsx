@@ -65,7 +65,7 @@ const FuelTab = ({ session, selectedDriver, paceModel, showModelHelp }) => (
 FuelTab.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
   selectedDriver: PropTypes.string.isRequired,
-  paceModel: PropTypes.instanceOf(Immutable.Map).isRequired,
+  paceModel: PropTypes.instanceOf(Object).isRequired,
   showModelHelp: PropTypes.bool.isRequired,
 };
 

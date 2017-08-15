@@ -121,7 +121,7 @@ const TyresTab = ({ session, selectedDriver, paceModel, selectedTyre, selectTyre
 
 TyresTab.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
-  paceModel: PropTypes.instanceOf(Immutable.Map).isRequired,
+  paceModel: PropTypes.instanceOf(Object).isRequired,
   selectedDriver: PropTypes.string,
   selectedTyre: PropTypes.string.isRequired,
   selectTyre: PropTypes.func.isRequired,
