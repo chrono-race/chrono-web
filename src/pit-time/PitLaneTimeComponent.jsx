@@ -24,7 +24,11 @@ const findStintPitLaneTime = (driver, stint, freeAirLaps) => {
       const averageS1 = get3LapAverage(laps, startLap, 's1Time');
       const timeLost = (inLapS3 - averageS3) + (outLapS1 - averageS1);
       console.log(`driver ${driver.get('tla')} stint starting on lap ${startLap} with in s3 ${inLapS3} (${averageS3}) and out s1 ${outLapS1} (${averageS1}) == ${timeLost} - isFreeAir ${isFreeAir}`);
-      return [];
+      return {
+        lapNumber: startLap - 1,
+        driver: driver.get('tla'),
+        timeLost,
+      };
     }
   }
   return undefined;
@@ -42,9 +46,28 @@ const findPitLaneTimes = session =>
 
 const PitLaneTime = ({ session }) => {
   console.log('finding pit times');
-  const times = findPitLaneTimes(session).count();
+  const times = findPitLaneTimes(session);
+  const rows = [];
+  times.forEach((time) => {
+    rows.push(
+      (<tr key={time.lapNumber + time.driver}>
+        <td>{time.lapNumber}</td>
+        <td>{time.driver}</td>
+        <td>{time.timeLost.toFixed(3)}</td>
+      </tr>),
+    );
+  });
   return (
-    <div>pit lane time</div>
+    <div>
+      <table className="pit-lane-time-table">
+        <tr>
+          <th>lap #</th>
+          <th>driver</th>
+          <th>pit lane time</th>
+        </tr>
+        {rows}
+      </table>
+    </div>
   );
 };
 

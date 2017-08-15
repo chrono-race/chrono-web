@@ -420,3 +420,26 @@ tr.active-tyre {
 .tab-info-button:focus {
   outline: 0px;
 }
+
+.pit-lane-time-table {
+  border-spacing: 1px;
+  border-collapse: separate;
+}
+
+.pit-lane-time-table > tr > th {
+  font-size: 9pt;
+  line-height: 1.25 !important;  
+  text-align: center;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  background: #303030;
+  margin: 1px !important;
+}
+
+.pit-lane-time-table > tr > td {
+  padding: 0px !important;
+  font-size: 8pt;
+  line-height: 1.25 !important;  
+  text-align: center;
+  background: #272727;
+}
