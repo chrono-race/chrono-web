@@ -487,8 +487,8 @@ tr.active-tyre {
   font-size: 8pt;
   line-height: 1.25 !important;  
   text-align: center;
-  padding-left: 12px !important;
-  padding-right: 4px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
   background: #303030;
   margin: 1px !important;  
 }
