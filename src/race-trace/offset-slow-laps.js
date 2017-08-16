@@ -17,6 +17,17 @@ function total(slowLaps) {
   return count;
 }
 
+function addLapBeforeEachSlowLap(lapNumbers) {
+  const result = [];
+  lapNumbers.forEach((lapNumber) => {
+    if (lapNumber > 1 && lapNumbers.find(l => l === lapNumber - 1) === undefined) {
+      result.push(lapNumber - 1);
+    }
+    result.push(lapNumber);
+  });
+  return result;
+}
+
 function offsetSlowLaps(times) {
   let updatedTimes = times;
 
@@ -27,8 +38,13 @@ function offsetSlowLaps(times) {
   const leaderLaps = [...Array(lastLapIndex + 1).keys()]
     .filter((v, i) => i > 0)
     .map(lapNumber => getLeaderLapTime(lapNumber, times));
-  const medianLap = median(leaderLaps.sort());
-  const slowLaps = leaderLaps.filter(l => l > medianLap * 1.3);
+  const medianLap = median(leaderLaps.sort((a, b) => a - b));
+
+  const slowLapNumbers = addLapBeforeEachSlowLap([...Array(lastLapIndex + 1).keys()]
+    .filter((v, i) => i > 0)
+    .filter(lapNumber => getLeaderLapTime(lapNumber, times) > medianLap * 1.3));
+
+  const slowLaps = slowLapNumbers.map(lapNumber => getLeaderLapTime(lapNumber, times));
 
   const leaderFinishTime = updatedTimes.get(leaderOnLap(times, lastLapIndex)).get(lastLapIndex);
   const typicalLap = (leaderFinishTime - total(slowLaps)) / (lastLapIndex - slowLaps.length);
@@ -42,7 +58,8 @@ function offsetSlowLaps(times) {
 
     const newLap = typicalLap;
 
-    if (lapTime > medianLap * 1.3) {
+    // if (lapTime > medianLap * 1.3) {
+    if (slowLapNumbers.find(l => l === lap) !== undefined) {
       updatedTimes = offsetTimes(updatedTimes, thisLap, lapTime - newLap);
     }
   }

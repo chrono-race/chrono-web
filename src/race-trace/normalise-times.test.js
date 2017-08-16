@@ -74,39 +74,22 @@ describe('normalise times', () => {
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });
 
-  it('offsets slow laps before normalising times', () => {
-    const session = fromJS({
-      drivers: {
-        VAN: {
-          cumulativeTime: [0, 90, 200, 290, 430, 520],
-        },
-      },
-    });
-
-    const expectedTimes = fromJS({
-      VAN: [0, -5, 10, 5, 5, 0],
-    });
-
-    const normalTimes = normaliseTimes(session);
-
-    assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
-  });
-
   it('offsets multiple slow laps before normalising times', () => {
     const session = fromJS({
       drivers: {
         VAN: {
-          // lap times:            90, 110, 140, 140, 90, 90, 90
-          // with slow laps fixed: 90, 110,  94,  94, 90, 90, 90
-          // typical lap: 94
-          // delta to typical:     -4, +16,   0,   0, -4, -4, -4
-          cumulativeTime: [0, 90, 200, 340, 480, 570, 660, 750],
+          // slow laps:                      x    x    x
+          // lap times:             90, 100, 110, 140, 140, 90, 90, 90
+          // with slow laps fixed:  90, 100,  92,  92,  92, 90, 90, 90
+          // typical lap: 92
+          // delta to typical:       -2,  8,   0,   0,   0, -2, -2, -2
+          cumulativeTime: [0, 90, 190, 300, 440, 580, 670, 760, 850],
         },
       },
     });
 
     const expectedTimes = fromJS({
-      VAN: [0, -4, 12, 12, 12, 8, 4, 0],
+      VAN: [0, -2, 6, 6, 6, 6, 4, 2, 0],
     });
 
     const normalTimes = normaliseTimes(session);
