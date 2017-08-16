@@ -15,16 +15,21 @@ const findStintPitLaneTime = (driver, stint, freeAirLaps) => {
                         freeAirLap.raceLapIndex >= startLap - 5 &&
                         freeAirLap.raceLapIndex <= startLap + 2) !== undefined;
     if (isFreeAir) {
-      const inLapS3 = laps.get(startLap - 2).get('s3Time');
-      const outLapS1 = laps.get(startLap - 1).get('s1Time');
-      const averageS3 = get3LapAverage(laps, startLap - 5, 's3Time');
-      const averageS1 = get3LapAverage(laps, startLap, 's1Time');
-      const timeLost = (inLapS3 - averageS3) + (outLapS1 - averageS1);
-      return {
-        lapNumber: startLap - 1,
-        driver: driver.get('tla'),
-        timeLost,
-      };
+      const minLapTime = Math.min(...laps.map(lap => lap.get('lapTime')).filter(t => t !== undefined && t !== null));
+      const isSlow = laps.slice(startLap - 5, startLap - 2).find(lap => lap.get('lapTime') > 1.05 * minLapTime) !== undefined ||
+                    laps.slice(startLap, startLap + 3).find(lap => lap.get('lapTime') > 1.05 * minLapTime) !== undefined;
+      if (!isSlow) {
+        const inLapS3 = laps.get(startLap - 2).get('s3Time');
+        const outLapS1 = laps.get(startLap - 1).get('s1Time');
+        const averageS3 = get3LapAverage(laps, startLap - 5, 's3Time');
+        const averageS1 = get3LapAverage(laps, startLap, 's1Time');
+        const timeLost = (inLapS3 - averageS3) + (outLapS1 - averageS1);
+        return {
+          lapNumber: startLap - 1,
+          driver: driver.get('tla'),
+          timeLost,
+        };
+      }
     }
   }
   return undefined;
