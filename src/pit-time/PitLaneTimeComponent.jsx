@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
+import median from '../race-trace/median';
 
 const heading = (title, sortBy, sortField, currentSortField) => {
   const sortSymbol = sortField === currentSortField
@@ -10,6 +11,15 @@ const heading = (title, sortBy, sortField, currentSortField) => {
     <a onClick={() => sortBy(sortField)} tabIndex="-1">{title} {sortSymbol}</a>
   );
 };
+
+const toFixedOrEmpty = (result) => {
+  if (result === undefined) {
+    return undefined;
+  }
+  return result.toFixed(3);
+};
+
+const minTime = pitLaneTimes => pitLaneTimes.map(t => t.timeLost).min();
 
 const PitLaneTime = ({ pitLaneTimes, sortBy, sortColumn }) => {
   const times = pitLaneTimes.sortBy(x => x[sortColumn]);
@@ -24,19 +34,35 @@ const PitLaneTime = ({ pitLaneTimes, sortBy, sortColumn }) => {
     );
   });
   return (
-    <div>
-      <table className="pit-lane-time-table">
-        <thead>
-          <tr>
-            <th>{heading('lap #', sortBy, 'lapNumber', sortColumn)}</th>
-            <th>{heading('driver', sortBy, 'driver', sortColumn)}</th>
-            <th>{heading('pit lane time', sortBy, 'timeLost', sortColumn)}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-        </tbody>
-      </table>
+    <div className="pit-lane-container">
+      <div className="pit-lane-times">
+        <table className="pit-lane-time-table">
+          <thead>
+            <tr>
+              <th>{heading('lap #', sortBy, 'lapNumber', sortColumn)}</th>
+              <th>{heading('driver', sortBy, 'driver', sortColumn)}</th>
+              <th>{heading('pit lane time', sortBy, 'timeLost', sortColumn)}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
+      </div>
+      <div className="pit-lane-info">
+        <table className="pit-lane-stats-table">
+          <tbody>
+            <tr>
+              <th>minimum</th>
+              <td>{toFixedOrEmpty(minTime(pitLaneTimes))}</td>
+            </tr>
+            <tr>
+              <th>median</th>
+              <td>{toFixedOrEmpty(median(pitLaneTimes.map(t => t.timeLost).sort().toArray()))}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

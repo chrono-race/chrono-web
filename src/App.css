@@ -421,6 +421,23 @@ tr.active-tyre {
   outline: 0px;
 }
 
+.pit-lane-container {
+  height: 100%;
+}
+
+.pit-lane-times {
+  height: 100%;
+  float: left;
+  overflow-y: auto;
+}
+
+.pit-lane-info {
+  float: left;
+  margin-left: 6px;
+  padding: 2px;
+  font-size: 9pt;
+}
+
 .pit-lane-time-table {
   border-spacing: 1px;
   border-collapse: separate;
@@ -460,4 +477,26 @@ tr.active-tyre {
 .sort-symbol {
   float: right;
   width: 12px;
+}
+.pit-lane-stats-table {
+  border-spacing: 1px;
+  border-collapse: separate;
+}
+
+.pit-lane-stats-table > tbody > tr > th {
+  font-size: 8pt;
+  line-height: 1.25 !important;  
+  text-align: center;
+  padding-left: 12px !important;
+  padding-right: 4px !important;
+  background: #303030;
+  margin: 1px !important;  
+}
+
+.pit-lane-stats-table > tbody > tr > td {
+  padding: 4px !important;
+  font-size: 8pt;
+  line-height: 1.25 !important;  
+  text-align: center;
+  background: #272727;  
 }
