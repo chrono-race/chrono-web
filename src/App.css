@@ -464,6 +464,7 @@ tr.active-tyre {
 .pit-lane-time-table > thead > tr > th > a {
   text-decoration: none;
   color: white;
+  cursor: pointer;
 }
 
 .pit-lane-time-table > thead > tr > th > a:hover {
@@ -478,6 +479,7 @@ tr.active-tyre {
   float: right;
   width: 12px;
 }
+
 .pit-lane-stats-table {
   border-spacing: 1px;
   border-collapse: separate;
