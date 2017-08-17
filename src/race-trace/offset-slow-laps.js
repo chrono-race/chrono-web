@@ -1,31 +1,12 @@
-import leaderOnLap from './leader-on-lap';
 import offsetTimes from './offset-times';
-import median from './median';
-
-function getLeaderLapTime(lapNumber, times) {
-  const leader = leaderOnLap(times, lapNumber);
-  const leaderLaps = times.get(leader);
-  const prevLap = leaderLaps.get(lapNumber - 1);
-  const thisLap = leaderLaps.get(lapNumber);
-  const lapTime = thisLap - prevLap;
-  return lapTime;
-}
+import findSlowLapNumbers from './find-slow-laps';
+import getLeaderLapTime from './leader-lap-time';
+import leaderOnLap from './leader-on-lap';
 
 function total(slowLaps) {
   let count = 0;
   slowLaps.forEach((l) => { count += l; });
   return count;
-}
-
-function addLapBeforeEachSlowLap(lapNumbers) {
-  const result = [];
-  lapNumbers.forEach((lapNumber) => {
-    if (lapNumber > 1 && lapNumbers.find(l => l === lapNumber - 1) === undefined) {
-      result.push(lapNumber - 1);
-    }
-    result.push(lapNumber);
-  });
-  return result;
 }
 
 function offsetSlowLaps(times) {
@@ -35,14 +16,8 @@ function offsetSlowLaps(times) {
   if (lastLapIndex === undefined) {
     return times;
   }
-  const leaderLaps = [...Array(lastLapIndex + 1).keys()]
-    .filter((v, i) => i > 0)
-    .map(lapNumber => getLeaderLapTime(lapNumber, times));
-  const medianLap = median(leaderLaps.sort((a, b) => a - b));
 
-  const slowLapNumbers = addLapBeforeEachSlowLap([...Array(lastLapIndex + 1).keys()]
-    .filter((v, i) => i > 0)
-    .filter(lapNumber => getLeaderLapTime(lapNumber, times) > medianLap * 1.3));
+  const slowLapNumbers = findSlowLapNumbers(times);
 
   const slowLaps = slowLapNumbers.map(lapNumber => getLeaderLapTime(lapNumber, times));
 
@@ -58,7 +33,6 @@ function offsetSlowLaps(times) {
 
     const newLap = typicalLap;
 
-    // if (lapTime > medianLap * 1.3) {
     if (slowLapNumbers.find(l => l === lap) !== undefined) {
       updatedTimes = offsetTimes(updatedTimes, thisLap, lapTime - newLap);
     }

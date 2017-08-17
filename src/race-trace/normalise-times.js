@@ -33,7 +33,7 @@ function findLeaderAverageLap(times) {
 
 function normaliseTimes(session) {
   const times = toTimeStructure(session);
-  const noSlowLaps = offsetSlowLaps(times, 90);
+  const noSlowLaps = offsetSlowLaps(times);
   const normalLap = findLeaderAverageLap(noSlowLaps);
   return noSlowLaps.map(driverTimes => toDriverNormalTime(driverTimes, normalLap));
 }
