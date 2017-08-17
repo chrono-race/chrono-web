@@ -51,7 +51,7 @@ describe('plot structure', () => {
 
     const expected = [
       {
-        label: 'VAN',
+        label: '&nbsp;VAN',
         color: '#ff0000',
         data: [[1, 0], [2, 1], [3, 2]],
         lines: {
@@ -85,7 +85,7 @@ describe('plot structure', () => {
 
     const expected = [
       {
-        label: 'VAN',
+        label: '&nbsp;VAN',
         color: '#ff0000',
         data: [[1, 0], [2, 1], [3, 2]],
         lines: {
