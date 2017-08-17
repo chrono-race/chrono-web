@@ -1,6 +1,5 @@
 import offsetSlowLaps from './offset-slow-laps';
 import leaderOnLap from './leader-on-lap';
-import findSlowLapNumbers from './find-slow-laps';
 
 // lapIndex is lapNumber-1
 function toLapNormalTime(time, lapIndex, best) {
@@ -24,8 +23,8 @@ function findLeaderAverageLap(times) {
   return leaderTime / lastLapIndex;
 }
 
-function normaliseTimes(times) {
-  const noSlowLaps = offsetSlowLaps(times, findSlowLapNumbers(times));
+function normaliseTimes(times, slowLapNumbers) {
+  const noSlowLaps = offsetSlowLaps(times, slowLapNumbers);
   const normalLap = findLeaderAverageLap(noSlowLaps);
   return noSlowLaps.map(driverTimes => toDriverNormalTime(driverTimes, normalLap));
 }
