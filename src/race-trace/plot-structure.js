@@ -6,7 +6,7 @@ function toLapNumberPairs(driverTimes) {
 function toDriverStructure(driverName, driverInfo, normalTimes, highlight) {
   if (highlight) {
     return {
-      label: driverName,
+      label: `&nbsp;${driverName}`,
       color: driverInfo.get('color'),
       data: toLapNumberPairs(normalTimes.get(driverName)),
       lines: {
