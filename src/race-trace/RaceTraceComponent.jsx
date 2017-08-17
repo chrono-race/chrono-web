@@ -101,7 +101,24 @@ class RaceTraceComponent extends React.Component {
     const slowLapNumbers = findSlowLapNumbers(times);
     const normalTimes = normaliseTimes(times, slowLapNumbers);
     const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
-    const chartOptions = createChartOptions(findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent), session.get('totalLaps'));
+    const minMax = findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent);
+    const chartOptions = createChartOptions(minMax, session.get('totalLaps'));
+
+    const barData = [];
+    slowLapNumbers.forEach((lapNumber) => {
+      barData.push([lapNumber, minMax.max]);
+    });
+
+    chartData.push({
+      data: barData,
+      bars: {
+        show: true,
+        barWidth: 1,
+        lineWidth: 0,
+        fill: 0.1,
+        alight: 'left',
+      },
+    });
 
     if (chartData.length === 0) {
       return;
