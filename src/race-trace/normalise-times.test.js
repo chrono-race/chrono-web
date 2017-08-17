@@ -1,6 +1,7 @@
 import { assert, should } from 'chai';
 import { fromJS } from 'immutable';
 import normaliseTimes from './normalise-times';
+import toTimeStructure from './time-structure';
 
 should();
 
@@ -24,7 +25,7 @@ describe('normalise times', () => {
       ALO: [1, 2, 3],
     });
 
-    const normalTimes = normaliseTimes(session);
+    const normalTimes = normaliseTimes(toTimeStructure(session));
 
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });
@@ -48,7 +49,7 @@ describe('normalise times', () => {
       ALO: [1, 2, 3, NaN],
     });
 
-    const normalTimes = normaliseTimes(session);
+    const normalTimes = normaliseTimes(toTimeStructure(session));
 
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });
@@ -69,7 +70,7 @@ describe('normalise times', () => {
       ALO: [1, 2, 3],
     });
 
-    const normalTimes = normaliseTimes(session);
+    const normalTimes = normaliseTimes(toTimeStructure(session));
 
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });
@@ -92,7 +93,7 @@ describe('normalise times', () => {
       VAN: [0, -2, 6, 6, 6, 6, 4, 2, 0],
     });
 
-    const normalTimes = normaliseTimes(session);
+    const normalTimes = normaliseTimes(toTimeStructure(session));
 
     assert(JSON.stringify(normalTimes).should.equal(JSON.stringify(expectedTimes)));
   });

@@ -10,14 +10,6 @@ function toLapNormalTime(time, lapIndex, best) {
   return time;
 }
 
-function toDriverTimeStructure(driver) {
-  return driver.get('cumulativeTime');
-}
-
-function toTimeStructure(session) {
-  return session.get('drivers').map(driver => toDriverTimeStructure(driver));
-}
-
 function toDriverNormalTime(driverTimes, normalLap) {
   return driverTimes.map((time, index) => toLapNormalTime(time, index, normalLap));
 }
@@ -32,8 +24,7 @@ function findLeaderAverageLap(times) {
   return leaderTime / lastLapIndex;
 }
 
-function normaliseTimes(session) {
-  const times = toTimeStructure(session);
+function normaliseTimes(times) {
   const noSlowLaps = offsetSlowLaps(times, findSlowLapNumbers(times));
   const normalLap = findLeaderAverageLap(noSlowLaps);
   return noSlowLaps.map(driverTimes => toDriverNormalTime(driverTimes, normalLap));

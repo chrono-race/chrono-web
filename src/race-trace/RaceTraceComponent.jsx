@@ -6,6 +6,7 @@ import $ from 'jquery';
 import flot from 'flot-for-node'; // eslint-disable-line no-unused-vars
 import normaliseTimes from './normalise-times';
 import plotStructure from './plot-structure';
+import toTimeStructure from './time-structure';
 
 function createChartOptions(minMax, totalLaps) {
   return {
@@ -95,7 +96,8 @@ class RaceTraceComponent extends React.Component {
   }
   renderPlot() {
     const session = this.props.session;
-    const normalTimes = normaliseTimes(session);
+    const times = toTimeStructure(session);
+    const normalTimes = normaliseTimes(times);
     const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
     const chartOptions = createChartOptions(findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent), session.get('totalLaps'));
 
