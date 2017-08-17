@@ -1,5 +1,4 @@
 import offsetTimes from './offset-times';
-import findSlowLapNumbers from './find-slow-laps';
 import getLeaderLapTime from './leader-lap-time';
 import leaderOnLap from './leader-on-lap';
 
@@ -9,15 +8,13 @@ function total(slowLaps) {
   return count;
 }
 
-function offsetSlowLaps(times) {
+function offsetSlowLaps(times, slowLapNumbers) {
   let updatedTimes = times;
 
   const lastLapIndex = updatedTimes.map(driver => driver.findLastIndex(t => !isNaN(t))).max();
   if (lastLapIndex === undefined) {
     return times;
   }
-
-  const slowLapNumbers = findSlowLapNumbers(times);
 
   const slowLaps = slowLapNumbers.map(lapNumber => getLeaderLapTime(lapNumber, times));
 
