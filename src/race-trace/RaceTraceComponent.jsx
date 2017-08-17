@@ -8,6 +8,7 @@ import normaliseTimes from './normalise-times';
 import plotStructure from './plot-structure';
 import toTimeStructure from './time-structure';
 import findSlowLapNumbers from './find-slow-laps';
+import projectForwards from './project-forwards';
 
 function createChartOptions(minMax, totalLaps) {
   return {
@@ -81,10 +82,6 @@ function findMinMax(times, selectedDriver, selectedOpponent) {
     min: allTimes.min(),
     max: allTimes.max(),
   };
-}
-
-function projectForwards(times) {
-  return times;
 }
 
 class RaceTraceComponent extends React.Component {
