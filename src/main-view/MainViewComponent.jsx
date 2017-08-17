@@ -10,6 +10,7 @@ import Modelling from '../pace-model/ModellingContainer';
 import TabContainer from '../tabs/TabContainer';
 import Tab from '../tabs/Tab';
 import PitLaneTime from '../pit-time/PitLaneTimeContainer';
+import Strategy from '../strategy-view/StrategyContainer';
 
 const MainViewComponent = () => (
   <div className="full-height">
@@ -39,6 +40,7 @@ const MainViewComponent = () => (
     </div>
     <div className="pace-model-container">
       <Modelling />
+      <Strategy />
     </div>
     <div className="race-control-messages">
       <RaceControlMessages />
