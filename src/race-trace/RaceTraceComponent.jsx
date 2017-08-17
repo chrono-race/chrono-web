@@ -83,6 +83,10 @@ function findMinMax(times, selectedDriver, selectedOpponent) {
   };
 }
 
+function projectForwards(times) {
+  return times;
+}
+
 class RaceTraceComponent extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions.bind(this));
@@ -99,7 +103,8 @@ class RaceTraceComponent extends React.Component {
   }
   renderPlot() {
     const session = this.props.session;
-    const times = toTimeStructure(session);
+    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20);
+
     const slowLapNumbers = findSlowLapNumbers(times);
     const normalTimes = normaliseTimes(times, slowLapNumbers);
     const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
