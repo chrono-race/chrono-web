@@ -63,10 +63,12 @@ function findMinMax(times, selectedDriver, selectedOpponent) {
       min = Math.min(min, times.get(selectedOpponent).filter(t => !isNaN(t)).min());
       max = Math.max(max, times.get(selectedOpponent).filter(t => !isNaN(t)).max());
     }
-    return {
-      min,
-      max,
-    };
+    if (!isNaN(min) && !isNaN(max)) {
+      return {
+        min,
+        max,
+      };
+    }
   }
   if (times.keySeq().length === 0) {
     return {
