@@ -106,10 +106,10 @@ class RaceTraceComponent extends React.Component {
 
     const pitStops = {};
     if (selectedDriver !== '') {
-      pitStops[selectedDriver] = strategies.get('driverLap');
+      pitStops[selectedDriver] = strategies.get('lapsUntilDriverStop');
     }
     if (selectedOpponent !== '') {
-      pitStops[selectedOpponent] = strategies.get('opponentLap');
+      pitStops[selectedOpponent] = strategies.get('lapsUntilOpponentStop');
     }
 
     const pitModelParams = {

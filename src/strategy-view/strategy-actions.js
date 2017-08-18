@@ -1,9 +1,13 @@
 import * as types from '../actions/action-types';
 
-// eslint-disable-next-line
-export const updateStrategies = (driverLap, opponentLap) =>
+export const updateDriverStrategy = lapsUntilStop =>
  ({
-   type: types.UPDATE_STRATEGIES,
-   driverLap,
-   opponentLap,
+   type: types.UPDATE_DRIVER_STRATEGY,
+   lapsUntilStop,
+ });
+
+export const updateOpponentStrategy = lapsUntilStop =>
+ ({
+   type: types.UPDATE_OPPONENT_STRATEGY,
+   lapsUntilStop,
  });

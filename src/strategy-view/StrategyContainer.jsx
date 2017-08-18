@@ -3,22 +3,19 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Immutable from 'immutable';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
-import { updateStrategies } from './strategy-actions';
+import { updateDriverStrategy, updateOpponentStrategy } from './strategy-actions';
 import sliderCss from '../css/bootstrap-slider.min.css'; // eslint-disable-line no-unused-vars
 
-function makeCell(driverLap, opponentLap, setStrategy) {
+function makeCell(driverLap, opponentLap) {
   return (
     <td key={`${driverLap}-${opponentLap}`}>
-      <a
-        tabIndex="-1"
-        onClick={() => setStrategy(driverLap, opponentLap)}
-      >xx</a>
+      x
     </td>);
 }
 
-function makeRow(driverLap, setStrategy) {
+function makeRow(driverLap) {
   const cells = [...Array(21).keys()]
-    .map(opponentLap => makeCell(driverLap, opponentLap, setStrategy));
+    .map(opponentLap => makeCell(driverLap, opponentLap));
   return (<tr key={driverLap}>
     <th>{driverLap}</th>
     {cells}
@@ -34,20 +31,20 @@ function makeHeaderRow() {
   </tr>);
 }
 
-function makeRows(setStrategy) {
+function makeRows() {
   const headerRow = makeHeaderRow();
-  const rows = [...Array(21).keys()].map(lap => makeRow(lap + 1, setStrategy));
+  const rows = [...Array(21).keys()].map(lap => makeRow(lap + 1));
   return [headerRow, ...rows];
 }
 
-const StrategyContainer = ({ session, setStrategy }) => {
+const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategyChange }) => {
   const isOffline = session.get('isOffline');
   // only show strategy container in live mode
   if (isOffline) {
     return (<div />);
   }
 
-  const rows = makeRows(setStrategy);
+  const rows = makeRows();
 
   return (
     <div className="strategy-container">
@@ -61,6 +58,7 @@ const StrategyContainer = ({ session, setStrategy }) => {
                   value={21}
                   min={1}
                   max={21}
+                  change={e => onDriverStrategyChange(e.target.value)}
                 />
               </div>
             </td>
@@ -72,6 +70,7 @@ const StrategyContainer = ({ session, setStrategy }) => {
                 min={1}
                 max={21}
                 orientation="vertical"
+                change={e => onOpponentStrategyChange(e.target.value)}
               />
             </td>
           </tr>
@@ -84,7 +83,8 @@ const StrategyContainer = ({ session, setStrategy }) => {
 
 StrategyContainer.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
-  setStrategy: PropTypes.func.isRequired,
+  onDriverStrategyChange: PropTypes.func.isRequired,
+  onOpponentStrategyChange: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -95,7 +95,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setStrategy: (driverLap, opponentLap) => dispatch(updateStrategies(driverLap, opponentLap)),
+    onDriverStrategyChange: lapsUntilStop => dispatch(updateDriverStrategy(lapsUntilStop)),
+    onOpponentStrategyChange: lapsUntilStop => dispatch(updateOpponentStrategy(lapsUntilStop)),
   };
 }
 
