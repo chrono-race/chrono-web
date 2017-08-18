@@ -16,9 +16,9 @@ function makeRow(driverLap) {
     .map(opponentLap => makeCell(driverLap, opponentLap));
   if (driverLap % 5 === 1) {
     if (driverLap < 20) {
-      cells.splice(0, 0, (<th rowSpan="5" className="side">{driverLap + 4}</th>));
+      cells.splice(0, 0, (<th key={driverLap} rowSpan="5" className="side">{driverLap + 4}</th>));
     } else {
-      cells.splice(0, 0, (<th />));
+      cells.splice(0, 0, (<th key={driverLap} />));
     }
   }
   return (<tr key={driverLap}>

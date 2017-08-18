@@ -115,6 +115,7 @@ class RaceTraceComponent extends React.Component {
     const pitModelParams = {
       timeLostInPits: 20,
       newTyreLaptimeDelta: -1,
+      overtakePaceDelta: 1.7,
     };
 
     const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20, pitStops, pitModelParams);

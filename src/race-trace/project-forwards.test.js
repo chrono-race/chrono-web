@@ -133,4 +133,28 @@ describe('project forwards', () => {
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
+
+  it('prevents overtakes with insufficient pace difference', () => {
+    const inputTimes = fromJS({
+      ALO: [0, 100, 200, 300, 400],
+      BUT: [6, 105, 204, 303, 402],
+    });
+
+    const expectedResult = fromJS({
+      ALO: [0, 100, 200, 300, 400, 500, 600, 700],
+      BUT: [6, 105, 204, 303, 402, 501, 600.5, 700.5],
+    });
+
+    const drivers = fromJS({
+      ALO: { stints: [] },
+      BUT: { stints: [] },
+    });
+    const pitModelParams = {
+      overtakePaceDelta: 1.5,
+    };
+
+    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams);
+
+    assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
+  });
 });
