@@ -27,13 +27,25 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
   const lastLaps = [...Array(5).keys()]
     .map(i => lapCount - 1 - i)
     .filter(i => i > 0)
-    .filter(i => !stintStartLaps.contains(i + 1) && !stintStartLaps.contains(i + 2) && i + 1 !== driverFuturePitLap)
+    .filter(i => !stintStartLaps.contains(i + 1) &&
+                  !stintStartLaps.contains(i + 2) &&
+                  i + 1 !== driverFuturePitLap)
     .map(i => lapTime(driverTimes, i));
 
-  const averageLapTime = lastLaps.reduce((a, b) => a + b, 0) / lastLaps.length;
+  let averageLapTime = lastLaps.reduce((a, b) => a + b, 0) / lastLaps.length;
 
   if (lapCount + 1 === driverFuturePitLap) {
     return driverTimes.get(lapCount - 1) + averageLapTime + pitModelParams.timeLostInPits;
+  }
+
+  if (lapCount + 1 > driverFuturePitLap) {
+    const lapsSincePitstop = lapCount - driverFuturePitLap;
+    const lapsUsedForAverage = lastLaps.length;
+
+    if (lapsSincePitstop < lapsUsedForAverage) {
+      const delta = (pitModelParams.newTyreLaptimeDelta * (lapsUsedForAverage - lapsSincePitstop)) / lapsUsedForAverage;
+      averageLapTime += delta;
+    }
   }
 
   return driverTimes.get(lapCount - 1) + averageLapTime;

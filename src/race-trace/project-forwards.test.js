@@ -104,15 +104,15 @@ describe('project forwards', () => {
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
 
-  it('adds pit stops', () => {
+  it('adds pit stops and reduces laptimes after stop', () => {
     const inputTimes = fromJS({
       ALO: [0, 90, 180, 270],
       BUT: [0, 100, 200, NaN],
     });
 
     const expectedResult = fromJS({
-      ALO: [0, 90, 180, 270, 360, 470, 560, 650, 740],
-      BUT: [0, 100, 200, 300, 400, 500, 620, 720, 820],
+      ALO: [0, 90, 180, 270, 360, 470, 559, 648, 737, 826, 915, 1004, 1093],
+      BUT: [0, 100, 200, 300, 400, 500, 620, 719, 818, 917, 1016, 1115],
     });
 
     const drivers = fromJS({
@@ -126,9 +126,10 @@ describe('project forwards', () => {
     };
     const pitModelParams = {
       timeLostInPits: 20,
+      newTyreLaptimeDelta: -1,
     };
 
-    const result = projectForwards(inputTimes, drivers, 5, pitStops, pitModelParams);
+    const result = projectForwards(inputTimes, drivers, 9, pitStops, pitModelParams);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
