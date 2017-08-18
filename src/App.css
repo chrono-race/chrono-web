@@ -509,24 +509,43 @@ tr.active-tyre {
   height: 100%;
 }
 
-.strategy-container > table > tbody > tr > td > .opponent-lap-slider {
+.strategy-container > table > tbody > tr > td > .driver-lap-slider {
   width: 100% !important;
-  margin-left: 32px;
-  padding-right: 20px;
+  margin-left: 24px;
+  padding-right: 14px;
 }
 
-.strategy-container > table > tbody > tr > td > .opponent-lap-slider > .slider-horizontal {
+.strategy-container > table > tbody > tr > td > .driver-lap-slider > .slider-horizontal {
   width: 100% !important;
+}
+
+.strategy-container > table > tbody > tr > td > .opponent-lap-slider {
+  margin-top: 40px;
+  padding-bottom: 28px;
+  height: 100%;
+}
+
+.strategy-container > table > tbody > tr > td > .opponent-lap-slider > .slider-vertical {
+  height: 100%;
 }
 
 .strategy-container > table > tbody > tr > th {
   text-align: center;
-  font-size: 8px;
+  font-size: 11px;
   padding-right: 4px;
+}
+
+.strategy-container > table > tbody > tr > th.top {
+  text-align: right;
+}
+
+.strategy-container > table > tbody > tr > th.side {
+  vertical-align: bottom;
 }
 
 .strategy-container > table > tbody > tr > td {
   padding-right: 3px;
   text-align: center;
-  width: 20px;
+  width: 12px;
+  height: 10px;
 }

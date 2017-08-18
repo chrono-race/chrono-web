@@ -8,23 +8,27 @@ import sliderCss from '../css/bootstrap-slider.min.css'; // eslint-disable-line 
 
 function makeCell(driverLap, opponentLap) {
   return (
-    <td key={`${driverLap}-${opponentLap}`}>
-      x
-    </td>);
+    <td key={`${driverLap}-${opponentLap}`} />);
 }
 
 function makeRow(driverLap) {
   const cells = [...Array(21).keys()]
     .map(opponentLap => makeCell(driverLap, opponentLap));
+  if (driverLap % 5 === 1) {
+    if (driverLap < 20) {
+      cells.splice(0, 0, (<th rowSpan="5" className="side">{driverLap + 4}</th>));
+    } else {
+      cells.splice(0, 0, (<th />));
+    }
+  }
   return (<tr key={driverLap}>
-    <th>{driverLap}</th>
     {cells}
   </tr>);
 }
 
 function makeHeaderRow() {
-  const cells = [...Array(21).keys()]
-    .map(lap => (<th key={lap}>{lap + 1}</th>));
+  const cells = [...Array(4).keys()]
+    .map(lap => (<th key={lap} colSpan="5" className="top">{(lap * 5) + 5}</th>));
   return (<tr key="header">
     <td />
     {cells}
@@ -53,7 +57,7 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
           <tr>
             <td />
             <td colSpan="21">
-              <div className="opponent-lap-slider">
+              <div className="driver-lap-slider">
                 <ReactBootstrapSlider
                   value={21}
                   min={1}
@@ -65,13 +69,15 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
           </tr>
           <tr>
             <td rowSpan="23">
-              <ReactBootstrapSlider
-                value={21}
-                min={1}
-                max={21}
-                orientation="vertical"
-                change={e => onOpponentStrategyChange(e.target.value)}
-              />
+              <div className="opponent-lap-slider">
+                <ReactBootstrapSlider
+                  value={21}
+                  min={1}
+                  max={21}
+                  orientation="vertical"
+                  change={e => onOpponentStrategyChange(e.target.value)}
+                />
+              </div>
             </td>
           </tr>
           {rows}
