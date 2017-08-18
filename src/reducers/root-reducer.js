@@ -5,6 +5,7 @@ import sessionList from './session-list-reducer';
 import connection from './connection-reducer';
 import modelling from '../pace-model/model-reducer';
 import pitTime from '../pit-time/pit-time-reducer';
+import strategies from '../strategy-view/strategy-reducer';
 
 export default combineReducers({
   selectedDriver,
@@ -13,4 +14,5 @@ export default combineReducers({
   connection,
   modelling,
   pitTime,
+  strategies,
 });

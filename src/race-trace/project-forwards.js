@@ -43,7 +43,8 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
     const lapsUsedForAverage = lastLaps.length;
 
     if (lapsSincePitstop < lapsUsedForAverage) {
-      const delta = (pitModelParams.newTyreLaptimeDelta * (lapsUsedForAverage - lapsSincePitstop)) / lapsUsedForAverage;
+      const delta = (pitModelParams.newTyreLaptimeDelta * (lapsUsedForAverage - lapsSincePitstop)) /
+                      lapsUsedForAverage;
       averageLapTime += delta;
     }
   }

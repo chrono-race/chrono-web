@@ -100,12 +100,29 @@ class RaceTraceComponent extends React.Component {
   }
   renderPlot() {
     const session = this.props.session;
-    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20, {}, {});
+    const strategies = this.props.strategies;
+    const selectedDriver = this.props.selectedDriver;
+    const selectedOpponent = this.props.selectedOpponent;
+
+    const pitStops = {};
+    if (selectedDriver !== '') {
+      pitStops[selectedDriver] = strategies.get('driverLap');
+    }
+    if (selectedOpponent !== '') {
+      pitStops[selectedOpponent] = strategies.get('opponentLap');
+    }
+
+    const pitModelParams = {
+      timeLostInPits: 20,
+      newTyreLaptimeDelta: -1,
+    };
+
+    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20, pitStops, pitModelParams);
 
     const slowLapNumbers = findSlowLapNumbers(times);
     const normalTimes = normaliseTimes(times, slowLapNumbers);
-    const chartData = plotStructure(normalTimes, session.get('drivers'), this.props.selectedDriver, this.props.selectedOpponent);
-    const minMax = findMinMax(normalTimes, this.props.selectedDriver, this.props.selectedOpponent);
+    const chartData = plotStructure(normalTimes, session.get('drivers'), selectedDriver, selectedOpponent);
+    const minMax = findMinMax(normalTimes, selectedDriver, selectedOpponent);
     const chartOptions = createChartOptions(minMax, session.get('totalLaps'));
 
     const barData = [];
@@ -141,6 +158,7 @@ RaceTraceComponent.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
   selectedDriver: PropTypes.string,
   selectedOpponent: PropTypes.string,
+  strategies: PropTypes.instanceOf(Immutable.Map).isRequired,
 };
 
 RaceTraceComponent.defaultProps = {
@@ -153,6 +171,7 @@ function mapStateToProps(state) {
     session: state.session,
     selectedDriver: state.selectedDriver.get('selectedDriver'),
     selectedOpponent: state.selectedDriver.get('selectedOpponent'),
+    strategies: state.strategies,
   };
 }
 
