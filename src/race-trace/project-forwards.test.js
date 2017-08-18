@@ -10,7 +10,7 @@ describe('project forwards', () => {
     const expectedResult = fromJS({});
     const drivers = fromJS({});
 
-    const result = projectForwards(inputTimes, drivers, 1);
+    const result = projectForwards(inputTimes, drivers, 1, {}, {});
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -31,7 +31,7 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2);
+    const result = projectForwards(inputTimes, drivers, 2, {}, {});
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -54,15 +54,15 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2);
+    const result = projectForwards(inputTimes, drivers, 2, {}, {});
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
 
   it('does nothing for drivers with one lap', () => {
     const inputTimes = fromJS({
-      ALO: [0, 90, 180, NaN],
-      BUT: [0, 100, 200, 300],
+      ALO: [0, 90, 180, 270],
+      BUT: [0, 100, 200, NaN],
       VER: [0, NaN],
     });
 
@@ -77,7 +77,7 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2);
+    const result = projectForwards(inputTimes, drivers, 2, {}, {});
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -99,7 +99,36 @@ describe('project forwards', () => {
       },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2);
+    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+
+    assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
+  });
+
+  it('adds pit stops', () => {
+    const inputTimes = fromJS({
+      ALO: [0, 90, 180, 270],
+      BUT: [0, 100, 200, NaN],
+    });
+
+    const expectedResult = fromJS({
+      ALO: [0, 90, 180, 270, 360, 470, 560, 650, 740],
+      BUT: [0, 100, 200, 300, 400, 500, 620, 720, 820],
+    });
+
+    const drivers = fromJS({
+      ALO: { stints: [] },
+      BUT: { stints: [] },
+    });
+
+    const pitStops = {
+      ALO: 2,
+      BUT: 4,
+    };
+    const pitModelParams = {
+      timeLostInPits: 20,
+    };
+
+    const result = projectForwards(inputTimes, drivers, 5, pitStops, pitModelParams);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });

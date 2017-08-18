@@ -100,7 +100,7 @@ class RaceTraceComponent extends React.Component {
   }
   renderPlot() {
     const session = this.props.session;
-    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20);
+    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20, {}, {});
 
     const slowLapNumbers = findSlowLapNumbers(times);
     const normalTimes = normaliseTimes(times, slowLapNumbers);
