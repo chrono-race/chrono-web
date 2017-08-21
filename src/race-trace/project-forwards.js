@@ -74,21 +74,15 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams) {
       drivers.get(nextDriver), pitStopLaps.get(nextDriver), pitModelParams);
     let updatedDriverTimes = updatedTimes.get(nextDriver).set(driverLaps, driverNextLap);
 
-    const projectedLaptime = updatedDriverTimes.get(driverLaps) - updatedDriverTimes.get(driverLaps - 1);
+    const projectedLaptime = updatedDriverTimes.get(driverLaps) -
+                               updatedDriverTimes.get(driverLaps - 1);
 
     const firstUnpassableTime = updatedTimes
-        .filter(driverTimes => driverTimes.get(driverLaps) >= driverNextLap)
+        .filter(driverTimes => driverTimes.get(driverLaps) + 0.5 >= driverNextLap)
         .map(driverTimes => driverTimes.get(driverLaps) - driverTimes.get(driverLaps - 1))
         .filter(laptime => projectedLaptime > laptime - pitModelParams.overtakePaceDelta)
-        .map((ignored, driver) => updatedTimes.get(driver).get(driverLaps)) // eslint-disable-line
+        .map((ignored, driver) => updatedTimes.get(driver).get(driverLaps))
         .max();
-
-    // const overtakenDrivers = updatedTimes
-    //     .filter(driverTimes => driverTimes.get(driverLaps) >= driverNextLap);
-    // if (overtakenDrivers.count() > 0 && nextDriver === 'HAM') {
-    //   console.log(`${nextDriver} overtaking with ${projectedLaptime} last laptimes ${JSON.stringify(overtakenDrivers.map(driverTimes => driverTimes.get(driverLaps) - driverTimes.get(driverLaps - 1)))}`);
-    //   // console.log(`driver ${nextDriver} laptimes being overtaken: ${overtakenDrivers.map(driverTimes => driverTimes.get(driverLaps) - driverTimes.get(driverLaps - 1))}`);
-    // }
 
     if (firstUnpassableTime !== undefined) {
       updatedDriverTimes = updatedDriverTimes.set(driverLaps, firstUnpassableTime + 0.5);

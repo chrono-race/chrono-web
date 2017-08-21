@@ -157,4 +157,28 @@ describe('project forwards', () => {
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
+
+  it('prevents being within 0.5 seconds with insufficient pace difference', () => {
+    const inputTimes = fromJS({
+      ALO: [0, 99.5, 199, 298.5, 398],              // 497.5,  597,    696.5
+      BUT: [3.25, 102.25, 201.25, 300.25, 399.25],  // 498.25, 597.25 <--
+    });
+
+    const expectedResult = fromJS({
+      ALO: [0, 99.5, 199, 298.5, 398, 497.5, 597, 696.5],
+      BUT: [3.25, 102.25, 201.25, 300.25, 399.25, 498.25, 597.5, 697],
+    });
+
+    const drivers = fromJS({
+      ALO: { stints: [] },
+      BUT: { stints: [] },
+    });
+    const pitModelParams = {
+      overtakePaceDelta: 1.5,
+    };
+
+    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams);
+
+    assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
+  });
 });
