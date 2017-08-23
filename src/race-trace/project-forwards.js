@@ -17,8 +17,11 @@ function findNextDriver(times) {
     .filter(driver => driverLapCount(driver) > 1)
     .map(driver => driver.filter(t => !isNaN(t)).max());
   const nextTime = driverTimes.filter(time => !isNaN(time)).minBy(time => time);
-  const nextDriver = driverTimes.findEntry(time => time === nextTime)[0];
-  return nextDriver;
+  const driverWithNextTime = driverTimes.findEntry(time => time === nextTime);
+  if (driverWithNextTime === undefined) {
+    return undefined;
+  }
+  return driverWithNextTime[0];
 }
 
 function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParams) {
@@ -66,6 +69,9 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams) {
   let updatedTimes = times;
   for (let i = 0; i < addLaps * drivers.count() * 2; i++) { // eslint-disable-line no-plusplus
     const nextDriver = findNextDriver(updatedTimes);
+    if (nextDriver === undefined) {
+      break;
+    }
     const driverLaps = driverLapCount(updatedTimes.get(nextDriver));
     if (driverLaps >= desiredLeaderLapCount - 1) {
       break;
