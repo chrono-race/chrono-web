@@ -41,7 +41,15 @@ function makeRows() {
   return [headerRow, ...rows];
 }
 
-const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategyChange }) => {
+function showAsLapsUntil(laps) {
+  if (laps > 20) {
+    return '>20';
+  }
+  return laps;
+}
+
+const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategyChange,
+  lapsUntilDriverStops, lapsUntilOpponentStops, selectedDriver, selectedOpponent }) => {
   const isOffline = session.get('isOffline');
   // only show strategy container in live mode
   if (isOffline) {
@@ -56,10 +64,20 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
         <tbody>
           <tr>
             <td />
+            <td />
+            <td colSpan="21">
+              <div className="driver-strategy-summary">
+                {showAsLapsUntil(lapsUntilDriverStops)} laps until {selectedDriver} stops
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td />
+            <td />
             <td colSpan="21">
               <div className="driver-lap-slider">
                 <ReactBootstrapSlider
-                  value={21}
+                  value={lapsUntilDriverStops}
                   min={1}
                   max={21}
                   change={e => onDriverStrategyChange(e.target.value)}
@@ -68,10 +86,18 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
             </td>
           </tr>
           <tr>
-            <td rowSpan="23">
+            <td rowSpan="24">
+              <div className="opponent-strategy-summary">
+                {showAsLapsUntil(lapsUntilOpponentStops)} laps<br />
+                until {selectedOpponent} stops
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td rowSpan="24">
               <div className="opponent-lap-slider">
                 <ReactBootstrapSlider
-                  value={21}
+                  value={lapsUntilOpponentStops}
                   min={1}
                   max={21}
                   orientation="vertical"
@@ -91,11 +117,24 @@ StrategyContainer.propTypes = {
   session: PropTypes.instanceOf(Immutable.Map).isRequired,
   onDriverStrategyChange: PropTypes.func.isRequired,
   onOpponentStrategyChange: PropTypes.func.isRequired,
+  lapsUntilDriverStops: PropTypes.number.isRequired,
+  lapsUntilOpponentStops: PropTypes.number.isRequired,
+  selectedDriver: PropTypes.string,
+  selectedOpponent: PropTypes.string,
+};
+
+StrategyContainer.defaultProps = {
+  selectedDriver: '',
+  selectedOpponent: '',
 };
 
 function mapStateToProps(state) {
   return {
     session: state.session,
+    lapsUntilDriverStops: state.strategies.get('lapsUntilDriverStop'),
+    lapsUntilOpponentStops: state.strategies.get('lapsUntilOpponentStop'),
+    selectedDriver: state.selectedDriver.get('selectedDriver'),
+    selectedOpponent: state.selectedDriver.get('selectedOpponent'),
   };
 }
 

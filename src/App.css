@@ -549,3 +549,14 @@ tr.active-tyre {
   width: 12px;
   height: 9px;
 }
+
+.driver-strategy-summary {
+  text-align: center;
+  font-size: 11pt;
+}
+
+.opponent-strategy-summary {
+  text-align: center;
+  font-size: 11pt;
+  min-width: 75px;
+}
