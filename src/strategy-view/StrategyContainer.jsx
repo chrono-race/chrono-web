@@ -51,9 +51,12 @@ function makeStrategyTableRows() {
 
 function showAsLapsUntil(laps) {
   if (laps > 20) {
-    return '>20';
+    return '>20 laps';
   }
-  return laps;
+  if (laps > 1) {
+    return `${laps} laps`;
+  }
+  return '1 lap';
 }
 
 function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
@@ -63,7 +66,7 @@ function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
       <td />
       <td colSpan="21">
         <div className="driver-strategy-summary">
-          {showAsLapsUntil(lapsUntilDriverStops)} laps until {selectedDriver} stops
+          {showAsLapsUntil(lapsUntilDriverStops)} until {selectedDriver} stops
         </div>
       </td>
     </tr>
@@ -94,7 +97,7 @@ function opponentSummaryRow(lapsUntilOpponentStops, selectedOpponent) {
     <tr>
       <td rowSpan="24">
         <div className="opponent-strategy-summary">
-          {showAsLapsUntil(lapsUntilOpponentStops)} laps<br />
+          {showAsLapsUntil(lapsUntilOpponentStops)} <br />
           until {selectedOpponent} stops
         </div>
       </td>
