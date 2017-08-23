@@ -520,8 +520,8 @@ tr.active-tyre {
 }
 
 .strategy-container > table > tbody > tr > td > .opponent-lap-slider {
-  margin-top: 40px;
-  padding-bottom: 28px;
+  margin-top: 4px;
+  padding-bottom: 10px;
   height: 100%;
 }
 

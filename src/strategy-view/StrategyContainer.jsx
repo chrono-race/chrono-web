@@ -6,6 +6,14 @@ import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { updateDriverStrategy, updateOpponentStrategy } from './strategy-actions';
 import sliderCss from '../css/bootstrap-slider.min.css'; // eslint-disable-line no-unused-vars
 
+function emptyTableRow() {
+  const cells = [...Array(23).keys()]
+    .map(i => (<td key={i} />));
+  return (<tr key="empty">
+    {cells}
+  </tr>);
+}
+
 function makeCell(driverLap, opponentLap) {
   return (
     <td key={`${driverLap}-${opponentLap}`} />);
@@ -31,14 +39,14 @@ function makeHeaderRow() {
     .map(lap => (<th key={lap} colSpan="5" className="top">{(lap * 5) + 5}</th>));
   return (<tr key="header">
     <td />
+    <td />
+    <td />
     {cells}
   </tr>);
 }
 
-function makeRows() {
-  const headerRow = makeHeaderRow();
-  const rows = [...Array(21).keys()].map(lap => makeRow(lap + 1));
-  return [headerRow, ...rows];
+function makeStrategyTableRows() {
+  return [...Array(21).keys()].map(lap => makeRow(lap + 1));
 }
 
 function showAsLapsUntil(laps) {
@@ -46,6 +54,70 @@ function showAsLapsUntil(laps) {
     return '>20';
   }
   return laps;
+}
+
+function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
+  return (
+    <tr>
+      <td />
+      <td />
+      <td colSpan="21">
+        <div className="driver-strategy-summary">
+          {showAsLapsUntil(lapsUntilDriverStops)} laps until {selectedDriver} stops
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function driverSliderRow(lapsUntilDriverStops, onDriverStrategyChange) {
+  return (
+    <tr>
+      <td />
+      <td />
+      <td colSpan="21">
+        <div className="driver-lap-slider">
+          <ReactBootstrapSlider
+            value={lapsUntilDriverStops}
+            min={1}
+            max={21}
+            change={e => onDriverStrategyChange(e.target.value)}
+          />
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function opponentSummaryRow(lapsUntilOpponentStops, selectedOpponent) {
+  return (
+    <tr>
+      <td rowSpan="24">
+        <div className="opponent-strategy-summary">
+          {showAsLapsUntil(lapsUntilOpponentStops)} laps<br />
+          until {selectedOpponent} stops
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function opponentSliderRow(lapsUntilOpponentStops, onOpponentStrategyChange) {
+  return (
+    <tr>
+      <td rowSpan="24">
+        <div className="opponent-lap-slider">
+          <ReactBootstrapSlider
+            value={lapsUntilOpponentStops}
+            min={1}
+            max={21}
+            orientation="vertical"
+            change={e => onOpponentStrategyChange(e.target.value)}
+          />
+        </div>
+      </td>
+    </tr>
+  );
 }
 
 const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategyChange,
@@ -56,56 +128,28 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
     return (<div />);
   }
 
-  const rows = makeRows();
+  const rows = [];
+
+  if (selectedDriver !== '') {
+    rows.push(driverSummaryRow(lapsUntilDriverStops, selectedDriver));
+    rows.push(driverSliderRow(lapsUntilDriverStops, onDriverStrategyChange));
+
+    if (selectedOpponent !== '') {
+      rows.push(makeHeaderRow());
+      rows.push(opponentSummaryRow(lapsUntilOpponentStops, selectedOpponent));
+      rows.push(opponentSliderRow(lapsUntilOpponentStops, onOpponentStrategyChange));
+
+      const strategyTableRows = makeStrategyTableRows();
+      strategyTableRows.forEach(r => rows.push(r));
+    } else {
+      rows.push(emptyTableRow());
+    }
+  }
 
   return (
     <div className="strategy-container">
       <table>
         <tbody>
-          <tr>
-            <td />
-            <td />
-            <td colSpan="21">
-              <div className="driver-strategy-summary">
-                {showAsLapsUntil(lapsUntilDriverStops)} laps until {selectedDriver} stops
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td />
-            <td />
-            <td colSpan="21">
-              <div className="driver-lap-slider">
-                <ReactBootstrapSlider
-                  value={lapsUntilDriverStops}
-                  min={1}
-                  max={21}
-                  change={e => onDriverStrategyChange(e.target.value)}
-                />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="24">
-              <div className="opponent-strategy-summary">
-                {showAsLapsUntil(lapsUntilOpponentStops)} laps<br />
-                until {selectedOpponent} stops
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="24">
-              <div className="opponent-lap-slider">
-                <ReactBootstrapSlider
-                  value={lapsUntilOpponentStops}
-                  min={1}
-                  max={21}
-                  orientation="vertical"
-                  change={e => onOpponentStrategyChange(e.target.value)}
-                />
-              </div>
-            </td>
-          </tr>
           {rows}
         </tbody>
       </table>
