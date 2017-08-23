@@ -512,7 +512,7 @@ tr.active-tyre {
 .strategy-container > table > tbody > tr > td > .driver-lap-slider {
   width: 100% !important;
   margin-left: 24px;
-  padding-right: 14px;
+  padding-right: 22px;
 }
 
 .strategy-container > table > tbody > tr > td > .driver-lap-slider > .slider-horizontal {
@@ -546,8 +546,8 @@ tr.active-tyre {
 .strategy-container > table > tbody > tr > td {
   padding-right: 3px;
   text-align: center;
-  width: 12px;
-  height: 9px;
+  width: 10px;
+  height: 7px;
 }
 
 .driver-strategy-summary {

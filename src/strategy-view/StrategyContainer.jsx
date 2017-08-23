@@ -5,6 +5,8 @@ import Immutable from 'immutable';
 import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { updateDriverStrategy, updateOpponentStrategy } from './strategy-actions';
 import sliderCss from '../css/bootstrap-slider.min.css'; // eslint-disable-line no-unused-vars
+import TabContainer from '../tabs/TabContainer';
+import Tab from '../tabs/Tab';
 
 function emptyTableRow() {
   const cells = [...Array(23).keys()]
@@ -66,7 +68,8 @@ function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
       <td />
       <td colSpan="21">
         <div className="driver-strategy-summary">
-          {showAsLapsUntil(lapsUntilDriverStops)} until {selectedDriver} stops
+          {showAsLapsUntil(lapsUntilDriverStops)} <br />
+          until {selectedDriver} stops
         </div>
       </td>
     </tr>
@@ -150,13 +153,17 @@ const StrategyContainer = ({ session, onDriverStrategyChange, onOpponentStrategy
   }
 
   return (
-    <div className="strategy-container">
-      <table>
-        <tbody>
-          {rows}
-        </tbody>
-      </table>
-    </div>
+    <TabContainer>
+      <Tab title="strategy">
+        <div className="strategy-container">
+          <table>
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </div>
+      </Tab>
+    </TabContainer>
   );
 };
 
