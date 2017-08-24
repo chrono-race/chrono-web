@@ -84,6 +84,19 @@ function findMinMax(times, selectedDriver, selectedOpponent) {
   };
 }
 
+function calcNowLine(originalTimes, normalTimes) {
+  return originalTimes.map((driver, key) => {
+    const lastLap = driver.findLastIndex(t => !isNaN(t));
+    return {
+      time: normalTimes.get(key).get(lastLap),
+      laps: lastLap + 1,
+    };
+  })
+  .filter(p => p.laps > 1)
+  .sortBy(p => p.time)
+  .map(p => [p.laps, p.time]);
+}
+
 class RaceTraceComponent extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions.bind(this));
@@ -124,6 +137,12 @@ class RaceTraceComponent extends React.Component {
     const times = projectForwards(originalTimes, session.get('drivers'), 20, pitStops, pitModelParams, slowLapNumbers);
 
     const normalTimes = normaliseTimes(times, slowLapNumbers);
+
+    const nowLine = calcNowLine(originalTimes, normalTimes);
+    console.log(`now line is ${nowLine}`);
+
+    const projectedTimes = projectForwards(normalTimes, session.get('drivers'), 20, pitStops, pitModelParams, slowLapNumbers);
+
     const chartData = plotStructure(normalTimes, session.get('drivers'), selectedDriver, selectedOpponent);
     const minMax = findMinMax(normalTimes, selectedDriver, selectedOpponent);
     const chartOptions = createChartOptions(minMax, session.get('totalLaps'));
@@ -141,6 +160,14 @@ class RaceTraceComponent extends React.Component {
         lineWidth: 0,
         fill: 0.1,
         alight: 'left',
+      },
+    });
+
+    chartData.push({
+      data: nowLine.toArray(),
+      color: '#FFFFAA',
+      lines: {
+        lineWidth: 0.5,
       },
     });
 
