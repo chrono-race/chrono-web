@@ -10,7 +10,7 @@ describe('project forwards', () => {
     const expectedResult = fromJS({});
     const drivers = fromJS({});
 
-    const result = projectForwards(inputTimes, drivers, 1, {}, {});
+    const result = projectForwards(inputTimes, drivers, 1, {}, {}, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -31,7 +31,7 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -54,7 +54,7 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -77,7 +77,7 @@ describe('project forwards', () => {
       BUT: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -99,7 +99,7 @@ describe('project forwards', () => {
       },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -129,7 +129,7 @@ describe('project forwards', () => {
       newTyreLaptimeDelta: -1,
     };
 
-    const result = projectForwards(inputTimes, drivers, 9, pitStops, pitModelParams);
+    const result = projectForwards(inputTimes, drivers, 9, pitStops, pitModelParams, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -153,7 +153,7 @@ describe('project forwards', () => {
       overtakePaceDelta: 1.5,
     };
 
-    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams);
+    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -177,7 +177,7 @@ describe('project forwards', () => {
       overtakePaceDelta: 1.5,
     };
 
-    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams);
+    const result = projectForwards(inputTimes, drivers, 3, {}, pitModelParams, []);
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
@@ -201,8 +201,30 @@ describe('project forwards', () => {
       VER: { stints: [] },
     });
 
-    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, []);
 
+    assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
+  });
+
+  it('ignores slow laps when calculating forward lap time', () => {
+    const inputTimes = fromJS({
+      ALO: [0, 200, 290, 380],
+      BUT: [0, 205, 296, 387],
+    });
+
+    const expectedResult = fromJS({
+      ALO: [0, 200, 290, 380, 470, 560],
+      BUT: [0, 205, 296, 387, 478, 569],
+    });
+
+    const drivers = fromJS({
+      ALO: { stints: [] },
+      BUT: { stints: [] },
+    });
+
+    const slowLaps = [1, 2];
+
+    const result = projectForwards(inputTimes, drivers, 2, {}, {}, slowLaps);
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
 });

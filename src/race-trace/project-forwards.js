@@ -24,7 +24,7 @@ function findNextDriver(times, minLapCount) {
   return driverWithNextTime[0];
 }
 
-function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParams) {
+function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParams, slowLapNumbers) {
   const lapCount = driverLapCount(driverTimes);
   const stintStartLaps = driver.get('stints').map(stint => stint.get('startLap'));
   const lastLaps = [...Array(5).keys()]
@@ -32,7 +32,8 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
     .filter(i => i > 0)
     .filter(i => !stintStartLaps.contains(i + 1) &&
                   !stintStartLaps.contains(i + 2) &&
-                  i + 1 !== driverFuturePitLap)
+                  i + 1 !== driverFuturePitLap &&
+                  slowLapNumbers.find(x => x === i + 1) === undefined)
     .map(i => lapTime(driverTimes, i));
 
   let averageLapTime = lastLaps.reduce((a, b) => a + b, 0) / lastLaps.length;
@@ -55,7 +56,7 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
   return driverTimes.get(lapCount - 1) + averageLapTime;
 }
 
-function projectForwards(times, drivers, addLaps, pitStops, pitModelParams) {
+function projectForwards(times, drivers, addLaps, pitStops, pitModelParams, slowLapNumbers) {
   const lastLapIndex = leaderLap(times);
   if (lastLapIndex === undefined) {
     return times;
@@ -81,7 +82,7 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams) {
       break;
     }
     const driverNextLap = projectDriverLap(updatedTimes.get(nextDriver),
-      drivers.get(nextDriver), pitStopLaps.get(nextDriver), pitModelParams);
+      drivers.get(nextDriver), pitStopLaps.get(nextDriver), pitModelParams, slowLapNumbers);
     let updatedDriverTimes = updatedTimes.get(nextDriver).set(driverLaps, driverNextLap);
 
     const projectedLaptime = updatedDriverTimes.get(driverLaps) -
