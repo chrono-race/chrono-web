@@ -63,7 +63,7 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams, slow
   }
 
   const pitStopLaps = fromJS(pitStops)
-    .map((deltaLaps, driver) => driverLapCount(times.get(driver)) + deltaLaps);
+    .map(deltaLaps => lastLapIndex - 1 + deltaLaps);
 
   const desiredLeaderLapCount = lastLapIndex + addLaps;
 

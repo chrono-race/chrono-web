@@ -118,9 +118,11 @@ class RaceTraceComponent extends React.Component {
       overtakePaceDelta: 1.7,
     };
 
-    const times = projectForwards(toTimeStructure(session), session.get('drivers'), 20, pitStops, pitModelParams);
+    const originalTimes = toTimeStructure(session);
+    const slowLapNumbers = findSlowLapNumbers(originalTimes);
 
-    const slowLapNumbers = findSlowLapNumbers(times);
+    const times = projectForwards(originalTimes, session.get('drivers'), 20, pitStops, pitModelParams, slowLapNumbers);
+
     const normalTimes = normaliseTimes(times, slowLapNumbers);
     const chartData = plotStructure(normalTimes, session.get('drivers'), selectedDriver, selectedOpponent);
     const minMax = findMinMax(normalTimes, selectedDriver, selectedOpponent);
