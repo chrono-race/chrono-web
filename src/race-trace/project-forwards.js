@@ -12,9 +12,9 @@ function lapTime(times, lapIndex) {
   return times.get(lapIndex) - times.get(lapIndex - 1);
 }
 
-function findNextDriver(times) {
+function findNextDriver(times, minLapCount) {
   const driverTimes = times
-    .filter(driver => driverLapCount(driver) > 1)
+    .filter(driver => driverLapCount(driver) > 1 && driverLapCount(driver) >= minLapCount)
     .map(driver => driver.filter(t => !isNaN(t)).max());
   const nextTime = driverTimes.filter(time => !isNaN(time)).minBy(time => time);
   const driverWithNextTime = driverTimes.findEntry(time => time === nextTime);
@@ -66,9 +66,13 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams) {
 
   const desiredLeaderLapCount = lastLapIndex + addLaps;
 
+  const leaderLaps = times
+    .map(driver => driverLapCount(driver))
+    .max();
+
   let updatedTimes = times;
   for (let i = 0; i < addLaps * drivers.count() * 2; i++) { // eslint-disable-line no-plusplus
-    const nextDriver = findNextDriver(updatedTimes);
+    const nextDriver = findNextDriver(updatedTimes, leaderLaps - 1);
     if (nextDriver === undefined) {
       break;
     }

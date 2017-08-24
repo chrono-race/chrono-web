@@ -181,4 +181,28 @@ describe('project forwards', () => {
 
     assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
   });
+
+  it('does nothing for drivers more than one lap behind the leader', () => {
+    const inputTimes = fromJS({
+      ALO: [0, 90, 180, 270],
+      BUT: [0, 100, 200, NaN],
+      VER: [0, 110],
+    });
+
+    const expectedResult = fromJS({
+      ALO: [0, 90, 180, 270, 360, 450],
+      BUT: [0, 100, 200, 300, 400, 500],
+      VER: [0, 110],
+    });
+
+    const drivers = fromJS({
+      ALO: { stints: [] },
+      BUT: { stints: [] },
+      VER: { stints: [] },
+    });
+
+    const result = projectForwards(inputTimes, drivers, 2, {}, {});
+
+    assert(JSON.stringify(result).should.equal(JSON.stringify(expectedResult)));
+  });
 });
