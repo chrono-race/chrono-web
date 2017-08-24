@@ -56,6 +56,13 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
   return driverTimes.get(lapCount - 1) + averageLapTime;
 }
 
+function ignoreMoreThan20Laps(deltaLaps) {
+  if (deltaLaps > 20) {
+    return undefined;
+  }
+  return deltaLaps;
+}
+
 function projectForwards(times, drivers, addLaps, pitStops, pitModelParams, slowLapNumbers) {
   const lastLapIndex = leaderLap(times);
   if (lastLapIndex === undefined) {
@@ -63,7 +70,8 @@ function projectForwards(times, drivers, addLaps, pitStops, pitModelParams, slow
   }
 
   const pitStopLaps = fromJS(pitStops)
-    .map(deltaLaps => lastLapIndex - 1 + deltaLaps);
+    .map((deltaLaps, driver) => driverLapCount(times.get(driver)) +
+                                  ignoreMoreThan20Laps(deltaLaps));
 
   const desiredLeaderLapCount = lastLapIndex + addLaps;
 
