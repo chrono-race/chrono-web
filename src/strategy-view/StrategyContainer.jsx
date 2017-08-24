@@ -63,7 +63,7 @@ function showAsLapsUntil(laps) {
 
 function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
   return (
-    <tr>
+    <tr key="driver-summary">
       <td />
       <td />
       <td colSpan="21">
@@ -78,7 +78,7 @@ function driverSummaryRow(lapsUntilDriverStops, selectedDriver) {
 
 function driverSliderRow(lapsUntilDriverStops, onDriverStrategyChange) {
   return (
-    <tr>
+    <tr key="driver-slider">
       <td />
       <td />
       <td colSpan="21">
@@ -97,7 +97,7 @@ function driverSliderRow(lapsUntilDriverStops, onDriverStrategyChange) {
 
 function opponentSummaryRow(lapsUntilOpponentStops, selectedOpponent) {
   return (
-    <tr>
+    <tr key="opponent-summary">
       <td rowSpan="24">
         <div className="opponent-strategy-summary">
           {showAsLapsUntil(lapsUntilOpponentStops)} <br />
@@ -110,7 +110,7 @@ function opponentSummaryRow(lapsUntilOpponentStops, selectedOpponent) {
 
 function opponentSliderRow(lapsUntilOpponentStops, onOpponentStrategyChange) {
   return (
-    <tr>
+    <tr key="opponent-slider">
       <td rowSpan="24">
         <div className="opponent-lap-slider">
           <ReactBootstrapSlider

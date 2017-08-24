@@ -139,9 +139,6 @@ class RaceTraceComponent extends React.Component {
     const normalTimes = normaliseTimes(times, slowLapNumbers);
 
     const nowLine = calcNowLine(originalTimes, normalTimes);
-    console.log(`now line is ${nowLine}`);
-
-    const projectedTimes = projectForwards(normalTimes, session.get('drivers'), 20, pitStops, pitModelParams, slowLapNumbers);
 
     const chartData = plotStructure(normalTimes, session.get('drivers'), selectedDriver, selectedOpponent);
     const minMax = findMinMax(normalTimes, selectedDriver, selectedOpponent);
