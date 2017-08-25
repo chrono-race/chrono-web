@@ -168,9 +168,9 @@ class RaceTraceComponent extends React.Component {
 
     chartData.push({
       data: nowLine,
-      color: '#FFFFAA',
+      color: '#FFFF77',
       lines: {
-        lineWidth: 0.5,
+        lineWidth: 1,
       },
     });
 
