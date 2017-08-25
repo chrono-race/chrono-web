@@ -33,7 +33,7 @@ function projectDriverLap(driverTimes, driver, driverFuturePitLap, pitModelParam
     .filter(i => !stintStartLaps.contains(i + 1) &&
                   !stintStartLaps.contains(i + 2) &&
                   i + 1 !== driverFuturePitLap &&
-                  slowLapNumbers.find(x => x === i + 1) === undefined)
+                  slowLapNumbers.find(x => x === i) === undefined)
     .map(i => lapTime(driverTimes, i));
 
   let averageLapTime = lastLaps.reduce((a, b) => a + b, 0) / lastLaps.length;

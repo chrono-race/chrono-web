@@ -122,7 +122,7 @@ describe('project forwards', () => {
 
     const pitStops = {
       ALO: 2,
-      BUT: 3,
+      BUT: 4,
     };
     const pitModelParams = {
       timeLostInPits: 20,
