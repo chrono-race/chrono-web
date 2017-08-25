@@ -170,7 +170,7 @@ class RaceTraceComponent extends React.Component {
       data: nowLine,
       color: '#FFFF77',
       lines: {
-        lineWidth: 1,
+        lineWidth: 2,
       },
     });
 
