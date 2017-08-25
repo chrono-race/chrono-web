@@ -92,9 +92,9 @@ function calcNowLine(originalTimes, normalTimes) {
       laps: lastLap + 1,
     };
   })
-  .filter(p => p.laps > 1)
-  .sortBy(p => p.time)
-  .map(p => [p.laps, p.time]);
+    .filter(p => p.laps > 1)
+    .sortBy(p => p.time)
+    .map(p => [p.laps, p.time]);
 }
 
 class RaceTraceComponent extends React.Component {
@@ -138,11 +138,17 @@ class RaceTraceComponent extends React.Component {
 
     const normalTimes = normaliseTimes(times, slowLapNumbers);
 
-    const nowLine = calcNowLine(originalTimes, normalTimes);
-
     const chartData = plotStructure(normalTimes, session.get('drivers'), selectedDriver, selectedOpponent);
     const minMax = findMinMax(normalTimes, selectedDriver, selectedOpponent);
     const chartOptions = createChartOptions(minMax, session.get('totalLaps'));
+
+    const nowLine = calcNowLine(originalTimes, normalTimes).toArray();
+    if (nowLine.length > 0) {
+      const lastNowLap = nowLine[nowLine.length - 1][0];
+      nowLine.push([lastNowLap, minMax.max]);
+      const firstNowLap = nowLine[0][0];
+      nowLine.unshift([firstNowLap, minMax.min]);
+    }
 
     const barData = [];
     slowLapNumbers.forEach((lapNumber) => {
@@ -161,7 +167,7 @@ class RaceTraceComponent extends React.Component {
     });
 
     chartData.push({
-      data: nowLine.toArray(),
+      data: nowLine,
       color: '#FFFFAA',
       lines: {
         lineWidth: 0.5,
